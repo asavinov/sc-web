@@ -1,5 +1,8 @@
 import { Injectable } from 'angular2/core';
 
+import { Space } from './space';
+import { SPACES } from './mock-data';
+
 import { Table } from './table';
 import { TABLES } from './mock-data';
 
@@ -8,6 +11,19 @@ import { COLUMNS } from './mock-data';
 
 @Injectable()
 export class ScService {
+
+  //
+  // Spaces
+  //
+
+  getSpaces() {
+    return Promise.resolve(SPACES);
+  }
+
+  //
+  // Tables
+  //
+
   getTables() {
     return Promise.resolve(TABLES);
   }
@@ -24,8 +40,19 @@ export class ScService {
     );
   }
 
+  //
+  // Tables
+  //
+
   getColumns() {
     return Promise.resolve(COLUMNS);
+  }
+
+  getInputColumns(id: string) {
+    if(!id || id.length === 0) return Promise.resolve([])
+    return Promise.resolve(COLUMNS).then(
+      columns => columns.filter(column => column.input_ref === id)
+    );
   }
 
 }

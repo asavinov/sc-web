@@ -5,7 +5,7 @@
 
   <td> <!-- TABLE LIST -->
 
-    <h2>Tables in My Schema</h2>
+    <h2>Tables of the space: {{selectedSpace ? selectedSpace.name : ""}}</h2>
 
     <ul class="tables">
       <li *ngFor="#table of tables" 
@@ -23,11 +23,11 @@
   </td>
   <td> <!-- COLUMNS LIST -->
 
-    <h2>Columns in My Table</h2> <!-- TODO: Has to be updated when table clicked -->
+    <h2>Columns of the table: {{selectedTable ? selectedTable.name : ""}}</h2>
 
     <ul class="tables">
       <li *ngFor="#column of columns" 
-        [class.selected]="columns === selectedColumns" 
+        [class.selected]="column === selectedColumn" 
         (click)="onSelectColumn(column)">
         <span class="badge">{{column.id}}</span> {{column.name}}
       </li>
