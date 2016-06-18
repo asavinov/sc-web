@@ -1,7 +1,10 @@
 import { Injectable } from 'angular2/core';
 
 import { Table } from './table';
-import { TABLES } from './mock-tables';
+import { TABLES } from './mock-data';
+
+import { Column } from './column';
+import { COLUMNS } from './mock-data';
 
 @Injectable()
 export class ScService {
@@ -15,9 +18,14 @@ export class ScService {
     );
   }
 
-  getTable(id: number) {
+  getTable(id: string) {
     return Promise.resolve(TABLES).then(
       tables => tables.filter(table => table.id === id)[0]
     );
   }
+
+  getColumns() {
+    return Promise.resolve(COLUMNS);
+  }
+
 }

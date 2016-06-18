@@ -2,7 +2,7 @@ import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import { HomeComponent } from './home.component';
-import { TablesComponent } from './tables.component';
+import { SpaceComponent } from './space.component';
 
 import { ScService } from './sc.service';
 
@@ -33,7 +33,7 @@ import { ScService } from './sc.service';
   {
     path: '/tables',
     name: 'Tables',
-    component: TablesComponent
+    component: SpaceComponent
   }
 ])
 export class AppComponent {

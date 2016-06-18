@@ -1,0 +1,46 @@
+<div>
+
+  <table border="1">
+  <tr>
+
+  <td> <!-- TABLE LIST -->
+
+    <h2>Tables in My Schema</h2>
+
+    <ul class="tables">
+      <li *ngFor="#table of tables" 
+        [class.selected]="table === selectedTable" 
+        (click)="onSelectTable(table)">
+        <span class="badge">{{table.id}}</span> {{table.name}}
+      </li>
+    </ul>
+
+    <div *ngIf="selectedTable">
+      <h2>{{selectedTable.name | uppercase}} is my table</h2>
+      <button (click)="gotoDetail()">View Column Details</button>
+    </div>
+
+  </td>
+  <td> <!-- COLUMNS LIST -->
+
+    <h2>Columns in My Table</h2> <!-- TODO: Has to be updated when table clicked -->
+
+    <ul class="tables">
+      <li *ngFor="#column of columns" 
+        [class.selected]="columns === selectedColumns" 
+        (click)="onSelectColumn(column)">
+        <span class="badge">{{column.id}}</span> {{column.name}}
+      </li>
+    </ul>
+
+    <div *ngIf="selectedColumn">
+      <h2>{{selectedColumn.name | uppercase}} is my column</h2>
+      <button (click)="gotoDetail()">View Column Details</button>
+    </div>
+
+  </td>
+
+  </tr>
+  </table>
+
+</div>
