@@ -14,9 +14,9 @@ export var TABLES: Table[] = [
 ];
 
 export var COLUMNS: Column[] = [
-  { 'id': '101', 'name': 'Column 1', 'input_ref': '11', 'output_ref': '01' },
-  { 'id': '102', 'name': 'My column', 'input_ref': '11', 'output_ref': '02' },
-  { 'id': '103', 'name': 'Events column', 'input_ref': '12', 'output_ref': '01' },
-  { 'id': '104', 'name': 'Device columns', 'input_ref': '12', 'output_ref': '02' },
-  { 'id': '105', 'name': 'Device columns 2', 'input_ref': '12', 'output_ref': '11' },
+  { 'id': '101', 'name': 'Column 1', 'input_ref': {'id': '11', 'table': undefined}, 'output_ref': {'id': '01', 'table': undefined} },
+  { 'id': '102', 'name': 'My column', 'input_ref': {'id': '11', 'table': undefined}, 'output_ref': {'id': '02', 'table': undefined} },
+  { 'id': '103', 'name': 'Events column', 'input_ref': {'id': '12', 'table': undefined}, 'output_ref': {'id': '01', 'table': undefined} },
+  { 'id': '104', 'name': 'Device columns', 'input_ref': {'id': '12', 'table': undefined}, 'output_ref': {'id': '02', 'table': undefined} },
+  { 'id': '105', 'name': 'Device columns 2', 'input_ref': {'id': '12', 'table': undefined}, 'output_ref': {'id': '11', 'table': undefined} },
 ];

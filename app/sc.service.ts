@@ -41,18 +41,23 @@ export class ScService {
   }
 
   //
-  // Tables
+  // Columns
   //
 
   getColumns() {
     return Promise.resolve(COLUMNS);
   }
 
-  getInputColumns(id: string) {
-    if(!id || id.length === 0) return Promise.resolve([])
+  getInputColumns(input_id: string) {
+    if(!input_id || input_id.length === 0) return Promise.resolve([])
     return Promise.resolve(COLUMNS).then(
-      columns => columns.filter(column => column.input_ref === id)
+      columns => columns.filter(column => column.input_ref.id === input_id)
     );
+  }
+
+  updateColumn(column: Column) {
+    let col = COLUMNS.filter(c => c.id === column.id)[0]
+    col.name = column.name
   }
 
 }
