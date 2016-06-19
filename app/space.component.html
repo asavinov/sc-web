@@ -8,11 +8,11 @@
     <h2>Tables of the space: {{selectedSpace ? selectedSpace.name : ""}}</h2>
 
     <ul class="tables">
-      <li *ngFor="#table of tables" 
-        [class.selected]="selectedTable && table.id === selectedTable.id" 
-        (click)="onSelectTable(table)">
+      <li *ngFor="let tab of tables" 
+        [class.selected]="selectedTable && tab.id === selectedTable.id" 
+        (click)="onSelectTable(tab)">
 
-        <span class="badge">{{table.id}}</span> {{table.name}}
+        <span class="badge">{{tab.id}}</span> {{tab.name}}
 
       </li>
     </ul>
@@ -29,11 +29,11 @@
     <h2>Columns of the table: {{selectedTable ? selectedTable.name : ""}}</h2>
 
     <ul class="tables">
-      <li *ngFor="#column of columns" 
-        [class.selected]="selectedColumn && column.id === selectedColumn.id" 
-        (click)="onSelectColumn(column)">
+      <li *ngFor="let col of columns" 
+        [class.selected]="selectedColumn && col.id === selectedColumn.id" 
+        (click)="onSelectColumn(col)">
 
-        <span class="badge">{{column.id}}</span> {{column.name}} Type: {{column.output_ref.table.name}}
+        <span class="badge">{{col.id}}</span> {{col.name}} Type: {{col.output_ref.table.name}}
 
       </li>
     </ul>
@@ -59,6 +59,13 @@
       <div class="form-group">
         <label for="output_ref">Type</label>
         <input type="text" class="form-control" [(ngModel)]="selectedColumn.output_ref.table.name" ngControl="type" #type="ngForm" placeholder="type" required />
+      </div>
+
+      <div class="form-group">
+        <label for="type">Choose type</label>
+        <select class="form-control" [(ngModel)]="selectedColumn.output_ref.id" required>
+          <option *ngFor="let tab of tables" [ngValue]="tab.id">{{tab.name}}</option>
+        </select>
       </div>
 
       <button type="submit" class="btn btn-default" [disabled]="!columnForm.form.valid">Save</button>
