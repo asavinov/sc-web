@@ -67,4 +67,16 @@ export class ScService {
     //col.output_ref = column.output_ref
   }
 
+  id_counter: number = 1000
+  addColumn(column: Column) {
+    column.id = String(this.id_counter++)
+    COLUMNS.push(column)
+
+    // Copy individual fields
+    //let col = COLUMNS.find(c => c.id === column.id)
+    //col.name = column.name
+    //col.input_ref = column.input_ref
+    //col.output_ref = column.output_ref
+  }
+
 }

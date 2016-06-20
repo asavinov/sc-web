@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
 import { Space } from './space';
-import { Table } from './table';
+import { Table, TableRef } from './table';
 import { Column } from './column';
 //import { TableDetailComponent } from './table-detail.component';
 
@@ -21,9 +21,9 @@ export class SpaceComponent implements OnInit {
     private _scService: ScService) { }
 
   ngOnInit() {
-    this.getSpaces();
-    this.getTables();
-    this.getColumns();
+    this.getSpaces()
+    this.getTables()
+    this.getColumns()
   }
 
   //
@@ -93,9 +93,23 @@ export class SpaceComponent implements OnInit {
     }
   }
 
-  onSelectColumn(column: Column) { 
-    //this.selectedColumn = column;
-    this.selectedColumn = (JSON.parse(JSON.stringify(column))) // Copy object for editing
+  onSelectColumn(column: Column) {
+    if(column) { // Edit existing column
+      //this.selectedColumn = column;
+      this.selectedColumn = (JSON.parse(JSON.stringify(column))) // Copy object for editing
+    }
+    else { // Create new column
+      let col = new Column()
+      col.id = ""
+      col.name = "New Column"
+      col.input_ref = new TableRef(this.selectedTable.id)
+      col.input_ref.table = this.selectedTable
+      let type = this.tables.find(t => t.name === "String")
+      col.output_ref = new TableRef(type.id)
+      col.output_ref.table = type
+
+      this.selectedColumn = col
+    } 
   }
 
   //
@@ -103,8 +117,14 @@ export class SpaceComponent implements OnInit {
   //
   
   onColumnSubmit() { 
-    // Update the model by sending the changed column data to the service
-    this._scService.updateColumn(this.selectedColumn)
+    if(this.selectedColumn.id.length === 0) {
+      // Add new column
+      this._scService.addColumn(this.selectedColumn)
+    }
+    else {
+      // Update rexisting column
+      this._scService.updateColumn(this.selectedColumn)
+    }
 
     // Clear the selected object (we want to load it again after update)
     let id = this.selectedColumn.id
@@ -115,7 +135,7 @@ export class SpaceComponent implements OnInit {
     // We could also trigger column list update by selecting the current table
 
     // Set selection again
-    let col = this.columns.find(c => c.id === id)
+    //let col = this.columns.find(c => c.id === id)
     //this.onSelectColumn(col)
   }
 

@@ -28,13 +28,16 @@
 
     <h2>Columns of the table: {{selectedTable ? selectedTable.name : ""}}</h2>
 
-    <ul class="tables">
+    <ul class="tables" *ngIf="selectedTable">
       <li *ngFor="let col of columns" 
         [class.selected]="selectedColumn && col.id === selectedColumn.id" 
         (click)="onSelectColumn(col)">
 
         <span class="badge">{{col.id}}</span> {{col.name}} Type: {{col.output_ref.table.name}}
 
+      </li>
+      <li [class.selected]="selectedColumn && selectedColumn.id === ''" (click)="onSelectColumn(undefined)">
+        <span class="badge"></span> [ADD NEW COLUMN]
       </li>
     </ul>
 
@@ -45,7 +48,7 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input type="text" class="form-control" [(ngModel)]="selectedColumn.id" ngControl="id" #id="ngForm" placeholder="id" required readonly />
+        <input type="text" class="form-control" [(ngModel)]="selectedColumn.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
       </div>
 
       <div class="form-group">
