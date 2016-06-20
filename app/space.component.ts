@@ -102,15 +102,21 @@ export class SpaceComponent implements OnInit {
   // Column details
   //
   
-  submitted = false
   onColumnSubmit() { 
-    this.submitted = true;
-
     // Update the model by sending the changed column data to the service
     this._scService.updateColumn(this.selectedColumn)
 
+    // Clear the selected object (we want to load it again after update)
+    let id = this.selectedColumn.id
+    this.selectedColumn = null
+
     // Update the view by loading again all the columns (or updating only one of them)
     this.getColumns();
+    // We could also trigger column list update by selecting the current table
+
+    // Set selection again
+    let col = this.columns.find(c => c.id === id)
+    //this.onSelectColumn(col)
   }
 
   gotoDetail() {

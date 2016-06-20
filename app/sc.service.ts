@@ -56,8 +56,15 @@ export class ScService {
   }
 
   updateColumn(column: Column) {
-    let col = COLUMNS.filter(c => c.id === column.id)[0]
-    col.name = column.name
+    // Copy the whole object
+    let idx = COLUMNS.findIndex(c => c.id === column.id)
+    COLUMNS[idx] = column
+
+    // Copy individual fields
+    //let col = COLUMNS.find(c => c.id === column.id)
+    //col.name = column.name
+    //col.input_ref = column.input_ref
+    //col.output_ref = column.output_ref
   }
 
 }
