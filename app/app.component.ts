@@ -3,6 +3,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/route
 
 import { HomeComponent } from './home.component';
 import { SpaceComponent } from './space.component';
+import { DataComponent } from './data.component';
 
 import { ScService } from './sc.service';
 
@@ -12,7 +13,8 @@ import { ScService } from './sc.service';
     <h1>{{title}}</h1>
     <nav>
       <a [routerLink]="['Home']">Home</a>
-      <a [routerLink]="['Tables']">Tables</a>
+      <a [routerLink]="['Schema']">Schema</a>
+      <a [routerLink]="['Data']">Data</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -31,9 +33,14 @@ import { ScService } from './sc.service';
     useAsDefault: true
   },
   {
-    path: '/tables',
-    name: 'Tables',
+    path: '/schema',
+    name: 'Schema',
     component: SpaceComponent
+  },
+  {
+    path: '/data',
+    name: 'Data',
+    component: DataComponent
   }
 ])
 export class AppComponent {

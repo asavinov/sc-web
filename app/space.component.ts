@@ -9,7 +9,7 @@ import { Column } from './column';
 import { ScService } from './sc.service';
 
 @Component({
-  selector: 'sc-tables',
+  selector: 'sc-space',
   templateUrl: 'app/space.component.html',
   styleUrls:  ['app/space.component.css']
   //directives: [TableDetailComponent]
