@@ -16,9 +16,8 @@ import { ScService } from './sc.service';
 })
 export class SpaceComponent implements OnInit {
 
-  constructor(
-    private _router: Router,
-    private _scService: ScService) { }
+  constructor(private _router: Router, private _scService: ScService) { 
+  }
 
   ngOnInit() {
     this.getSpaces()

@@ -79,4 +79,12 @@ export class ScService {
     //col.output_ref = column.output_ref
   }
 
+  //
+  // Data (push, pop)
+  //
+
+  push(json: string) {
+    console.log("PUSHED: " + json)
+  }
+
 }

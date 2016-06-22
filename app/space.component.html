@@ -1,9 +1,8 @@
 <div>
 
-  <table border="1">
-  <tr valign="top" style="text-valign:top">
+  <div class="row">
 
-  <td> <!-- TABLE LIST -->
+  <div class="col-sm-3"> <!-- TABLE LIST -->
 
     <h2>Tables of the space: {{selectedSpace ? selectedSpace.name : ""}}</h2>
 
@@ -23,8 +22,9 @@
       <button (click)="gotoDetail()">View Column Details</button>
     </div>
 
-  </td>
-  <td> <!-- COLUMNS LIST -->
+  </div>
+
+  <div class="col-sm-3"> <!-- COLUMNS LIST -->
 
     <h2>Columns of the table: {{selectedTable ? selectedTable.name : ""}}</h2>
 
@@ -42,7 +42,8 @@
     </ul>
 
     <!-- -COLUMN DETAILS -->
-    <div class="container">
+    <div class="row">
+
       <form *ngIf="selectedColumn" (ngSubmit)="onColumnSubmit()" #columnForm="ngForm">
       <h2>Column details</h2>
 
@@ -71,9 +72,8 @@
       </form>
     </div>
 
-  </td>
+  </div>
 
-  </tr>
-  </table>
+  </div>
 
 </div>
