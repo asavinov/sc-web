@@ -10,7 +10,7 @@ import { Column } from './column';
 import { COLUMNS } from './mock-data';
 
 @Injectable()
-export class ScService {
+export class ScMockService {
 
   //
   // Spaces

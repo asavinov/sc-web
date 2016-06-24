@@ -5,7 +5,7 @@ import { HomeComponent } from './home.component';
 import { SpaceComponent } from './space.component';
 import { DataComponent } from './data.component';
 
-import { ScService } from './sc.service';
+import { ScMockService } from './sc-mock.service';
 
 @Component({
   selector: 'sc-app',
@@ -22,7 +22,7 @@ import { ScService } from './sc.service';
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
-    ScService
+    ScMockService
   ]
 })
 @RouteConfig([
