@@ -6,6 +6,12 @@ import { Space } from './space';
 import { Table } from './table';
 import { Column } from './column';
 
+
+// Links to how implement in-memory service:
+// - https://github.com/wardbell/a2-in-memory-web-api
+// - https://github.com/johnpapa/event-view
+// package 'angular2-in-memory-web-api' has these: InMemoryBackendConfig, InMemoryBackendService, SEED_DATA
+
 @Injectable()
 export class ScService {
 

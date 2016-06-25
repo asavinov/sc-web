@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
 import { Space } from './space';
 import { Table, TableRef } from './table';
 import { Column } from './column';
-//import { TableDetailComponent } from './table-detail.component';
 
 import { ScService } from './sc.service';
 
@@ -12,7 +11,6 @@ import { ScService } from './sc.service';
   selector: 'sc-space',
   templateUrl: 'app/space.component.html',
   styleUrls:  ['app/space.component.css']
-  //directives: [TableDetailComponent]
 })
 export class SpaceComponent implements OnInit {
 

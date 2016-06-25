@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
-import 'rxjs/add/operator/toPromise';
+import { Component /*, provide*/ } from '@angular/core';
+
+import { Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { SpaceComponent } from './space.component';
@@ -13,9 +14,9 @@ import { ScService } from './sc.service';
   template: `
     <h1>{{title}}</h1>
     <nav>
-      <a [routerLink]="['Home']">Home</a>
-      <a [routerLink]="['Schema']">Schema</a>
-      <a [routerLink]="['Data']">Data</a>
+      <a [routerLink]="['/home']">Home</a>
+      <a [routerLink]="['/schema']">Schema</a>
+      <a [routerLink]="['/data']">Data</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -26,24 +27,14 @@ import { ScService } from './sc.service';
     ScService
   ]
 })
-@RouteConfig([
-  {
-    path: '/home',
-    name: 'Home',
-    component: HomeComponent,
-    useAsDefault: true
-  },
-  {
-    path: '/schema',
-    name: 'Schema',
-    component: SpaceComponent
-  },
-  {
-    path: '/data',
-    name: 'Data',
-    component: DataComponent
-  }
+
+@Routes([
+  {path: '/', component: HomeComponent},
+  {path: '/home', component: HomeComponent},
+  {path: '/schema', component: SpaceComponent},
+  {path: '/data', component: DataComponent}
 ])
+
 export class AppComponent {
   title = 'StreamCommandr';
 }
