@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
-import { ScMockService } from './sc-mock.service';
+import { ScService } from './sc.service';
 
 @Component({
   selector: 'sc-data',
@@ -9,7 +9,7 @@ import { ScMockService } from './sc-mock.service';
 })
 export class DataComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScMockService) { 
+  constructor(private _router: Router, private _scService: ScService) { 
   }
 
   pushJson: string;

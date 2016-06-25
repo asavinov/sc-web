@@ -6,7 +6,7 @@ import { Table, TableRef } from './table';
 import { Column } from './column';
 //import { TableDetailComponent } from './table-detail.component';
 
-import { ScMockService } from './sc-mock.service';
+import { ScService } from './sc.service';
 
 @Component({
   selector: 'sc-space',
@@ -16,7 +16,7 @@ import { ScMockService } from './sc-mock.service';
 })
 export class SpaceComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScMockService) { 
+  constructor(private _router: Router, private _scService: ScService) { 
   }
 
   ngOnInit() {

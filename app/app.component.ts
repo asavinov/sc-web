@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import 'rxjs/add/operator/toPromise';
 
 import { HomeComponent } from './home.component';
 import { SpaceComponent } from './space.component';
 import { DataComponent } from './data.component';
 
-import { ScMockService } from './sc-mock.service';
+import { ScService } from './sc.service';
 
 @Component({
   selector: 'sc-app',
@@ -22,7 +23,7 @@ import { ScMockService } from './sc-mock.service';
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
-    ScMockService
+    ScService
   ]
 })
 @RouteConfig([
