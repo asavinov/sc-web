@@ -65,10 +65,18 @@ export class SpaceComponent implements OnInit {
       );
   }
 
-  resolveColumn(column: Column) { // Resolve all reference from the specified column 
+  resolveColumn(column: Column) { // Resolve all reference from the specified column
+    let colAny: any = column
 
     // Resolve input table reference
-    if(!column.input_ref || !column.input_ref.id) {
+
+    let inId: string = ""
+    if(colAny.input) inId = colAny.input.id
+
+    if(!column.input_ref) column.input_ref = new TableRef(inId);
+    else column.input_ref.id = inId
+
+    if(!column.input_ref.id) {
       column.input_ref.table = undefined
     }
     else {
@@ -76,7 +84,14 @@ export class SpaceComponent implements OnInit {
     }
 
     // Resolve output table reference
-    if(!column.output_ref || !column.output_ref.id) {
+
+    let outId: string = ""
+    if(colAny.output) outId = colAny.output.id
+
+    if(!column.output_ref) column.output_ref = new TableRef(outId);
+    else column.output_ref.id = outId
+
+    if(!column.output_ref.id) {
       column.output_ref.table = undefined
     }
     else {

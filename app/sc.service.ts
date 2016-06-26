@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
 
 import { Space } from './space';
 import { Table } from './table';
@@ -19,7 +18,7 @@ export class ScService {
   }
 
   // URL to web API
-  //private scUrl = 'api/v1'; 
+  private scUrl = 'http://localhost:8080/api'; 
 
   // Alternatively (without in-mem server), we can point to a file 
   //private scSpaceUrl = 'app/mock-spaces.json';
@@ -38,7 +37,7 @@ export class ScService {
   //
 
   getSpaces() {
-    return this.http.get(this.scSpaceUrl)
+    return this.http.get(this.scUrl + "/spaces")
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -48,12 +47,17 @@ export class ScService {
   // Tables
   //
 
+  // Mulitple tables. /api/v1/tables
+
+  // GET /api/v1/tables
   getTables(): Promise<Table[]> {
-    return this.http.get(this.scTableUrl)
+    return this.http.get(this.scUrl + "/tables")
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
   }
+
+  // One table. /api/v1/tables/{id}
 
   getTable(id: string) {
   }
@@ -62,8 +66,10 @@ export class ScService {
   // Columns
   //
 
+  // Mulitple columns. /api/v1/columns
+
   getColumns(): Promise<Column[]> {
-    return this.http.get(this.scColumnUrl)
+    return this.http.get(this.scUrl + "/columns")
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -72,18 +78,36 @@ export class ScService {
   getInputColumns(input_id: string): Promise<Column[]> {
     if(!input_id || input_id.length === 0) return Promise.resolve([])
 
-    return this.http.get(this.scColumnUrl)
+    return this.http.get(this.scUrl + "/columns")
         .toPromise()
         .then(this.extractData)
-        .then( columns => columns.filter((col: Column) => col.input_ref.id === input_id) )
+        .then( columns => columns.filter((col: any) => col.input.id === input_id) )
         .catch(this.handleError);
   }
 
   addColumn(column: Column): Promise<Column> {
 
     let body = JSON.stringify(column);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+
+    // Header might be needed for authorization etc.
+    let headers = new Headers();
+    headers.append("Content-Type", 'application/json');
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+
+    let options = new RequestOptions({headers: headers})
+
+    /* Explicitly paramterize the request
+    let options = new RequestOptions({
+      method: RequestMethod.Post,
+      url: this.scColumnUrl,
+      headers: headers,
+      body: JSON.stringify(column)
+    });
+    return this.http.request(new Request(options))
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+    */
 
     return this.http.post(this.scColumnUrl, body, options)
         .toPromise()
@@ -103,6 +127,11 @@ export class ScService {
         .catch(this.handleError);
   }
 
+  // One column. /api/v1/columns/{id}
+
+  getColumn(id: string) {
+  }
+
   //
   // Data (push, pop)
   //
@@ -116,8 +145,14 @@ export class ScService {
   //
 
   private extractData(res: Response) {
-    let body = res.json();
-    return body.data || { };
+    let body = res.json(); // Parse json string
+    if(body && body.data) {
+      return body.data || { }
+    }
+    else {
+      return body
+    }
+    //return body.data || { };
   }
 
   private handleError (error: any) {

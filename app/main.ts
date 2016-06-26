@@ -1,5 +1,7 @@
+import { provide } from '@angular/core';
+
 import { HTTP_PROVIDERS } from '@angular/http';
-import { XHRBackend } from '@angular/http';
+import { RequestOptions, XHRBackend } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 // Imports for loading & configuring the in-memory web api
@@ -12,7 +14,9 @@ import { AppComponent } from './app.component';
 
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
-    { provide: XHRBackend, useClass: InMemoryBackendService },    // in-mem server will be used to serve http requests
-    { provide: SEED_DATA,  useClass: ScSampleData },              // data to be used by in-mem server
-    { provide: InMemoryBackendConfig, useValue: { delay: 1000 } } // config. delay in ms
+//    { provide: XHRBackend, useClass: InMemoryBackendService },    // in-mem server will be used to serve http requests
+//    { provide: SEED_DATA,  useClass: ScSampleData },              // data to be used by in-mem server
+//    { provide: InMemoryBackendConfig, useValue: { delay: 1000, rootPath: "api" } }, // config. delay in ms
+//    { provide: RequestOptions, useValue: { url: "http://localhost:8080" } },
+//    provide('webApiBaseUrl', { useValue: 'http://localhost:8080' })
     ]);
