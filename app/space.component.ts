@@ -73,14 +73,14 @@ export class SpaceComponent implements OnInit {
     let inId: string = ""
     if(colAny.input) inId = colAny.input.id
 
-    if(!column.input_ref) column.input_ref = new TableRef(inId);
-    else column.input_ref.id = inId
+    if(!column.input) column.input = new TableRef(inId);
+    else column.input.id = inId
 
-    if(!column.input_ref.id) {
-      column.input_ref.table = undefined
+    if(!column.input.id) {
+      column.input.table = undefined
     }
     else {
-      column.input_ref.table = this.tables.find(t => t.id === column.input_ref.id)
+      column.input.table = this.tables.find(t => t.id === column.input.id)
     }
 
     // Resolve output table reference
@@ -88,14 +88,14 @@ export class SpaceComponent implements OnInit {
     let outId: string = ""
     if(colAny.output) outId = colAny.output.id
 
-    if(!column.output_ref) column.output_ref = new TableRef(outId);
-    else column.output_ref.id = outId
+    if(!column.output) column.output = new TableRef(outId);
+    else column.output.id = outId
 
-    if(!column.output_ref.id) {
-      column.output_ref.table = undefined
+    if(!column.output.id) {
+      column.output.table = undefined
     }
     else {
-      column.output_ref.table = this.tables.find(t => t.id === column.output_ref.id)
+      column.output.table = this.tables.find(t => t.id === column.output.id)
     }
 
   }
@@ -107,18 +107,16 @@ export class SpaceComponent implements OnInit {
 
   onSelectColumn(column: Column) {
     if(column) { // Edit existing column
-      //this.selectedColumn = column;
-      this.selectedColumn = (JSON.parse(JSON.stringify(column))) // Copy object for editing
+      this.selectedColumn = column.clone() // Copy object for editing
     }
     else { // Create new column
-      let col = new Column()
-      col.id = ""
+      let col = new Column("")
       col.name = "New Column"
-      col.input_ref = new TableRef(this.selectedTable.id)
-      col.input_ref.table = this.selectedTable
+      col.input.id = this.selectedTable.id
+      col.input.table = this.selectedTable
       let type = this.tables.find(t => t.name === "String")
-      col.output_ref = new TableRef(type.id)
-      col.output_ref.table = type
+      col.output.id = type.id
+      col.output.table = type
 
       this.selectedColumn = col
     } 
@@ -143,8 +141,11 @@ export class SpaceComponent implements OnInit {
     this.selectedColumn = null
 
     // Update the view by loading again all the columns (or updating only one of them)
-    this.getColumns();
+    setTimeout(this.getColumns(), 2000)
     // We could also trigger column list update by selecting the current table
+
+    // We need to refresh the column list to reflect the updated column
+    this.onSelectTable(this.selectedTable)
 
     // Set selection again
     //let col = this.columns.find(c => c.id === id)

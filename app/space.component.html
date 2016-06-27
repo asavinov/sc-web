@@ -33,7 +33,7 @@
         [class.selected]="selectedColumn && col.id === selectedColumn.id" 
         (click)="onSelectColumn(col)">
 
-        <span class="badge">{{col.id}}</span> {{col.name}} Type: {{col.output_ref.table.name}}
+        <span class="badge">{{col.id}}</span> {{col.name}} Type: {{col.output.table.name}}
 
       </li>
       <li [class.selected]="selectedColumn && selectedColumn.id === ''" (click)="onSelectColumn(undefined)">
@@ -62,7 +62,7 @@
 
       <div class="form-group">
         <label for="type">Choose type</label>
-        <select class="form-control" [(ngModel)]="selectedColumn.output_ref.id" required>
+        <select class="form-control" [(ngModel)]="selectedColumn.output.id" required>
           <option *ngFor="let tab of tables" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>

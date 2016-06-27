@@ -67,22 +67,28 @@ export class ScService {
   //
 
   // Mulitple columns. /api/v1/columns
+/*
+  let body = res.json(); // Parse json string
+  if(!body) return spaces;
+  if(body.data) {
+    body = body.data || { }
+  }
+*/
 
   getColumns(): Promise<Column[]> {
     return this.http.get(this.scUrl + "/columns")
         .toPromise()
-        .then(this.extractData)
+        .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
   }
 
   getInputColumns(input_id: string): Promise<Column[]> {
     if(!input_id || input_id.length === 0) return Promise.resolve([])
 
-    return this.http.get(this.scUrl + "/columns")
-        .toPromise()
-        .then(this.extractData)
-        .then( columns => columns.filter((col: any) => col.input.id === input_id) )
-        .catch(this.handleError);
+    // WORKAROUND: Here we retrieve ALL column and then filter them
+    return this.getColumns()
+      .then(columns => columns.filter((col: any) => col.input.id === input_id))
+      .catch();
   }
 
   addColumn(column: Column): Promise<Column> {
@@ -117,11 +123,11 @@ export class ScService {
 
   updateColumn(column: Column) {
 
-    let body = JSON.stringify(column);
+    let body = column.toJson();
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.scColumnUrl + "/" + column.id, body, options)
+    return this.http.put(this.scUrl + "/columns" + "/" + column.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
