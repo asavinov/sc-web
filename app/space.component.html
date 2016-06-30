@@ -2,19 +2,22 @@
 
   <div class="row">
 
-  <div class="col-sm-3"> <!-- TABLE LIST -->
+  <div class="col-sm-4"> <!-- TABLE LIST -->
 
     <h2>Tables of the space: {{selectedSpace ? selectedSpace.name : ""}}</h2>
 
-    <ul class="tables">
-      <li *ngFor="let tab of tables" 
-        [class.selected]="selectedTable && tab.id === selectedTable.id" 
-        (click)="onSelectTable(tab)">
+    <div class="list-group">
 
-        <span class="badge">{{tab.id}}</span> {{tab.name}}
+      <a *ngFor="let tab of tables"
+        class="list-group-item"
+        [class.active]="selectedTable && tab.id === selectedTable.id" 
+        (click)="onSelectTable(tab)"
+        >
+        <h4 class="list-group-item-heading">{{tab.name}}</h4>
+        <p class="list-group-item-text">{{tab.id}}</p>
+      </a>
 
-      </li>
-    </ul>
+    </div>
 
     <!-- TABLE DETAILS -->
     <div *ngIf="selectedTable">
@@ -24,22 +27,31 @@
 
   </div>
 
-  <div class="col-sm-3"> <!-- COLUMNS LIST -->
+  <div class="col-sm-4"> <!-- COLUMNS LIST -->
 
     <h2>Columns of the table: {{selectedTable ? selectedTable.name : ""}}</h2>
 
-    <ul class="tables" *ngIf="selectedTable">
-      <li *ngFor="let col of columns" 
-        [class.selected]="selectedColumn && col.id === selectedColumn.id" 
-        (click)="onSelectColumn(col)">
 
-        <span class="badge">{{col.id}}</span> {{col.name}} Type: {{col.output.table.name}}
+    <div class="list-group" *ngIf="selectedTable">
 
-      </li>
-      <li [class.selected]="selectedColumn && selectedColumn.id === ''" (click)="onSelectColumn(undefined)">
-        <span class="badge"></span> [ADD NEW COLUMN]
-      </li>
-    </ul>
+      <a *ngFor="let col of columns"
+        class="list-group-item"
+        [class.active]="selectedColumn && col.id === selectedColumn.id" 
+        (click)="onSelectColumn(col)"
+        >
+        <h4 class="list-group-item-heading">{{col.name}}</h4>
+        <p class="list-group-item-text">Type: {{col.output.table.name}}</p>
+        <p class="list-group-item-text">Id: {{col.id}}</p>
+      </a>
+      <a 
+        class="list-group-item"
+        [class.active]="selectedColumn && selectedColumn.id === ''" 
+        (click)="onSelectColumn(undefined)"
+        >
+        <h4 class="list-group-item-heading">[ADD NEW COLUMN]</h4>
+      </a>
+
+    </div>
 
     <!-- -COLUMN DETAILS -->
     <div class="row">
