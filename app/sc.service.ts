@@ -93,7 +93,7 @@ export class ScService {
 
   addColumn(column: Column): Promise<Column> {
 
-    let body = JSON.stringify(column);
+    let body = column.toJson();
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
@@ -115,7 +115,7 @@ export class ScService {
         .catch(this.handleError);
     */
 
-    return this.http.post(this.scColumnUrl, body, options)
+    return this.http.post(this.scUrl + "/columns", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
