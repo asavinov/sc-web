@@ -133,6 +133,17 @@ export class ScService {
         .catch(this.handleError);
   }
 
+  deleteColumn(column: Column) {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.delete(this.scUrl + "/columns" + "/" + column.id, options)
+        .toPromise()
+        .then()
+        .catch(this.handleError);
+  }
+
   // One column. /api/v1/columns/{id}
 
   getColumn(id: string) {

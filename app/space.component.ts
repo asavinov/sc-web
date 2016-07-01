@@ -127,13 +127,39 @@ export class SpaceComponent implements OnInit {
   //
   
   onColumnSubmit() { 
-    if(this.selectedColumn.id.length === 0) {
+    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
       // Add new column
       this._scService.addColumn(this.selectedColumn)
     }
     else {
       // Update rexisting column
       this._scService.updateColumn(this.selectedColumn)
+    }
+
+    // Clear the selected object (we want to load it again after update)
+    let id = this.selectedColumn.id
+    this.selectedColumn = null
+
+    // Update the view by loading again all the columns (or updating only one of them)
+    setTimeout(this.getColumns(), 2000)
+    // We could also trigger column list update by selecting the current table
+
+    // We need to refresh the column list to reflect the updated column
+    this.onSelectTable(this.selectedTable)
+
+    // Set selection again
+    //let col = this.columns.find(c => c.id === id)
+    //this.onSelectColumn(col)
+  }
+
+  onColumnDelete() { 
+    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
+      // Cannot delete new column
+      return;
+    }
+    else {
+      // Delete rexisting column
+      this._scService.deleteColumn(this.selectedColumn)
     }
 
     // Clear the selected object (we want to load it again after update)

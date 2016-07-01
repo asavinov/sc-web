@@ -79,7 +79,8 @@
         </select>
       </div>
 
-      <input type="submit" class="btn btn-primary" [disabled]="!columnForm.form.valid" value="Save"/>
+      <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
+      <button type="button" class="btn btn-warning btn" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
 
       </form>
     </div>
