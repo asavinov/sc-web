@@ -102,6 +102,11 @@ export class ScService {
 
     let options = new RequestOptions({headers: headers})
 
+    return this.http.post(this.scUrl + "/columns", body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+
     /* Explicitly paramterize the request
     let options = new RequestOptions({
       method: RequestMethod.Post,
@@ -114,11 +119,6 @@ export class ScService {
         .then(this.extractData)
         .catch(this.handleError);
     */
-
-    return this.http.post(this.scUrl + "/columns", body, options)
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
   }
 
   updateColumn(column: Column) {
@@ -150,11 +150,37 @@ export class ScService {
   }
 
   //
-  // Data (push, pop)
+  // Data (write, read)
   //
 
-  push(json: string) {
-    console.log("PUSHED: " + json)
+  write(table: Table, json: string) {
+
+    let body = json;
+
+    // Header might be needed for authorization etc.
+    let headers = new Headers();
+    headers.append("Content-Type", 'application/json');
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+
+    let options = new RequestOptions({headers: headers})
+
+    return this.http.post(this.scUrl + "/tables/" + table.id + "/data", body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+
+    /* Explicitly paramterize the request
+    let options = new RequestOptions({
+      method: RequestMethod.Post,
+      url: this.scColumnUrl,
+      headers: headers,
+      body: JSON.stringify(column)
+    });
+    return this.http.request(new Request(options))
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+    */
   }
 
   //

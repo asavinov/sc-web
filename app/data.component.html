@@ -1,6 +1,5 @@
 <h3>StreamCommandr Data</h3>
 
-<!-- PUSH -->
 <div class="row">
   <div class="col-sm-6">
     <h2>Space name: My Space</h2>
@@ -8,14 +7,40 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-  <form (ngSubmit)="onPushSubmit()" #pushForm="ngForm">
+    <label for="type">Table</label>
+    <select [(ngModel)]="selectedTable" required>
+      <option *ngFor="let tab of tables" [ngValue]="tab">{{tab.name}}</option>
+    </select>
+  </div>
+</div>
+
+<!-- WRITE -->
+<div class="row">
+  <div class="col-sm-6">
+  <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
 
   <div class="form-group">
-    <label for="push">Push JSON event:</label>
-    <textarea [(ngModel)]="pushJson" ngControl="pushJson" placeholder="pushJson" required class="form-control" rows="5" id="pushJson"></textarea>
+    <label for="write">Write JSON to table:</label>
+    <textarea [(ngModel)]="writeJson" ngControl="writeJson" placeholder="writeJson" required class="form-control" rows="5" id="writeJson"></textarea>
   </div>
 
-  <button type="submit" class="btn btn-default" [disabled]="!pushForm.form.valid">Push</button>
+  <button type="submit" class="btn btn-success" [disabled]="!writeForm.form.valid || !selectedTable">Write</button>
+
+  </form>
+  </div>
+</div>
+
+<!-- READ -->
+<div class="row">
+  <div class="col-sm-6">
+  <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
+
+  <div class="form-group">
+    <label for="read">Read JSON from table:</label>
+    <textarea [(ngModel)]="readJson" ngControl="readJson" placeholder="readJson" required class="form-control" rows="5" id="readJson"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!selectedTable">Read</button>
 
   </form>
   </div>
