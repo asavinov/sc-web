@@ -34,17 +34,17 @@ export class DataComponent implements OnInit {
   writeJson: string;
 
   onWriteSubmit() {
-    if(this.writeJson.length === 0) {
-      // Nothing to do
-    }
-    else {
-      // Write to the service
-      this._scService.write(this.selectedTable, this.writeJson)
-    }
+    // Write to the service
+    this._scService.write(this.selectedTable, this.writeJson)
   }
 
+  // Read
+
+  readJson: string;
+
   onReadSubmit() {
-      //this._scService.read(this.selectedTable)
+    // Write to the service
+    this._scService.read(this.selectedTable).then(records => this.readJson = JSON.stringify(records));
   }
 
 }

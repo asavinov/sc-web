@@ -37,7 +37,7 @@
 
   <div class="form-group">
     <label for="read">Read JSON from table:</label>
-    <textarea [(ngModel)]="readJson" ngControl="readJson" placeholder="readJson" required class="form-control" rows="5" id="readJson"></textarea>
+    <textarea [(ngModel)]="readJson" ngControl="readJson" placeholder="readJson" readonly class="form-control" rows="5" id="readJson"></textarea>
   </div>
 
   <button type="submit" class="btn btn-success" [disabled]="!selectedTable">Read</button>

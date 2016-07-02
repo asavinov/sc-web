@@ -153,6 +153,13 @@ export class ScService {
   // Data (write, read)
   //
 
+  read(table: Table) {
+    return this.http.get(this.scUrl + "/tables/" + table.id + "/data")
+        .toPromise()
+        .then(res => this.extractData(res))
+        .catch(this.handleError);
+  }
+
   write(table: Table, json: string) {
 
     let body = json;

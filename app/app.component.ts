@@ -13,11 +13,13 @@ import { ScService } from './sc.service';
   selector: 'sc-app',
   template: `
     <h1>{{title}}</h1>
+    <div class="row">
     <nav>
-      <a [routerLink]="['/home']">Home</a>
-      <a [routerLink]="['/schema']">Schema</a>
-      <a [routerLink]="['/data']">Data</a>
+      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/home']">Home</a>
+      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/schema']">Schema</a>
+      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/data']">Data</a>
     </nav>
+    </div>
     <router-outlet></router-outlet>
   `,
   styleUrls: ['app/app.component.css'],
