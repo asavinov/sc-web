@@ -79,6 +79,14 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label for="descriptor">Descriptor</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" ngControl="descriptor" #descriptor="ngForm" placeholder="descriptor" />
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Descriptor has to be a valid JSON string
+        </div>
+      </div>
+
       <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
       <button type="button" class="btn btn-warning btn" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
 

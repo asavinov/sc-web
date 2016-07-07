@@ -15,6 +15,8 @@ export class Column {
   input: TableRef;
   output: TableRef;
 
+  descriptor: string;
+
   clone(): Column {
     let col: Column = new Column(this.id)
     Object.assign(col, this)
@@ -33,6 +35,7 @@ export class Column {
     col.input.table = undefined
     col.output.id = json.output.id
     col.output.table = undefined
+    col.descriptor = JSON.stringify(json.descriptor)
 
     return col
   }
