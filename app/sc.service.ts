@@ -47,17 +47,15 @@ export class ScService {
   // Tables
   //
 
-  // Mulitple tables. /api/v1/tables
+  getTables(space: Space): Promise<Table[]> {
+    if(space == null || space.id == null) return Promise.resolve([]);
+    let id: string  = space.id;
 
-  // GET /api/v1/tables
-  getTables(): Promise<Table[]> {
-    return this.http.get(this.scUrl + "/tables")
+    return this.http.get(this.scUrl + "/spaces/" + id + "/tables")
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
   }
-
-  // One table. /api/v1/tables/{id}
 
   getTable(id: string) {
   }
@@ -66,32 +64,29 @@ export class ScService {
   // Columns
   //
 
-  // Mulitple columns. /api/v1/columns
-/*
-  let body = res.json(); // Parse json string
-  if(!body) return spaces;
-  if(body.data) {
-    body = body.data || { }
-  }
-*/
+  getColumns(space: Space): Promise<Column[]> {
+    if(space == null || space.id == null) return Promise.resolve([]);
+    let id: string  = space.id;
 
-  getColumns(): Promise<Column[]> {
-    return this.http.get(this.scUrl + "/columns")
+    return this.http.get(this.scUrl + "/spaces/" + id + "/columns")
         .toPromise()
         .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
   }
 
-  getInputColumns(input_id: string): Promise<Column[]> {
-    if(!input_id || input_id.length === 0) return Promise.resolve([])
+  getInputColumns(space: Space, input_id: string): Promise<Column[]> {
+    if(!input_id || input_id.length === 0) return Promise.resolve([]);
 
-    // WORKAROUND: Here we retrieve ALL column and then filter them
-    return this.getColumns()
+    // WORKAROUND: Here we retrieve ALL column and then filter them. 
+    // REDO: Retrieve ALL columns of the selected space and then select input or other columns on the client (in controller)
+    return this.getColumns(space)
       .then(columns => columns.filter((col: any) => col.input.id === input_id))
       .catch();
   }
 
-  addColumn(column: Column): Promise<Column> {
+  createColumn(space: Space, column: Column): Promise<Column> {
+    if(space == null || space.id == null) return Promise.resolve({});
+    let id: string  = space.id;
 
     let body = column.toJson();
 
@@ -102,23 +97,13 @@ export class ScService {
 
     let options = new RequestOptions({headers: headers})
 
-    return this.http.post(this.scUrl + "/columns", body, options)
+    return this.http.post(this.scUrl + "/spaces/" + id + "/columns", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
+  }
 
-    /* Explicitly paramterize the request
-    let options = new RequestOptions({
-      method: RequestMethod.Post,
-      url: this.scColumnUrl,
-      headers: headers,
-      body: JSON.stringify(column)
-    });
-    return this.http.request(new Request(options))
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    */
+  getColumn(id: string) {
   }
 
   updateColumn(column: Column) {
@@ -142,11 +127,6 @@ export class ScService {
         .toPromise()
         .then()
         .catch(this.handleError);
-  }
-
-  // One column. /api/v1/columns/{id}
-
-  getColumn(id: string) {
   }
 
   //
@@ -175,19 +155,6 @@ export class ScService {
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
-
-    /* Explicitly paramterize the request
-    let options = new RequestOptions({
-      method: RequestMethod.Post,
-      url: this.scColumnUrl,
-      headers: headers,
-      body: JSON.stringify(column)
-    });
-    return this.http.request(new Request(options))
-        .toPromise()
-        .then(this.extractData)
-        .catch(this.handleError);
-    */
   }
 
   //

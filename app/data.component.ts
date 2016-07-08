@@ -17,16 +17,36 @@ export class DataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getSpaces()
     this.getTables()
   }
 
+  //
+  // Space list
+  //
+  
+  spaces: Space[];
+  selectedSpace: Space;
+
+  getSpaces() {
+    this._scService.getSpaces().then(
+      spaces => { 
+        this.spaces = spaces;
+        this.selectedSpace = this.spaces[0]; 
+      });
+  }
+
+  //
   // Tables
+  //
 
   tables: Table[];
   selectedTable: Table;
 
   getTables() {
-    this._scService.getTables().then(tables => this.tables = tables);
+    this._scService.getTables(this.selectedSpace).then(
+      tables => this.tables = tables
+      );
   }
 
   // Write

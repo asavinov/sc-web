@@ -19,8 +19,6 @@ export class SpaceComponent implements OnInit {
 
   ngOnInit() {
     this.getSpaces()
-    this.getTables()
-    this.getColumns()
   }
 
   //
@@ -31,7 +29,17 @@ export class SpaceComponent implements OnInit {
   selectedSpace: Space;
 
   getSpaces() {
-    this._scService.getSpaces().then(spaces => { this.spaces = spaces; this.selectedSpace = this.spaces[0]; });
+    this._scService.getSpaces().then(
+      spaces => { 
+        this.spaces = spaces;
+        this.selectedSpace = this.spaces[0];
+        this.onSelectSapce(this.selectedSpace); 
+      });
+  }
+
+  onSelectSapce(space: Space) { 
+    this.selectedSpace = space; 
+    this.getTables();
   }
 
   //
@@ -42,12 +50,16 @@ export class SpaceComponent implements OnInit {
   selectedTable: Table;
 
   getTables() {
-    this._scService.getTables().then(tables => this.tables = tables);
+    this._scService.getTables(this.selectedSpace).then(
+      tables => { 
+        this.tables = tables;
+        //this.selectedTable = undefined;
+        this.onSelectTable(this.selectedTable); 
+      });
   }
 
   onSelectTable(table: Table) { 
     this.selectedTable = table; 
-    this.selectedColumn = undefined; 
     this.getColumns();
   }
 
@@ -60,9 +72,12 @@ export class SpaceComponent implements OnInit {
 
   getColumns() {
     if(!this.selectedTable) return new Array<Column>()
-    this._scService.getInputColumns(this.selectedTable.id).then(
-      columns => { this.columns = columns; this.resolveColumns(); }
-      );
+    this._scService.getInputColumns(this.selectedSpace, this.selectedTable.id).then(
+      columns => {
+        this.columns = columns; 
+        this.resolveColumns(); 
+        //this.selectedColumn = undefined;
+      });
   }
 
   resolveColumn(column: Column) { // Resolve all reference from the specified column
@@ -129,53 +144,34 @@ export class SpaceComponent implements OnInit {
   onColumnSubmit() { 
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
       // Add new column
-      this._scService.addColumn(this.selectedColumn)
+      this._scService.createColumn(this.selectedSpace, this.selectedColumn).then(
+        x => {
+          this.onSelectTable(this.selectedTable);
+        }
+      )
     }
     else {
-      // Update rexisting column
-      this._scService.updateColumn(this.selectedColumn)
+      // Update existing column
+      this._scService.updateColumn(this.selectedColumn).then(
+        x => {
+          this.onSelectTable(this.selectedTable);
+        }
+      )
     }
-
-    // Clear the selected object (we want to load it again after update)
-    let id = this.selectedColumn.id
-    this.selectedColumn = null
-
-    // Update the view by loading again all the columns (or updating only one of them)
-    setTimeout(this.getColumns(), 2000)
-    // We could also trigger column list update by selecting the current table
-
-    // We need to refresh the column list to reflect the updated column
-    this.onSelectTable(this.selectedTable)
-
-    // Set selection again
-    //let col = this.columns.find(c => c.id === id)
-    //this.onSelectColumn(col)
   }
 
   onColumnDelete() { 
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
-      // Cannot delete new column
-      return;
+      return; // Nothing to do. Cannot delete new column
     }
     else {
       // Delete rexisting column
-      this._scService.deleteColumn(this.selectedColumn)
+      this._scService.deleteColumn(this.selectedColumn).then(
+        x => {
+          this.onSelectTable(this.selectedTable);
+        }
+      )
     }
-
-    // Clear the selected object (we want to load it again after update)
-    let id = this.selectedColumn.id
-    this.selectedColumn = null
-
-    // Update the view by loading again all the columns (or updating only one of them)
-    setTimeout(this.getColumns(), 2000)
-    // We could also trigger column list update by selecting the current table
-
-    // We need to refresh the column list to reflect the updated column
-    this.onSelectTable(this.selectedTable)
-
-    // Set selection again
-    //let col = this.columns.find(c => c.id === id)
-    //this.onSelectColumn(col)
   }
 
   gotoDetail() {
