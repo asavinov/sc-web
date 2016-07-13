@@ -87,8 +87,10 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
-      <button type="button" class="btn btn-warning btn" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
+      <div class="text-right">
+        <button type="button" class="btn btn-warning" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
+      </div>
 
       </form>
     </div>

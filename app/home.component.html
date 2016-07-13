@@ -2,9 +2,23 @@
 <div>
   <h2>Space name: My Space</h2>
 
+  <div class="col-sm-6">
+  <form (ngSubmit)="onUploadClick()" #readForm="ngForm">
+
+  <div class="form-group">
+    <label for="file-upload">Select asset:</label>
+    <input type="file" (change)="fileChangeEvent2($event)" placeholder="Upload file..." class="form-control" id="file-upload"/>
+  </div>
+
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload">Upload</button>
+
+  </form>
+
   <!-- [(ngModel)] doesn’t work.  In the current version of Angular 2, it doesn’t map correctly which is why I had to cheat with the change event. -->
+  <!--
   <input type="file" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
-  <button type="button" (click)="onUploadClick()">Upload</button>
+  <button type="button" class="btn btn-success" [disabled]="!fileToUpload" (click)="onUploadClick()">Upload</button>
+  -->
 
   <!--
   <label for="file">Select a File to Upload</label>
@@ -14,9 +28,4 @@
   <button ng-click="uploadFile()">Upload</button>
   -->
 
-  <ul>
-    <li>Space 1</li>
-    <li>Space 2</li>
-    <li>Space 3</li>
-  </ul>
 </div>
