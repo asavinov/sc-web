@@ -1,18 +1,63 @@
-<h3>StreamCommandr Space</h3>
-<div>
-  <h2>Space name: My Space</h2>
-
-  <div class="col-sm-6">
-  <form (ngSubmit)="onUploadClick()" #readForm="ngForm">
-
-  <div class="form-group">
-    <label for="file-upload">Select asset:</label>
-    <input type="file" (change)="fileChangeEvent2($event)" placeholder="Upload file..." class="form-control" id="file-upload"/>
+<!-- ----------- -->
+<!-- SPACE PANEL -->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">SPACES</h1>    
   </div>
+  <div class="panel-body">
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload">Upload</button>
+    <!-- SPACE LIST -->
+    <div class="list-group col-sm-6">
+      <a *ngFor="let spa of spaces"
+        class="list-group-item"
+        [class.active]="selectedSpace && spa.id === selectedSpace.id" 
+        (click)="onSelectSpace(spa)"
+        >
+        <h4 class="list-group-item-heading">{{spa.name}}</h4>
+        <p class="list-group-item-text">Id: {{spa.id}}</p>
+      </a>
+      <a 
+        class="list-group-item"
+        [class.active]="selectedSpace && selectedSpace.id === ''" 
+        (click)="onSelectSpace(null)"
+        >
+        <h4 class="list-group-item-heading">[ADD NEW SPACE]</h4>
+      </a>
+    </div>
 
-  </form>
+    <!-- SPACE PROPERTIES -->
+    <div class="col-sm-6">
+
+    <form *ngIf="selectedSpace" (ngSubmit)="onSpaceSubmit()" #spaceForm="ngForm">
+
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedSpace.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedSpace.name" ngControl="name" #name="ngForm" placeholder="name" required />
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="button" class="btn btn-warning" (click)="onSpaceDelete()" [disabled]="!selectedSpace.id">Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!spaceForm.form.valid">Save</button>
+      </div>
+
+    </form>
+
+    <form (ngSubmit)="onUploadClick()" #readForm="ngForm">
+
+    <div class="form-group">
+      <label for="file-upload">Select asset:</label>
+      <input type="file" (change)="fileChangeEvent2($event)" placeholder="Upload file..." class="form-control" id="file-upload"/>
+    </div>
+    <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload">Upload</button>
+    </form>
 
   <!-- [(ngModel)] doesn’t work.  In the current version of Angular 2, it doesn’t map correctly which is why I had to cheat with the change event. -->
   <!--
@@ -27,5 +72,132 @@
   <input type="file" ng-model-instant id="file" multiple onchange="angular.element(this).scope().setFiles(this)" />
   <button ng-click="uploadFile()">Upload</button>
   -->
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- ----------- -->
+<!-- TABLE PANEL -->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">TABLES</h1>    
+  </div>
+  <div class="panel-body">
+
+    <!-- TABLE LIST -->
+    <div class="list-group col-sm-6">
+      <a *ngFor="let tab of tables"
+        class="list-group-item"
+        [class.active]="selectedTable && tab.id === selectedTable.id" 
+        (click)="onSelectTable(tab)"
+        >
+        <h4 class="list-group-item-heading">{{tab.name}}</h4>
+        <p class="list-group-item-text">{{tab.id}}</p>
+      </a>
+    </div>
+
+    <!-- TABLE PROPERTIES -->
+    <div class="col-sm-6">
+    <form *ngIf="selectedTable" (ngSubmit)="onTableSubmit()" #tableForm="ngForm">
+
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedTable.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedTable.name" ngControl="name" #name="ngForm" placeholder="name" required />
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="button" class="btn btn-warning" (click)="onTableDelete()" [disabled]="!selectedTable.id">Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!tableForm.form.valid">Save</button>
+      </div>
+
+    </form>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- ------------ -->
+<!-- COLUMN PANEL -->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">COLUMNS</h1>    
+  </div>
+  <div class="panel-body">
+
+    <!-- COLUMN LIST -->
+    <div class="list-group col-sm-6" *ngIf="selectedTable">
+      <a *ngFor="let col of columns"
+        class="list-group-item"
+        [class.active]="selectedColumn && col.id === selectedColumn.id" 
+        (click)="onSelectColumn(col)"
+        >
+        <h4 class="list-group-item-heading">{{col.name}}</h4>
+        <p class="list-group-item-text">Type: {{col.output.table.name}}</p>
+        <p class="list-group-item-text">Id: {{col.id}}</p>
+      </a>
+      <a 
+        class="list-group-item"
+        [class.active]="selectedColumn && selectedColumn.id === ''" 
+        (click)="onSelectColumn(undefined)"
+        >
+        <h4 class="list-group-item-heading">[ADD NEW COLUMN]</h4>
+      </a>
+    </div>
+
+    <!-- COLUMN PROPERTIES -->
+    <div class="col-sm-6">
+    <form *ngIf="selectedColumn" (ngSubmit)="onColumnSubmit()" #columnForm="ngForm">
+
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedColumn.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedColumn.name" ngControl="name" #name="ngForm" placeholder="name" required />
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Choose type</label>
+        <select class="form-control" [(ngModel)]="selectedColumn.output.id" required>
+          <option *ngFor="let tab of tables" [ngValue]="tab.id">{{tab.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="descriptor">Descriptor</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" ngControl="descriptor" #descriptor="ngForm" placeholder="descriptor" />
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Descriptor has to be a valid JSON string
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="button" class="btn btn-warning" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
+      </div>
+
+    </form>
+    </div>
+
+  </div>
 
 </div>

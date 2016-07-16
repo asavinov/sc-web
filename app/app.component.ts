@@ -12,6 +12,12 @@ import { ScService } from './sc.service';
 @Component({
   selector: 'sc-app',
   template: `
+<div class="jumbotron well well-lg">
+  <h1><span class="label label-danger center-block">{{title}}</span></h1>
+  <p class="text-center">high throughput column-oriented in-stream analytics</p>
+</div>
+<router-outlet></router-outlet>
+<!--
     <h1>{{title}}</h1>
     <div class="row">
     <nav>
@@ -21,6 +27,7 @@ import { ScService } from './sc.service';
     </nav>
     </div>
     <router-outlet></router-outlet>
+-->
   `,
   styleUrls: ['app/app.component.css'],
   directives: [ROUTER_DIRECTIVES],
@@ -30,5 +37,5 @@ import { ScService } from './sc.service';
 })
 
 export class AppComponent {
-  title = 'StreamCommandr';
+  title = 'STREAM COMMANDR';
 }

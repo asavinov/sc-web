@@ -36,10 +36,10 @@ export class ScService {
   // Spaces
   //
 
-  getSpaces() {
+  getSpaces(): Promise<Space[]> {
     return this.http.get(this.scUrl + "/spaces")
         .toPromise()
-        .then(this.extractData)
+        .then(res => Space.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
   }
 
@@ -48,12 +48,12 @@ export class ScService {
   //
 
   getTables(space: Space): Promise<Table[]> {
-    if(space == null || space.id == null) return Promise.resolve([]);
+    if(space == null || space.id == null|| space.id.length == 0) return Promise.resolve([]);
     let id: string  = space.id;
 
     return this.http.get(this.scUrl + "/spaces/" + id + "/tables")
         .toPromise()
-        .then(this.extractData)
+        .then(res => Table.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
   }
 
@@ -65,7 +65,7 @@ export class ScService {
   //
 
   getColumns(space: Space): Promise<Column[]> {
-    if(space == null || space.id == null) return Promise.resolve([]);
+    if(space == null || space.id == null || space.id.length == 0) return Promise.resolve([]);
     let id: string  = space.id;
 
     return this.http.get(this.scUrl + "/spaces/" + id + "/columns")
