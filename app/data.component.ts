@@ -18,7 +18,6 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getSpaces()
-    this.getTables()
   }
 
   //
@@ -32,8 +31,14 @@ export class DataComponent implements OnInit {
     this._scService.getSpaces().then(
       spaces => { 
         this.spaces = spaces;
-        this.selectedSpace = this.spaces[0]; 
+        this.selectedSpace = this.spaces[0];
+        this.onSelectSapce(this.selectedSpace); 
       });
+  }
+
+  onSelectSapce(space: Space) { 
+    this.selectedSpace = space; 
+    this.getTables();
   }
 
   //
@@ -45,8 +50,16 @@ export class DataComponent implements OnInit {
 
   getTables() {
     this._scService.getTables(this.selectedSpace).then(
-      tables => this.tables = tables
-      );
+      tables => { 
+        this.tables = tables;
+        //this.selectedTable = undefined;
+        this.onSelectTable(this.selectedTable); 
+      });
+  }
+
+  onSelectTable(table: Table) { 
+    this.selectedTable = table; 
+    //this.getColumns();
   }
 
   // Write

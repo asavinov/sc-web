@@ -35,7 +35,7 @@ export class Column {
     col.input.table = undefined
     col.output.id = json.output.id
     col.output.table = undefined
-    col.descriptor = JSON.stringify(json.descriptor)
+    col.descriptor = json.descriptor
 
     return col
   }

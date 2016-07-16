@@ -162,6 +162,7 @@ export class ScService {
   //
 
   private extractData(res: Response) {
+    //let body = JSON.parse(res.text()); // Parse json string
     let body = res.json(); // Parse json string
     if(body && body.data) {
       return body.data || { }
