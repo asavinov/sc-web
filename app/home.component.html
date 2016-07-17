@@ -1,51 +1,51 @@
 <!-- ----------- -->
-<!-- SPACE PANEL -->
+<!-- SCHEMA PANEL -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">SPACES</h1>    
+    <h1 class="panel-title">SCHEMAS</h1>    
   </div>
   <div class="panel-body">
 
-    <!-- SPACE LIST -->
+    <!-- SCHEMA LIST -->
     <div class="list-group col-sm-6">
-      <a *ngFor="let spa of spaces"
+      <a *ngFor="let spa of schemas"
         class="list-group-item"
-        [class.active]="selectedSpace && spa.id === selectedSpace.id" 
-        (click)="onSelectSpace(spa)"
+        [class.active]="selectedSchema && spa.id === selectedSchema.id" 
+        (click)="onSelectSchema(spa)"
         >
         <h4 class="list-group-item-heading">{{spa.name}}</h4>
         <p class="list-group-item-text">Id: {{spa.id}}</p>
       </a>
       <a 
         class="list-group-item"
-        [class.active]="selectedSpace && selectedSpace.id === ''" 
-        (click)="onSelectSpace(null)"
+        [class.active]="selectedSchema && selectedSchema.id === ''" 
+        (click)="onSelectSchema(null)"
         >
-        <h4 class="list-group-item-heading">[ADD NEW SPACE]</h4>
+        <h4 class="list-group-item-heading">[ADD NEW SCHEMA]</h4>
       </a>
     </div>
 
-    <!-- SPACE PROPERTIES -->
+    <!-- SCHEMA PROPERTIES -->
     <div class="col-sm-6">
 
-    <form *ngIf="selectedSpace" (ngSubmit)="onSpaceSubmit()" #spaceForm="ngForm">
+    <form *ngIf="selectedSchema" (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input type="text" class="form-control" [(ngModel)]="selectedSpace.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
+        <input type="text" class="form-control" [(ngModel)]="selectedSchema.id" ngControl="id" #id="ngForm" placeholder="id" readonly />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" [(ngModel)]="selectedSpace.name" ngControl="name" #name="ngForm" placeholder="name" required />
+        <input type="text" class="form-control" [(ngModel)]="selectedSchema.name" ngControl="name" #name="ngForm" placeholder="name" required />
         <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
           Name is required
         </div>
       </div>
 
       <div class="text-right">
-        <button type="button" class="btn btn-warning" (click)="onSpaceDelete()" [disabled]="!selectedSpace.id">Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!spaceForm.form.valid">Save</button>
+        <button type="button" class="btn btn-warning" (click)="onSchemaDelete()" [disabled]="!selectedSchema.id">Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!schemaForm.form.valid">Save</button>
       </div>
 
     </form>
@@ -198,6 +198,44 @@
     </form>
     </div>
 
+  </div>
+
+</div>
+
+
+
+<!-- ------------ -->
+<!-- DATA PANEL -->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">DATA</h1>    
+  </div>
+  <div class="panel-body">
+
+  <div class="col-sm-6">
+  <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
+
+  <div class="form-group">
+    <label for="read">Read JSON from table:</label>
+    <textarea [(ngModel)]="readJson" ngControl="readJson" placeholder="readJson" readonly class="form-control" rows="5" id="readJson"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Read</button>
+
+  </form>
+  </div>
+
+  <div class="col-sm-6">
+  <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
+
+  <div class="form-group">
+    <label for="write">Write JSON to table:</label>
+    <textarea [(ngModel)]="writeJson" ngControl="writeJson" placeholder="writeJson" required class="form-control" rows="5" id="writeJson"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Write</button>
+
+  </form>
   </div>
 
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
 
-import { Space } from './space';
+import { Schema } from './schema';
 import { Table } from './table';
 import { Column } from './column';
 
@@ -21,25 +21,25 @@ export class ScService {
   private scUrl = 'http://localhost:8080/api'; 
 
   // Alternatively (without in-mem server), we can point to a file 
-  //private scSpaceUrl = 'app/mock-spaces.json';
+  //private scSchemaUrl = 'app/mock-spaces.json';
   //private scTableUrl = 'app/mock-tables.json';
   //private scColumnUrl = 'app/mock-columns.json';
   
   // With in-mem server, we point to table names used as a key in dictionary
   // It is configured in main.ts. We need to create a class which contains (and initializes the dict with data)
   // The name in this url must correspond to the name in the sample database  
-  private scSpaceUrl = 'app/spaces';
+  private scSchemaUrl = 'app/spaces';
   private scTableUrl = 'app/tables';
   private scColumnUrl = 'app/columns';
 
   //
-  // Spaces
+  // Schemas
   //
 
-  getSpaces(): Promise<Space[]> {
+  getSchemas(): Promise<Schema[]> {
     return this.http.get(this.scUrl + "/spaces")
         .toPromise()
-        .then(res => Space.fromJsonList(this.extractData(res)))
+        .then(res => Schema.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
   }
 
@@ -47,9 +47,9 @@ export class ScService {
   // Tables
   //
 
-  getTables(space: Space): Promise<Table[]> {
-    if(space == null || space.id == null|| space.id.length == 0) return Promise.resolve([]);
-    let id: string  = space.id;
+  getTables(sch: Schema): Promise<Table[]> {
+    if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
+    let id: string  = sch.id;
 
     return this.http.get(this.scUrl + "/spaces/" + id + "/tables")
         .toPromise()
@@ -64,9 +64,9 @@ export class ScService {
   // Columns
   //
 
-  getColumns(space: Space): Promise<Column[]> {
-    if(space == null || space.id == null || space.id.length == 0) return Promise.resolve([]);
-    let id: string  = space.id;
+  getColumns(sch: Schema): Promise<Column[]> {
+    if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
+    let id: string  = sch.id;
 
     return this.http.get(this.scUrl + "/spaces/" + id + "/columns")
         .toPromise()
@@ -74,21 +74,21 @@ export class ScService {
         .catch(this.handleError);
   }
 
-  getInputColumns(space: Space, input_id: string): Promise<Column[]> {
+  getInputColumns(sch: Schema, input_id: string): Promise<Column[]> {
     if(!input_id || input_id.length === 0) return Promise.resolve([]);
 
     // WORKAROUND: Here we retrieve ALL column and then filter them. 
     // REDO: Retrieve ALL columns of the selected space and then select input or other columns on the client (in controller)
-    return this.getColumns(space)
-      .then(columns => columns.filter((col: any) => col.input.id === input_id))
+    return this.getColumns(sch)
+      .then(cols => cols.filter((col: any) => col.input.id === input_id))
       .catch();
   }
 
-  createColumn(space: Space, column: Column): Promise<Column> {
-    if(space == null || space.id == null) return Promise.resolve({});
-    let id: string  = space.id;
+  createColumn(sch: Schema, col: Column): Promise<Column> {
+    if(sch == null || sch.id == null) return Promise.resolve({});
+    let id: string  = sch.id;
 
-    let body = column.toJson();
+    let body = col.toJson();
 
     // Header might be needed for authorization etc.
     let headers = new Headers();

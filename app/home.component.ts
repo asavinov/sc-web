@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Space } from './space';
+import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
 
@@ -19,37 +19,37 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSpaces()
+    this.getSchemas()
   }
 
   //
-  // Space list
+  // Schema list
   //
   
-  spaces: Space[];
-  selectedSpace: Space;
+  schemas: Schema[];
+  selectedSchema: Schema;
 
-  getSpaces() {
-    this._scService.getSpaces().then(
-      spaces => { 
-        this.spaces = spaces;
-        this.selectedSpace = undefined; //this.spaces[0];
-        this.onSelectSpace(this.selectedSpace); 
+  getSchemas() {
+    this._scService.getSchemas().then(
+      schs => { 
+        this.schemas = schs;
+        this.selectedSchema = undefined;
+        this.onSelectSchema(this.selectedSchema); 
       });
   }
 
-  onSelectSpace(spa: Space) { 
+  onSelectSchema(spa: Schema) { 
     if(spa) { // Edit existing 
-      this.selectedSpace = spa.clone() // Copy object for editing
+      this.selectedSchema = spa.clone() // Copy object for editing
     }
     else if(spa === undefined) {
-      this.selectedSpace = undefined
+      this.selectedSchema = undefined
     }
     else { // Create new
-      spa = new Space("")
-      spa.name = "New Space"
+      spa = new Schema("")
+      spa.name = "New Schema"
 
-      this.selectedSpace = spa
+      this.selectedSchema = spa
     } 
 
     this.getTables();
@@ -73,13 +73,13 @@ export class HomeComponent implements OnInit {
   }
 
   //
-  // Space details
+  // Schema details
   //
   
-  onSpaceSubmit() { 
+  onSchemaSubmit() { 
   }
 
-  onSpaceumnDelete() { 
+  onSchemaDelete() { 
   }
 
   //
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
   selectedTable: Table;
 
   getTables() {
-    this._scService.getTables(this.selectedSpace).then(
+    this._scService.getTables(this.selectedSchema).then(
       tables => { 
         this.tables = tables;
         this.onSelectTable(this.selectedTable); 
@@ -122,7 +122,7 @@ export class HomeComponent implements OnInit {
 
   getColumns() {
     if(!this.selectedTable) return new Array<Column>()
-    this._scService.getInputColumns(this.selectedSpace, this.selectedTable.id).then(
+    this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
       columns => {
         this.columns = columns; 
         this.resolveColumns(); 
@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit {
   onColumnSubmit() { 
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
       // Add new column
-      this._scService.createColumn(this.selectedSpace, this.selectedColumn).then(
+      this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
         }
@@ -222,6 +222,28 @@ export class HomeComponent implements OnInit {
         }
       )
     }
+  }
+
+  //
+  // Data
+  //
+
+  // Read
+
+  readJson: string;
+
+  onReadSubmit() {
+    // Write to the service
+    this._scService.read(this.selectedTable).then(records => this.readJson = JSON.stringify(records));
+  }
+
+  // Write
+
+  writeJson: string;
+
+  onWriteSubmit() {
+    // Write to the service
+    this._scService.write(this.selectedTable, this.writeJson)
   }
 
 }

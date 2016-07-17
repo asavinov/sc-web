@@ -1,4 +1,4 @@
-import { Space } from './space';
+import { Schema } from './schema';
 import { Table } from './table';
 import { Column } from './column';
 
@@ -8,9 +8,9 @@ export class ScSampleData {
   createDb() {
     // Name of the variable will be a key in the dictionary 
     // It is important because the service will use the name in service url to find a table with the coresponding name
-    let s = Object.create(Space.prototype);
+    let s = Object.create(Schema.prototype);
     Object.assign(s, {'id':'0', 'name':'My Space'})
-    let spaces: Space[] = [ s ];
+    let spaces: Schema[] = [ s ];
 
     let t1 = new Table("01"); Object.assign(t1, {'name':'Double'})
     let t2 = new Table("02"); Object.assign(t1, {'name':'String'})

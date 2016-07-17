@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { Space } from './space';
+import { Schema } from './schema';
 import { Table } from './table';
 import { Column } from './column';
 
-//import { SPACES } from './mock-data';
+//import { SCHEMAS } from './mock-data';
 //import { TABLES } from './mock-data';
 //import { COLUMNS } from './mock-data';
 
@@ -12,11 +12,11 @@ import { Column } from './column';
 export class ScMockService {
 
   //
-  // Spaces
+  // Schemas
   //
 
   getSpaces() {
-    return Promise.resolve(SPACES);
+    return Promise.resolve(SCHEMAS);
   }
 
   //
@@ -88,7 +88,7 @@ export class ScMockService {
 
 }
 
-export var SPACES: Space[] = []
+export var SCHEMAS: Schema[] = []
 /*
 [
   { 'id': '0', 'name': 'My Space' },
