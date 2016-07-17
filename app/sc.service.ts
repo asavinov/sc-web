@@ -28,7 +28,7 @@ export class ScService {
   // With in-mem server, we point to table names used as a key in dictionary
   // It is configured in main.ts. We need to create a class which contains (and initializes the dict with data)
   // The name in this url must correspond to the name in the sample database  
-  private scSchemaUrl = 'app/spaces';
+  private scSchemaUrl = 'app/schemas';
   private scTableUrl = 'app/tables';
   private scColumnUrl = 'app/columns';
 
@@ -37,7 +37,7 @@ export class ScService {
   //
 
   getSchemas(): Promise<Schema[]> {
-    return this.http.get(this.scUrl + "/spaces")
+    return this.http.get(this.scUrl + "/schemas")
         .toPromise()
         .then(res => Schema.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -51,7 +51,7 @@ export class ScService {
     if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    return this.http.get(this.scUrl + "/spaces/" + id + "/tables")
+    return this.http.get(this.scUrl + "/schemas/" + id + "/tables")
         .toPromise()
         .then(res => Table.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -68,7 +68,7 @@ export class ScService {
     if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    return this.http.get(this.scUrl + "/spaces/" + id + "/columns")
+    return this.http.get(this.scUrl + "/schemas/" + id + "/columns")
         .toPromise()
         .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -78,7 +78,7 @@ export class ScService {
     if(!input_id || input_id.length === 0) return Promise.resolve([]);
 
     // WORKAROUND: Here we retrieve ALL column and then filter them. 
-    // REDO: Retrieve ALL columns of the selected space and then select input or other columns on the client (in controller)
+    // REDO: Retrieve ALL columns of the selected schema and then select input or other columns on the client (in controller)
     return this.getColumns(sch)
       .then(cols => cols.filter((col: any) => col.input.id === input_id))
       .catch();
@@ -97,7 +97,7 @@ export class ScService {
 
     let options = new RequestOptions({headers: headers})
 
-    return this.http.post(this.scUrl + "/spaces/" + id + "/columns", body, options)
+    return this.http.post(this.scUrl + "/schemas/" + id + "/columns", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
