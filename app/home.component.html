@@ -14,7 +14,6 @@
         (click)="onSelectSchema(spa)"
         >
         <h4 class="list-group-item-heading">{{spa.name}}</h4>
-        <p class="list-group-item-text">Id: {{spa.id}}</p>
       </a>
       <a 
         class="list-group-item"
@@ -96,7 +95,13 @@
         (click)="onSelectTable(tab)"
         >
         <h4 class="list-group-item-heading">{{tab.name}}</h4>
-        <p class="list-group-item-text">{{tab.id}}</p>
+      </a>
+      <a 
+        class="list-group-item"
+        [class.active]="selectedSchema && selectedSchema.id.length != 0 && selectedTable && selectedTable.id === ''" 
+        (click)="onSelectTable(undefined)"
+        >
+        <h4 class="list-group-item-heading">[ADD NEW TABLE]</h4>
       </a>
     </div>
 
@@ -145,13 +150,13 @@
         [class.active]="selectedColumn && col.id === selectedColumn.id" 
         (click)="onSelectColumn(col)"
         >
+        <span class="badge">{{col.output.table.name}}</span>
         <h4 class="list-group-item-heading">{{col.name}}</h4>
-        <p class="list-group-item-text">Type: {{col.output.table.name}}</p>
-        <p class="list-group-item-text">Id: {{col.id}}</p>
+        <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
       </a>
       <a 
         class="list-group-item"
-        [class.active]="selectedColumn && selectedColumn.id === ''" 
+        [class.active]="selectedTable && selectedTable.id.length != 0 && selectedColumn && selectedColumn.id === ''" 
         (click)="onSelectColumn(undefined)"
         >
         <h4 class="list-group-item-heading">[ADD NEW COLUMN]</h4>

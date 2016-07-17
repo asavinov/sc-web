@@ -7,6 +7,12 @@ export class Table {
   id: string;
   name: string;
 
+  clone(): Table {
+    let tab: Table = new Table(this.id)
+    Object.assign(tab, this)
+    return tab
+  }
+
   toJson(): String {
     return JSON.stringify(this);
   }

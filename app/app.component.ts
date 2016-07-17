@@ -1,6 +1,5 @@
 import { Component /*, provide*/ } from '@angular/core';
 
-// Routes, ROUTER_PROVIDERS 
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { HomeComponent } from './home.component';
@@ -28,7 +27,8 @@ import { ScService } from './sc.service';
 -->
   `,
   styleUrls: ['app/app.component.css'],
-  directives: [ROUTER_DIRECTIVES],
+  //directives: [HomeComponent], // Use it if a component will be included in html explicitly 
+  directives: [ROUTER_DIRECTIVES], // Use it in the case of routing
   providers: [
     ScService
   ]

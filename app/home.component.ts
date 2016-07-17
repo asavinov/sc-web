@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
 
 import { Schema } from './schema';
@@ -98,8 +99,17 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  onSelectTable(table: Table) { 
-    this.selectedTable = table; 
+  onSelectTable(tab: Table) { 
+    if(tab) { // Edit existing
+      this.selectedTable = tab.clone() // Copy object for editing
+    }
+    else { // Create new
+      tab = new Table("")
+      tab.name = "New Table"
+
+      this.selectedTable = tab
+    } 
+
     this.getColumns();
   }
 
@@ -170,12 +180,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onSelectColumn(column: Column) {
-    if(column) { // Edit existing column
-      this.selectedColumn = column.clone() // Copy object for editing
+  onSelectColumn(col: Column) {
+    if(col) { // Edit existing column
+      this.selectedColumn = col.clone() // Copy object for editing
     }
     else { // Create new column
-      let col = new Column("")
+      col = new Column("")
       col.name = "New Column"
       col.input.id = this.selectedTable.id
       col.input.table = this.selectedTable
