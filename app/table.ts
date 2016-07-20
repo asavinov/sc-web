@@ -7,6 +7,13 @@ export class Table {
   id: string;
   name: string;
 
+  isPrimitve(): boolean {
+    if(!this.name) return false;
+    let n: string = this.name.toUpperCase()
+    if(n === "STRING" || n === "DOUBLE" || n === "INTEGER") return true
+    return false
+  }
+
   clone(): Table {
     let tab: Table = new Table(this.id)
     Object.assign(tab, this)

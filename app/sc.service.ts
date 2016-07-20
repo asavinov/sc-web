@@ -60,6 +60,49 @@ export class ScService {
   getTable(id: string) {
   }
 
+  createTable(sch: Schema, tab: Table): Promise<Table> {
+    if(sch == null || sch.id == null) return Promise.resolve({});
+    let id: string  = sch.id;
+
+    let body = tab.toJson();
+
+    // Header might be needed for authorization etc.
+    let headers = new Headers();
+    headers.append("Content-Type", 'application/json');
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+
+    let options = new RequestOptions({headers: headers})
+
+    return this.http.post(this.scUrl + "/schemas/" + id + "/tables", body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+  }
+
+  updateTable(tab: Table) {
+
+    let body = tab.toJson();
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.put(this.scUrl + "/tables" + "/" + tab.id, body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+  }
+
+  deleteTable(tab: Table) {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.delete(this.scUrl + "/tables" + "/" + tab.id, options)
+        .toPromise()
+        .then()
+        .catch(this.handleError);
+  }
+
   //
   // Columns
   //
@@ -84,6 +127,9 @@ export class ScService {
       .catch();
   }
 
+  getColumn(id: string) {
+  }
+
   createColumn(sch: Schema, col: Column): Promise<Column> {
     if(sch == null || sch.id == null) return Promise.resolve({});
     let id: string  = sch.id;
@@ -103,27 +149,25 @@ export class ScService {
         .catch(this.handleError);
   }
 
-  getColumn(id: string) {
-  }
+  updateColumn(col: Column) {
 
-  updateColumn(column: Column) {
+    let body = col.toJson();
 
-    let body = column.toJson();
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.scUrl + "/columns" + "/" + column.id, body, options)
+    return this.http.put(this.scUrl + "/columns" + "/" + col.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
   }
 
-  deleteColumn(column: Column) {
+  deleteColumn(col: Column) {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(this.scUrl + "/columns" + "/" + column.id, options)
+    return this.http.delete(this.scUrl + "/columns" + "/" + col.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);

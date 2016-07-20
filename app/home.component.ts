@@ -90,6 +90,16 @@ export class HomeComponent implements OnInit {
   tables: Table[];
   selectedTable: Table;
 
+  primitiveTables(): Table[] {
+    if(!this.tables) return undefined
+    return this.tables.filter(t => t.isPrimitve())
+  }
+
+  nonprimitiveTables(): Table[] {
+    if(!this.tables) return undefined
+    return this.tables.filter(t => !t.isPrimitve())
+  }
+
   getTables() {
     this._scService.getTables(this.selectedSchema).then(
       tables => { 
@@ -118,9 +128,36 @@ export class HomeComponent implements OnInit {
   //
   
   onTableSubmit() { 
+    if(!this.selectedTable.id || this.selectedTable.id.length === 0) {
+      // Add new
+      this._scService.createTable(this.selectedSchema, this.selectedTable).then(
+        x => {
+          this.onSelectSchema(this.selectedSchema);
+        }
+      )
+    }
+    else {
+      // Update existing
+      this._scService.updateTable(this.selectedTable).then(
+        x => {
+          this.onSelectSchema(this.selectedSchema);
+        }
+      )
+    }
   }
 
-  onTableumnDelete() { 
+  onTableDelete() { 
+    if(!this.selectedTable.id || this.selectedTable.id.length === 0) {
+      return; // Nothing to do. Cannot delete new
+    }
+    else {
+      // Delete existing
+      this._scService.deleteTable(this.selectedTable).then(
+        x => {
+          this.onSelectSchema(this.selectedSchema);
+        }
+      )
+    }
   }
 
   //
@@ -181,10 +218,10 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectColumn(col: Column) {
-    if(col) { // Edit existing column
+    if(col) { // Edit existing
       this.selectedColumn = col.clone() // Copy object for editing
     }
-    else { // Create new column
+    else { // Create new
       col = new Column("")
       col.name = "New Column"
       col.input.id = this.selectedTable.id
@@ -203,7 +240,7 @@ export class HomeComponent implements OnInit {
   
   onColumnSubmit() { 
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
-      // Add new column
+      // Add new
       this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
@@ -211,7 +248,7 @@ export class HomeComponent implements OnInit {
       )
     }
     else {
-      // Update existing column
+      // Update existing
       this._scService.updateColumn(this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
@@ -222,10 +259,10 @@ export class HomeComponent implements OnInit {
 
   onColumnDelete() { 
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
-      return; // Nothing to do. Cannot delete new column
+      return; // Nothing to do. Cannot delete new
     }
     else {
-      // Delete rexisting column
+      // Delete existing
       this._scService.deleteColumn(this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);

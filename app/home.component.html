@@ -89,7 +89,7 @@
 
     <!-- TABLE LIST -->
     <div class="list-group col-sm-6">
-      <a *ngFor="let tab of tables"
+      <a *ngFor="let tab of nonprimitiveTables()"
         class="list-group-item"
         [class.active]="selectedTable && tab.id === selectedTable.id" 
         (click)="onSelectTable(tab)"
@@ -183,7 +183,7 @@
       <div class="form-group">
         <label for="type">Choose type</label>
         <select class="form-control" [(ngModel)]="selectedColumn.output.id" required>
-          <option *ngFor="let tab of tables" [ngValue]="tab.id">{{tab.name}}</option>
+          <option *ngFor="let tab of primitiveTables()" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>
 
