@@ -2,10 +2,12 @@ export class Table {
   constructor(id: string) { 
     this.id = id;
     this.name = "";
+    this.maxLength = -1;
   }
 
   id: string;
   name: string;
+  maxLength: number;
 
   isPrimitve(): boolean {
     if(!this.name) return false;
@@ -28,6 +30,7 @@ export class Table {
 
     tab.id = json.id
     tab.name = json.name
+    tab.maxLength = json.maxLength
 
     return tab
   }
