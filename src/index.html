@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <title>StreamCommandr</title>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="StreamCommandr: column-oriented high performance in-stream analytics">
+  <meta name="author" content="Alexandr Savinov">
+  <meta name="KeyWords" content="In-Stream Analytics, Complex Event Processing, Analytics, Big Data, Data Integration, Data Analysis, Concept-Oriented Model" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <base href="/">
+
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Service worker support is disabled by default.
+       Install the worker script and uncomment to enable.
+       Only enable service workers in production.
+  <script type="text/javascript">
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/worker.js').catch(function(err) {
+        console.log('Error installing service worker: ', err);
+      });
+    }
+  </script>
+  -->
+</head>
+<body>
+  <sc-app>StreamCommandr Loading ...</sc-app>
+
+  <script src="vendor/es6-shim/es6-shim.js"></script>
+  <script src="vendor/reflect-metadata/Reflect.js"></script>
+  <script src="vendor/systemjs/dist/system-polyfills.js"></script>
+  <!-- OLD
+  <script src="node_modules/core-js/client/shim.min.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="systemjs.config.js"></script>
+  -->
+
+  <script src="vendor/systemjs/dist/system.src.js"></script>
+  <script src="vendor/zone.js/dist/zone.js"></script>
+
+  <script>
+    System.import('system-config.js').then(function () {
+      System.import('main');
+    }).catch(console.error.bind(console));
+  </script>
+  <!-- OLD
+  <script>
+    System.import('app').catch(function(err){ console.error(err); });
+  </script>
+  -->
+</body>
+</html>

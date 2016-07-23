@@ -12,7 +12,7 @@ import { Column } from './column';
 // package 'angular2-in-memory-web-api' has these: InMemoryBackendConfig, InMemoryBackendService, SEED_DATA
 
 @Injectable()
-export class ScService {
+export class ScRestService {
 
   constructor (private http: Http) {
   }

@@ -6,7 +6,7 @@ import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
 
-import { ScService } from './sc.service';
+import { ScRestService } from './sc-rest.service';
 
 @Component({
   selector: 'sc-home',
@@ -15,7 +15,7 @@ import { ScService } from './sc.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScService) {
+  constructor(private _router: Router, private _scService: ScRestService) {
     //this.filesToUpload = [];
   }
 

@@ -1,20 +1,25 @@
-import { provide } from '@angular/core';
+import { provide } from '@angular/core'; // !!! OLD: Do I need it
+
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
 
 import { HTTP_PROVIDERS } from '@angular/http';
 import { RequestOptions, XHRBackend } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryBackendConfig, InMemoryBackendService, SEED_DATA }  from 'angular2-in-memory-web-api';
-import { ScSampleData }   from './sc-sample-data';
+//import { InMemoryBackendConfig, InMemoryBackendService, SEED_DATA }  from 'angular2-in-memory-web-api';
+//import { ScSampleData }   from './sc-sample-data';
 
-import { bootstrap }    from '@angular/platform-browser-dynamic';
+import { APP_ROUTER_PROVIDERS } from './app/sc-app.routes'; // Our app-specific route definitions are in a separate file
 
-import { AppComponent } from './app.component';
+import { ScAppComponent, environment } from './app/';
 
-import { APP_ROUTER_PROVIDERS } from './app.routes'; // Our app-specific route definitions are in a separate file
+if (environment.production) {
+  enableProdMode();
+}
 
-bootstrap(AppComponent, [
+bootstrap(ScAppComponent, [
     APP_ROUTER_PROVIDERS, // Inject our app-specific route definitions for displaying components depending on URL
     HTTP_PROVIDERS,
 //    { provide: XHRBackend, useClass: InMemoryBackendService },    // in-mem server will be used to serve http requests
