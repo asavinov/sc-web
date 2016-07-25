@@ -11,6 +11,25 @@ import { Column } from './column';
 // - https://github.com/johnpapa/event-view
 // package 'angular2-in-memory-web-api' has these: InMemoryBackendConfig, InMemoryBackendService, SEED_DATA
 
+// How to implement authentication and session management
+// Configure http accordingly: http://blog.ionic.io/angularjs-authentication/
+//.config(['$httpProvider', function($httpProvider) {
+//  $httpProvider.defaults.withCredentials = true;
+//}])
+// http://corpus.hubwiz.com/2/angularjs/19383311.html
+// res.header("Access-Control-Allow-Credentials", true);
+
+// https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/
+// Server responds with "Set-Cookie: session=sid" on the first client login.
+// For each next request, the client sets "Cookie: session=sid" so the server can recognize it.
+
+// Server responds to login with "token: ‘...JWT…’ "
+// Next client request contain: "Authorization: Bearer ...JWT..." (Jason Web Token)
+// - HTTP header transmits the user information (in contrast to cookies)
+// - Server does not have to maintain session store
+
+// https://spring.io/blog/2015/01/12/the-login-page-angular-js-and-spring-security-part-ii
+
 @Injectable()
 export class ScRestService {
 
