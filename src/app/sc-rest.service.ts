@@ -56,7 +56,10 @@ export class ScRestService {
   //
 
   getSchemas(): Promise<Schema[]> {
-    return this.http.get(this.scUrl + "/schemas")
+
+    let options = new RequestOptions({withCredentials: true})
+
+    return this.http.get(this.scUrl + "/schemas", options)
         .toPromise()
         .then(res => Schema.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -70,7 +73,9 @@ export class ScRestService {
     if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    return this.http.get(this.scUrl + "/schemas/" + id + "/tables")
+    let options = new RequestOptions({withCredentials: true})
+
+    return this.http.get(this.scUrl + "/schemas/" + id + "/tables", options)
         .toPromise()
         .then(res => Table.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -90,7 +95,7 @@ export class ScRestService {
     headers.append("Content-Type", 'application/json');
     headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
 
-    let options = new RequestOptions({headers: headers})
+    let options = new RequestOptions({headers: headers, withCredentials: true})
 
     return this.http.post(this.scUrl + "/schemas/" + id + "/tables", body, options)
         .toPromise()
@@ -103,7 +108,7 @@ export class ScRestService {
     let body = tab.toJson();
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this.http.put(this.scUrl + "/tables" + "/" + tab.id, body, options)
         .toPromise()
@@ -114,7 +119,8 @@ export class ScRestService {
   deleteTable(tab: Table) {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+
+    let options = new RequestOptions({headers: headers, withCredentials: true})
 
     return this.http.delete(this.scUrl + "/tables" + "/" + tab.id, options)
         .toPromise()
@@ -130,7 +136,9 @@ export class ScRestService {
     if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    return this.http.get(this.scUrl + "/schemas/" + id + "/columns")
+    let options = new RequestOptions({withCredentials: true})
+
+    return this.http.get(this.scUrl + "/schemas/" + id + "/columns", options)
         .toPromise()
         .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -160,7 +168,7 @@ export class ScRestService {
     headers.append("Content-Type", 'application/json');
     headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
 
-    let options = new RequestOptions({headers: headers})
+    let options = new RequestOptions({headers: headers, withCredentials: true})
 
     return this.http.post(this.scUrl + "/schemas/" + id + "/columns", body, options)
         .toPromise()
@@ -173,7 +181,8 @@ export class ScRestService {
     let body = col.toJson();
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this.http.put(this.scUrl + "/columns" + "/" + col.id, body, options)
         .toPromise()
@@ -184,7 +193,8 @@ export class ScRestService {
   deleteColumn(col: Column) {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this.http.delete(this.scUrl + "/columns" + "/" + col.id, options)
         .toPromise()
@@ -197,7 +207,10 @@ export class ScRestService {
   //
 
   read(table: Table) {
-    return this.http.get(this.scUrl + "/tables/" + table.id + "/data")
+
+    let options = new RequestOptions({ withCredentials: true });
+
+    return this.http.get(this.scUrl + "/tables/" + table.id + "/data", options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
@@ -212,7 +225,7 @@ export class ScRestService {
     headers.append("Content-Type", 'application/json');
     headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
 
-    let options = new RequestOptions({headers: headers})
+    let options = new RequestOptions({headers: headers, withCredentials: true})
 
     return this.http.post(this.scUrl + "/tables/" + table.id + "/data", body, options)
         .toPromise()
@@ -262,6 +275,7 @@ export class ScRestService {
         //}
 
         let xhr:XMLHttpRequest = new XMLHttpRequest();
+        xhr.withCredentials = true;
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
