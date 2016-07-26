@@ -20,7 +20,21 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSchemas()
+    // TODO: clean the state (no login)
+    this.schemas = [] 
+    this.tables = [] 
+    this.columns = [] 
+
+    let loginStatus = this.login();
+  }
+
+  login() {
+    this._scService.login().then(
+      (result) => {this.getSchemas();}, 
+      (error) => {console.error(error);}
+      );
+
+    return true;
   }
 
   //
@@ -32,10 +46,18 @@ export class HomeComponent implements OnInit {
 
   getSchemas() {
     this._scService.getSchemas().then(
-      schs => { 
-        this.schemas = schs;
-        this.selectedSchema = undefined;
-        this.onSelectSchema(this.selectedSchema); 
+      schemas => { 
+        if(schemas instanceof Array) { // Success
+          this.schemas = schemas;
+          this.selectedSchema = undefined;
+          this.onSelectSchema(this.selectedSchema); 
+        }
+        else if(schemas instanceof Object) { // Error
+          let code: String = schemas["code"] || ""
+          if(code === "400") {
+            this.login();
+          }
+        }
       });
   }
 
@@ -102,10 +124,18 @@ export class HomeComponent implements OnInit {
 
   getTables() {
     this._scService.getTables(this.selectedSchema).then(
-      tables => { 
-        this.tables = tables;
-        this.onSelectTable(this.selectedTable); 
-        //this.selectedTable = undefined;
+      tables => {
+        if(tables instanceof Array) { // Success
+          this.tables = tables;
+          this.onSelectTable(this.selectedTable); 
+          //this.selectedTable = undefined;
+        }
+        else if(tables instanceof Object) { // Error
+          let code: String = tables["code"] || ""
+          if(code === "400") {
+            this.login();
+          }
+        }
       });
   }
 
@@ -170,10 +200,18 @@ export class HomeComponent implements OnInit {
   getColumns() {
     if(!this.selectedTable) return new Array<Column>()
     this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
-      columns => {
-        this.columns = columns; 
-        this.resolveColumns(); 
-        //this.selectedColumn = undefined;
+      columns => { 
+        if(columns instanceof Array) { // Success
+          this.columns = columns; 
+          this.resolveColumns(); 
+          //this.selectedColumn = undefined;
+        }
+        else if(columns instanceof Object) { // Error
+          let code: String = columns["code"] || ""
+          if(code === "400") {
+            this.login();
+          }
+        }
       });
   }
 

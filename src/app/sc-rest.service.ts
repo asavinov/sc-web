@@ -51,11 +51,20 @@ export class ScRestService {
   private scTableUrl = 'app/tables';
   private scColumnUrl = 'app/columns';
 
+  login():Promise<String> {
+    let options = new RequestOptions({withCredentials: true})
+
+    return this.http.get(this.scUrl + "/login", options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+  }
+
   //
   // Schemas
   //
 
-  getSchemas(): Promise<Schema[]> {
+  getSchemas(): Promise<Schema[] | Object> {
 
     let options = new RequestOptions({withCredentials: true})
 
@@ -69,7 +78,7 @@ export class ScRestService {
   // Tables
   //
 
-  getTables(sch: Schema): Promise<Table[]> {
+  getTables(sch: Schema): Promise<Table[] | Object> {
     if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
@@ -132,7 +141,7 @@ export class ScRestService {
   // Columns
   //
 
-  getColumns(sch: Schema): Promise<Column[]> {
+  getColumns(sch: Schema): Promise<Column[] | Object> {
     if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
@@ -144,14 +153,20 @@ export class ScRestService {
         .catch(this.handleError);
   }
 
-  getInputColumns(sch: Schema, input_id: string): Promise<Column[]> {
+  getInputColumns(sch: Schema, input_id: string): Promise<Column[] | Object> {
     if(!input_id || input_id.length === 0) return Promise.resolve([]);
 
     // WORKAROUND: Here we retrieve ALL column and then filter them. 
     // REDO: Retrieve ALL columns of the selected schema and then select input or other columns on the client (in controller)
-    return this.getColumns(sch)
-      .then(cols => cols.filter((col: any) => col.input.id === input_id))
-      .catch();
+    return this.getColumns(sch).then(
+      cols => {
+        if(cols instanceof Array) {
+          return Promise.resolve( cols.filter(col => col.input.id === input_id) );
+        }
+        else {
+          return Promise.resolve(cols);
+        }
+      });
   }
 
   getColumn(id: string) {
@@ -240,22 +255,42 @@ export class ScRestService {
   private extractData(res: Response) {
     //let body = JSON.parse(res.text()); // Parse json string
     let body = res.json(); // Parse json string
-    if(body && body.data) {
+
+    //
+    // First, we process possible errors
+    //
+    if(body && body.error) {
+      return body.error || { }
+    }
+
+    //
+    // Second, we process normal data
+    //
+    else if(body && body.data) {
       return body.data || { }
     }
     else {
-      return body
+      return body || { }
     }
-    //return body.data || { };
   }
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
-    return Promise.reject(errMsg);
+    let body = error.json(); // Parse json string
+
+    //
+    // First, we process our own domain-specific error information
+    //
+    if(body && body.error) {
+      return body.error || { }
+    }
+    else {
+      let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      console.error(errMsg); // log to console instead
+      return Promise.reject(errMsg);
+    }
+
   }
 
 
