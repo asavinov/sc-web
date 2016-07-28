@@ -49,7 +49,7 @@
 
     </form>
 
-    <form (ngSubmit)="onUploadClick()" #readForm="ngForm">
+    <form *ngIf="selectedSchema" (ngSubmit)="onUploadClick()" #readForm="ngForm">
 
     <div class="form-group">
       <label for="file-upload">Select asset:</label>
@@ -88,26 +88,27 @@
   <div class="panel-body">
 
     <!-- TABLE LIST -->
-    <div class="list-group col-sm-6">
-      <a *ngFor="let tab of nonprimitiveTables()"
-        class="list-group-item"
-        [class.active]="selectedTable && tab.id === selectedTable.id" 
+    <div class="col-sm-6">
+    <div class="list-group" *ngIf="selectedSchema && selectedSchema.id.length != 0">
+      <a class="list-group-item"
+        *ngFor="let tab of nonprimitiveTables()"
+        [class.active]="selectedTable && selectedTable.id === tab.id" 
         (click)="onSelectTable(tab)"
         >
         <h4 class="list-group-item-heading">{{tab.name}}</h4>
       </a>
-      <a 
-        class="list-group-item"
-        [class.active]="selectedSchema && selectedSchema.id.length != 0 && selectedTable && selectedTable.id === ''" 
-        (click)="onSelectTable(undefined)"
+      <a class="list-group-item"
+        [class.active]="selectedTable && selectedTable.id.length == 0" 
+        (click)="onSelectTable(null)"
         >
         <h4 class="list-group-item-heading">[ADD NEW TABLE]</h4>
       </a>
     </div>
+    </div>
 
     <!-- TABLE PROPERTIES -->
     <div class="col-sm-6">
-    <form *ngIf="selectedTable" (ngSubmit)="onTableSubmit()" #tableForm="ngForm">
+    <form *ngIf="(selectedSchema && selectedSchema.id.length != 0) && selectedTable" (ngSubmit)="onTableSubmit()" #tableForm="ngForm">
 
       <div class="form-group">
         <label for="id">Id</label>
@@ -149,10 +150,11 @@
   <div class="panel-body">
 
     <!-- COLUMN LIST -->
-    <div class="list-group col-sm-6" *ngIf="selectedTable">
-      <a *ngFor="let col of columns"
-        class="list-group-item"
-        [class.active]="selectedColumn && col.id === selectedColumn.id" 
+    <div class="col-sm-6">
+    <div class="list-group" *ngIf="selectedTable && selectedTable.id.length != 0">
+      <a class="list-group-item"
+        *ngFor="let col of columns"
+        [class.active]="selectedColumn && selectedColumn.id === col.id" 
         (click)="onSelectColumn(col)"
         >
         <span class="badge">{{col.output.table.name}}</span>
@@ -161,16 +163,18 @@
       </a>
       <a 
         class="list-group-item"
-        [class.active]="selectedTable && selectedTable.id.length != 0 && selectedColumn && selectedColumn.id === ''" 
-        (click)="onSelectColumn(undefined)"
+        [class.active]="selectedColumn && selectedColumn.id.length == 0" 
+        (click)="onSelectColumn(null)"
         >
         <h4 class="list-group-item-heading">[ADD NEW COLUMN]</h4>
       </a>
+
+    </div>
     </div>
 
     <!-- COLUMN PROPERTIES -->
     <div class="col-sm-6">
-    <form *ngIf="selectedColumn" (ngSubmit)="onColumnSubmit()" #columnForm="ngForm">
+    <form *ngIf="(selectedTable && selectedTable.id.length != 0) && selectedColumn" (ngSubmit)="onColumnSubmit()" #columnForm="ngForm">
 
       <div class="form-group">
         <label for="id">Id</label>

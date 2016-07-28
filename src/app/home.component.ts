@@ -21,17 +21,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // TODO: clean the state (no login)
-    this.schemas = [] 
-    this.tables = [] 
+    this.schemas = []
+    this.selectedSchema = undefined 
+    this.tables = []
+    this.selectedTable = undefined 
     this.columns = [] 
+    this.selectedColumn = undefined
 
     let loginStatus = this.login();
   }
 
   login() {
     this._scService.login().then(
-      (result) => {this.getSchemas();}, 
-      (error) => {console.error(error);}
+      (result) => {
+        this.getSchemas();
+      }, 
+      (error) => {
+        console.error(error);
+      }
       );
 
     return true;
@@ -47,10 +54,12 @@ export class HomeComponent implements OnInit {
   getSchemas() {
     this._scService.getSchemas().then(
       schemas => { 
+        this.schemas = []
+        this.selectedSchema = undefined; 
+
         if(schemas instanceof Array) { // Success
           this.schemas = schemas;
-          this.selectedSchema = undefined;
-          this.onSelectSchema(this.selectedSchema); 
+          this.getTables();
         }
         else if(schemas instanceof Object) { // Error
           let code: String = schemas["code"] || ""
@@ -61,18 +70,18 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  onSelectSchema(spa: Schema) { 
-    if(spa) { // Edit existing 
-      this.selectedSchema = spa.clone() // Copy object for editing
+  onSelectSchema(sch: Schema) { 
+    if(sch) { // Edit existing 
+      this.selectedSchema = sch.clone() // Copy object for editing
     }
-    else if(spa === undefined) {
+    else if(sch === undefined) { // No selection
       this.selectedSchema = undefined
     }
-    else { // Create new
-      spa = new Schema("")
-      spa.name = "New Schema"
+    else { // null. Create new
+      sch = new Schema("")
+      sch.name = "New Schema"
 
-      this.selectedSchema = spa
+      this.selectedSchema = sch
     } 
 
     this.getTables();
@@ -125,10 +134,12 @@ export class HomeComponent implements OnInit {
   getTables() {
     this._scService.getTables(this.selectedSchema).then(
       tables => {
+        this.tables = []
+        this.selectedTable = undefined;
+
         if(tables instanceof Array) { // Success
           this.tables = tables;
-          this.onSelectTable(this.selectedTable); 
-          //this.selectedTable = undefined;
+          this.getColumns();
         }
         else if(tables instanceof Object) { // Error
           let code: String = tables["code"] || ""
@@ -140,10 +151,13 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectTable(tab: Table) { 
-    if(tab) { // Edit existing
+    if(tab) { // Edit existing 
       this.selectedTable = tab.clone() // Copy object for editing
     }
-    else { // Create new
+    else if(tab === undefined) { // No selection
+      this.selectedTable = undefined
+    }
+    else { // null. Create new
       tab = new Table("")
       tab.name = "New Table"
 
@@ -201,10 +215,11 @@ export class HomeComponent implements OnInit {
     if(!this.selectedTable) return new Array<Column>()
     this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
       columns => { 
+        this.columns = [] 
+        this.selectedColumn = undefined
         if(columns instanceof Array) { // Success
           this.columns = columns; 
           this.resolveColumns(); 
-          //this.selectedColumn = undefined;
         }
         else if(columns instanceof Object) { // Error
           let code: String = columns["code"] || ""
@@ -258,6 +273,9 @@ export class HomeComponent implements OnInit {
   onSelectColumn(col: Column) {
     if(col) { // Edit existing
       this.selectedColumn = col.clone() // Copy object for editing
+    }
+    else if(col === undefined) { // No selection
+      this.selectedColumn = undefined
     }
     else { // Create new
       col = new Column("")
