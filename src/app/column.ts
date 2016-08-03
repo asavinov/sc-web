@@ -15,6 +15,7 @@ export class Column {
   input: TableRef;
   output: TableRef;
 
+  formula: string;
   descriptor: string;
 
   clone(): Column {
@@ -35,6 +36,7 @@ export class Column {
     col.input.table = undefined
     col.output.id = json.output.id
     col.output.table = undefined
+    col.formula = json.formula
     col.descriptor = json.descriptor
 
     return col
