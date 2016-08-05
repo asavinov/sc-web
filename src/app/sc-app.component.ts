@@ -18,5 +18,5 @@ import { ScRestService } from './sc-rest.service';
   ]
 })
 export class ScAppComponent {
-  title = 'STREAM COMMANDR';
+  title = 'DATA COMMANDR';
 }
