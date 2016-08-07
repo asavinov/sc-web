@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { ScRestService } from './sc-rest.service';
+import { ToastOptions, ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
-
-import { ScRestService } from './sc-rest.service';
 
 @Component({
   selector: 'sc-home',
@@ -15,7 +15,7 @@ import { ScRestService } from './sc-rest.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScRestService) {
+  constructor(private _router: Router, private _scService: ScRestService, public toastr: ToastsManager) {
     //this.filesToUpload = [];
   }
 
@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
     this.selectedColumn = undefined
 
     let loginStatus = this.login();
+
+    this.toastr.success('Login.', 'Success.');
   }
 
   login() {

@@ -249,6 +249,39 @@ export class ScRestService {
   }
 
   //
+  // File upload http://stackoverflow.com/questions/32423348/angular2-post-uploaded-file
+  //
+
+  // Service method which knows how to upload to the service
+  uploadFile(file:File):Promise<String> {
+
+    return new Promise((resolve, reject) => {
+
+        let formData = new FormData();
+        formData.append("file", file, file.name);
+        //for(let i = 0; i < files.length; i++) {
+        //  formData.append("uploads[]", files[i], files[i].name);
+        //}
+
+        let xhr:XMLHttpRequest = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(<String>JSON.parse(xhr.response));
+                } else {
+                    reject(xhr.response);
+                }
+            }
+        };
+
+        xhr.open('POST', this.scUrl + "/assets/", true);
+        xhr.send(formData);
+    });
+
+  }
+
+  //
   // Work with Response
   //
 
@@ -290,40 +323,6 @@ export class ScRestService {
       console.error(errMsg); // log to console instead
       return Promise.reject(errMsg);
     }
-
-  }
-
-
-  //
-  // File upload http://stackoverflow.com/questions/32423348/angular2-post-uploaded-file
-  //
-
-  // Service method which knows how to upload to the service
-  uploadFile(file:File):Promise<String> {
-
-    return new Promise((resolve, reject) => {
-
-        let formData = new FormData();
-        formData.append("file", file, file.name);
-        //for(let i = 0; i < files.length; i++) {
-        //  formData.append("uploads[]", files[i], files[i].name);
-        //}
-
-        let xhr:XMLHttpRequest = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    resolve(<String>JSON.parse(xhr.response));
-                } else {
-                    reject(xhr.response);
-                }
-            }
-        };
-
-        xhr.open('POST', this.scUrl + "/assets/", true);
-        xhr.send(formData);
-    });
 
   }
 

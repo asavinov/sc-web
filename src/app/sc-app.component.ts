@@ -5,6 +5,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HomeComponent } from './home.component';
 
 import { ScRestService } from './sc-rest.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,8 @@ import { ScRestService } from './sc-rest.service';
   //directives: [HomeComponent], // Use it if a component will be included in html explicitly 
   directives: [ROUTER_DIRECTIVES], // Use it in the case of routing
   providers: [
-    ScRestService
+    ScRestService,
+    ToastsManager
   ]
 })
 export class ScAppComponent {
