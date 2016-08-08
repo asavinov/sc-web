@@ -293,6 +293,8 @@ export class ScRestService {
     // First, we process possible errors
     //
     if(body && body.error) {
+      // Create and return new error object
+
       return body.error || { }
     }
 
@@ -307,7 +309,7 @@ export class ScRestService {
     }
   }
 
-  private handleError (error: any) {
+  private handleError (error: any): any {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let body = error.json(); // Parse json string
@@ -316,14 +318,36 @@ export class ScRestService {
     // First, we process our own domain-specific error information
     //
     if(body && body.error) {
-      return body.error || { }
+      let err = new ScServiceError(body.error.code, body.error.message, body.error.message2);
+      return Promise.resolve(err)
     }
     else {
       let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      let err = new ScServiceError(error.status, error.message, 'Server error');
       console.error(errMsg); // log to console instead
-      return Promise.reject(errMsg);
+      return Promise.reject(err);
     }
 
   }
 
+}
+
+export class ScServiceError {
+  constructor(code: ScServiceErrorCode, message: string, message2: string) { 
+    this.code = code;
+    this.message = message;
+    this.message2 = message2;
+  }
+
+	code: ScServiceErrorCode;
+	message: string;
+	message2: string;
+}
+
+export enum ScServiceErrorCode {
+    NOT_FOUND_IDENTITY = 1,
+    GET_ELEMENT = 2,
+    CREATE_ELEMENT = 3,
+    UPATE_ELEMENT = 4,
+    DELETE_ELEMENT = 5
 }

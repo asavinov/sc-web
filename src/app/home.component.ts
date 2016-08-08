@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { ScRestService } from './sc-rest.service';
+import { ScRestService, ScServiceError, ScServiceErrorCode } from './sc-rest.service';
 import { ToastOptions, ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { Schema } from './schema';
@@ -15,7 +15,7 @@ import { Column } from './column';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScRestService, public toastr: ToastsManager) {
+  constructor(private _router: Router, private _scService: ScRestService, public _toastr: ToastsManager) {
     //this.filesToUpload = [];
   }
 
@@ -29,8 +29,6 @@ export class HomeComponent implements OnInit {
     this.selectedColumn = undefined
 
     let loginStatus = this.login();
-
-    this.toastr.success('Login.', 'Success.');
   }
 
   login() {
@@ -62,10 +60,13 @@ export class HomeComponent implements OnInit {
         if(schemas instanceof Array) { // Success
           this.schemas = schemas;
           this.getTables();
+
+          this._toastr.info('New session created.');
         }
         else if(schemas instanceof Object) { // Error
-          let code: String = schemas["code"] || ""
-          if(code === "400") {
+          let code: ScServiceErrorCode = schemas["code"] || 0
+          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }
         }
@@ -89,10 +90,24 @@ export class HomeComponent implements OnInit {
     this.getTables();
   }
 
+  //
+  // Schema details
+  //
+  
+  onSchemaSubmit() { 
+  }
+
+  onSchemaDelete() { 
+  }
+
+  //
+  // Schema assets
+  //
+  
   fileToUpload: File;
   // filesToUpload: Array<File>; // For multiple files
 
-  fileChangeEvent2(fileInput: any){
+  fileChangeEvent2(fileInput: any) {
     this.fileToUpload = <File> fileInput.target.files[0];
     // this.filesToUpload = <Array<File>> fileInput.target.files; // For multiple files
   }
@@ -104,16 +119,6 @@ export class HomeComponent implements OnInit {
       }, (error) => {
         console.error(error);
       });
-  }
-
-  //
-  // Schema details
-  //
-  
-  onSchemaSubmit() { 
-  }
-
-  onSchemaDelete() { 
   }
 
   //
@@ -144,8 +149,9 @@ export class HomeComponent implements OnInit {
           this.getColumns();
         }
         else if(tables instanceof Object) { // Error
-          let code: String = tables["code"] || ""
-          if(code === "400") {
+          let code: ScServiceErrorCode = tables["code"] || 0
+          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }
         }
@@ -174,16 +180,14 @@ export class HomeComponent implements OnInit {
   //
   
   onTableSubmit() { 
-    if(!this.selectedTable.id || this.selectedTable.id.length === 0) {
-      // Add new
+    if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Add new
       this._scService.createTable(this.selectedSchema, this.selectedTable).then(
         x => {
           this.onSelectSchema(this.selectedSchema);
         }
       )
     }
-    else {
-      // Update existing
+    else { // Update existing
       this._scService.updateTable(this.selectedTable).then(
         x => {
           this.onSelectSchema(this.selectedSchema);
@@ -193,11 +197,10 @@ export class HomeComponent implements OnInit {
   }
 
   onTableDelete() { 
-    if(!this.selectedTable.id || this.selectedTable.id.length === 0) {
-      return; // Nothing to do. Cannot delete new
+    if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Nothing to do. Cannot delete new
+      return; 
     }
-    else {
-      // Delete existing
+    else { // Delete existing
       this._scService.deleteTable(this.selectedTable).then(
         x => {
           this.onSelectSchema(this.selectedSchema);
@@ -224,8 +227,9 @@ export class HomeComponent implements OnInit {
           this.resolveColumns(); 
         }
         else if(columns instanceof Object) { // Error
-          let code: String = columns["code"] || ""
-          if(code === "400") {
+          let code: ScServiceErrorCode = columns["code"] || 0
+          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }
         }
@@ -297,16 +301,14 @@ export class HomeComponent implements OnInit {
   //
   
   onColumnSubmit() { 
-    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
-      // Add new
+    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Add new
       this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
         }
       )
     }
-    else {
-      // Update existing
+    else { // Update existing
       this._scService.updateColumn(this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
@@ -316,11 +318,10 @@ export class HomeComponent implements OnInit {
   }
 
   onColumnDelete() { 
-    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) {
-      return; // Nothing to do. Cannot delete new
+    if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Nothing to do. Cannot delete new
+      return; 
     }
-    else {
-      // Delete existing
+    else { // Delete existing
       this._scService.deleteColumn(this.selectedColumn).then(
         x => {
           this.onSelectTable(this.selectedTable);
