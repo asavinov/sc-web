@@ -8,6 +8,8 @@ import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
 
+require("node_modules/bootstrap/dist/css/bootstrap.min.css")
+
 @Component({
   selector: 'sc-home',
   templateUrl: 'home.component.html',

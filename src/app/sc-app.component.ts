@@ -7,6 +7,8 @@ import { HomeComponent } from './home.component';
 import { ScRestService } from './sc-rest.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+require("node_modules/ng2-toastr/bundles/ng2-toastr.min.css")
+
 @Component({
   moduleId: module.id,
   selector: 'sc-app',
