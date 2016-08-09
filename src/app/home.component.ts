@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { ScRestService, ScServiceError, ScServiceErrorCode } from './sc-rest.service';
-import { ToastOptions, ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { Schema } from './schema';
 import { Table, TableRef } from './table';
@@ -10,8 +10,8 @@ import { Column } from './column';
 
 @Component({
   selector: 'sc-home',
-  templateUrl: 'app/home.component.html',
-  styleUrls:  ['app/home.component.css']
+  templateUrl: 'home.component.html',
+  styleUrls:  ['home.component.css']
 })
 export class HomeComponent implements OnInit {
 
@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
         this.getSchemas();
       }, 
       (error) => {
+        this._toastr.info('ERROR.');
         console.error(error);
       }
       );

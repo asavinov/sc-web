@@ -14,48 +14,36 @@
 
   <base href="/">
 
-  <link rel="shortcut icon" type="image/x-icon" href="favicon-dc.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-dc.png">
 
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <!--
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/ng2-toastr/bundles/ng2-toastr.min.css" />
-  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  
-  <!-- Service worker support is disabled by default.
-       Install the worker script and uncomment to enable.
-       Only enable service workers in production.
-  <script type="text/javascript">
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/worker.js').catch(function(err) {
-        console.log('Error installing service worker: ', err);
-      });
-    }
-  </script>
   -->
+  
+  <base href="/">
 </head>
 <body>
   <sc-app>Data Commandr Loading ...</sc-app>
 
+  <!-- OLD
   <script src="vendor/es6-shim/es6-shim.js"></script>
   <script src="vendor/reflect-metadata/Reflect.js"></script>
   <script src="vendor/systemjs/dist/system-polyfills.js"></script>
-  <!-- OLD
-  <script src="node_modules/core-js/client/shim.min.js"></script>
-  <script src="node_modules/reflect-metadata/Reflect.js"></script>
-  <script src="systemjs.config.js"></script>
-  -->
 
   <script src="vendor/systemjs/dist/system.src.js"></script>
   <script src="vendor/zone.js/dist/zone.js"></script>
+  -->
 
+  <!-- OLD
   <script>
     System.import('system-config.js').then(function () {
       System.import('main');
     }).catch(console.error.bind(console));
   </script>
-  <!-- OLD
-  <script>
-    System.import('app').catch(function(err){ console.error(err); });
-  </script>
   -->
+
 </body>
 </html>

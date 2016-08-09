@@ -13,7 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   templateUrl: 'sc-app.component.html',
   styleUrls: ['sc-app.component.css'],
   //directives: [HomeComponent], // Use it if a component will be included in html explicitly 
-  directives: [ROUTER_DIRECTIVES], // Use it in the case of routing
+  directives: [...ROUTER_DIRECTIVES], // Use it in the case of routing
   providers: [
     ScRestService,
     ToastsManager

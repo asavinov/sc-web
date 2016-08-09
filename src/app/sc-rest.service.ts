@@ -37,7 +37,7 @@ export class ScRestService {
   }
 
   // URL to web API
-  private scUrl = 'http://localhost:8080/api'; 
+  private scUrl = 'http://localhost:8000/api'; 
 
   // Alternatively (without in-mem server), we can point to a file 
   //private scSchemaUrl = 'app/mock-spaces.json';
