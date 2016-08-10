@@ -7,7 +7,7 @@ import { HomeComponent } from './home.component';
 import { ScRestService } from './sc-rest.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
-require("node_modules/ng2-toastr/bundles/ng2-toastr.min.css")
+require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
 
 @Component({
   //moduleId: module.id, // Not needed when using Webpack and also produces error in rc5

@@ -29,7 +29,7 @@ export class ScMockService {
 
   getTablesSlowly() {
     return new Promise<Table[]>(resolve =>
-      setTimeout(()=>resolve(TABLES), 2000) // 2 seconds
+      setTimeout(()=>resolve(TABLES), 2000); // 2 seconds
     );
   }
 
@@ -56,8 +56,8 @@ export class ScMockService {
 
   id_counter: number = 1000
   addColumn(column: Column) {
-    column.id = String(this.id_counter++)
-    COLUMNS.push(column)
+    column.id = String(this.id_counter++);
+    COLUMNS.push(column);
 
     // Copy individual fields
     //let col = COLUMNS.find(c => c.id === column.id)
@@ -68,8 +68,8 @@ export class ScMockService {
 
   updateColumn(column: Column) {
     // Copy the whole object
-    let idx = COLUMNS.findIndex(c => c.id === column.id)
-    COLUMNS[idx] = column
+    let idx = COLUMNS.findIndex(c => c.id === column.id);
+    COLUMNS[idx] = column;
 
     // Copy individual fields
     //let col = COLUMNS.find(c => c.id === column.id)
@@ -83,19 +83,19 @@ export class ScMockService {
   //
 
   push(json: string) {
-    console.log("PUSHED: " + json)
+    console.log("PUSHED: " + json);
   }
 
 }
 
-export var SCHEMAS: Schema[] = []
+export var SCHEMAS: Schema[] = [];
 /*
 [
   { 'id': '0', 'name': 'My Space' },
 ];
 */
 
-export var TABLES: Table[] = []
+export var TABLES: Table[] = [];
 /* 
 [
   { 'id': '01', 'name': 'Double' },
@@ -105,7 +105,7 @@ export var TABLES: Table[] = []
 ];
 */
 
-export var COLUMNS: Column[] = []
+export var COLUMNS: Column[] = [];
 /* 
 [
   { 'id': '101', 'name': 'Column 1', 'input': {'id': '11', 'table': undefined}, 'output': {'id': '01', 'table': undefined} },

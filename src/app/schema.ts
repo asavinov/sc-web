@@ -10,30 +10,30 @@ export class Schema {
   name: string;
 
   clone(): Schema {
-    let sch: Schema = new Schema(this.id)
-    Object.assign(sch, this)
-    return sch
+    let sch: Schema = new Schema(this.id);
+    Object.assign(sch, this);
+    return sch;
   }
 
   toJson(): String {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Schema {
-    let sch: Schema = new Schema("")
+    let sch: Schema = new Schema("");
 
-    sch.id = json.id
-    sch.name = json.name
+    sch.id = json.id;
+    sch.name = json.name;
 
-    return sch
+    return sch;
   }
   static fromJsonList(json: any): Schema[] {
-    let schs: Schema[] = []
-    if(!json) return schs
+    let schs: Schema[] = [];
+    if(!json) return schs;
 
     let sch: Schema;
     for(let o of json) {
-      sch = Schema.fromJsonObject(o)
-      schs.push(sch)
+      sch = Schema.fromJsonObject(o);
+      schs.push(sch);
     }
 
     return schs;

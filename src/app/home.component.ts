@@ -8,7 +8,7 @@ import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
 
-require("node_modules/bootstrap/dist/css/bootstrap.min.css")
+require('node_modules/bootstrap/dist/css/bootstrap.min.css');
 
 @Component({
   selector: 'sc-home',
@@ -23,12 +23,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // TODO: clean the state (no login)
-    this.schemas = []
-    this.selectedSchema = undefined 
-    this.tables = []
-    this.selectedTable = undefined 
-    this.columns = [] 
-    this.selectedColumn = undefined
+    this.schemas = [];
+    this.selectedSchema = undefined; 
+    this.tables = [];
+    this.selectedTable = undefined; 
+    this.columns = [];
+    this.selectedColumn = undefined;
 
     let loginStatus = this.login();
   }
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this._scService.login().then(
       (result) => {
         this.getSchemas();
-      }, 
+      },
       (error) => {
         this._toastr.info('ERROR.');
         console.error(error);
@@ -56,9 +56,9 @@ export class HomeComponent implements OnInit {
 
   getSchemas() {
     this._scService.getSchemas().then(
-      schemas => { 
-        this.schemas = []
-        this.selectedSchema = undefined; 
+      schemas => {
+        this.schemas = [];
+        this.selectedSchema = undefined;
 
         if(schemas instanceof Array) { // Success
           this.schemas = schemas;
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
           this._toastr.info('New session created.');
         }
         else if(schemas instanceof Object) { // Error
-          let code: ScServiceErrorCode = schemas["code"] || 0
+          let code: ScServiceErrorCode = schemas["code"] || 0;
           if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
@@ -77,18 +77,18 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectSchema(sch: Schema) { 
-    if(sch) { // Edit existing 
-      this.selectedSchema = sch.clone() // Copy object for editing
+    if(sch) { // Edit existing
+      this.selectedSchema = sch.clone(); // Copy object for editing
     }
     else if(sch === undefined) { // No selection
-      this.selectedSchema = undefined
+      this.selectedSchema = undefined;
     }
     else { // null. Create new
-      sch = new Schema("")
-      sch.name = "New Schema"
+      sch = new Schema("");
+      sch.name = "New Schema";
 
-      this.selectedSchema = sch
-    } 
+      this.selectedSchema = sch;
+    }
 
     this.getTables();
   }
@@ -156,19 +156,19 @@ export class HomeComponent implements OnInit {
   selectedTable: Table;
 
   primitiveTables(): Table[] {
-    if(!this.tables) return undefined
-    return this.tables.filter(t => t.isPrimitve())
+    if(!this.tables) return undefined;
+    return this.tables.filter(t => t.isPrimitve());
   }
 
   nonprimitiveTables(): Table[] {
-    if(!this.tables) return undefined
-    return this.tables.filter(t => !t.isPrimitve())
+    if(!this.tables) return undefined;
+    return this.tables.filter(t => !t.isPrimitve());
   }
 
   getTables() {
     this._scService.getTables(this.selectedSchema).then(
       tables => {
-        this.tables = []
+        this.tables = [];
         this.selectedTable = undefined;
 
         if(tables instanceof Array) { // Success
@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit {
           this.getColumns();
         }
         else if(tables instanceof Object) { // Error
-          let code: ScServiceErrorCode = tables["code"] || 0
+          let code: ScServiceErrorCode = tables["code"] || 0;
           if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
@@ -187,17 +187,17 @@ export class HomeComponent implements OnInit {
 
   onSelectTable(tab: Table) { 
     if(tab) { // Edit existing 
-      this.selectedTable = tab.clone() // Copy object for editing
+      this.selectedTable = tab.clone(); // Copy object for editing
     }
     else if(tab === undefined) { // No selection
-      this.selectedTable = undefined
+      this.selectedTable = undefined;
     }
     else { // null. Create new
-      tab = new Table("")
-      tab.name = "New Table"
+      tab = new Table("");
+      tab.name = "New Table";
 
-      this.selectedTable = tab
-    } 
+      this.selectedTable = tab;
+    }
 
     this.getColumns();
   }
@@ -206,7 +206,7 @@ export class HomeComponent implements OnInit {
   // Table details
   //
   
-  onTableSubmit() { 
+  onTableSubmit() {
     if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Add new
       this._scService.createTable(this.selectedSchema, this.selectedTable).then(
         x => {
@@ -244,17 +244,17 @@ export class HomeComponent implements OnInit {
   selectedColumn: Column;
 
   getColumns() {
-    if(!this.selectedTable) return new Array<Column>()
+    if(!this.selectedTable) return new Array<Column>();
     this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
       columns => { 
-        this.columns = [] 
-        this.selectedColumn = undefined
+        this.columns = [];
+        this.selectedColumn = undefined;
         if(columns instanceof Array) { // Success
-          this.columns = columns; 
-          this.resolveColumns(); 
+          this.columns = columns;
+          this.resolveColumns();
         }
         else if(columns instanceof Object) { // Error
-          let code: ScServiceErrorCode = columns["code"] || 0
+          let code: ScServiceErrorCode = columns["code"] || 0;
           if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
@@ -264,36 +264,36 @@ export class HomeComponent implements OnInit {
   }
 
   resolveColumn(column: Column) { // Resolve all reference from the specified column
-    let colAny: any = column
+    let colAny: any = column;
 
     // Resolve input table reference
 
-    let inId: string = ""
-    if(colAny.input) inId = colAny.input.id
+    let inId: string = "";
+    if(colAny.input) inId = colAny.input.id;
 
     if(!column.input) column.input = new TableRef(inId);
-    else column.input.id = inId
+    else column.input.id = inId;
 
     if(!column.input.id) {
-      column.input.table = undefined
+      column.input.table = undefined;
     }
     else {
-      column.input.table = this.tables.find(t => t.id === column.input.id)
+      column.input.table = this.tables.find(t => t.id === column.input.id);
     }
 
     // Resolve output table reference
 
-    let outId: string = ""
-    if(colAny.output) outId = colAny.output.id
+    let outId: string = "";
+    if(colAny.output) outId = colAny.output.id;
 
     if(!column.output) column.output = new TableRef(outId);
-    else column.output.id = outId
+    else column.output.id = outId;
 
     if(!column.output.id) {
-      column.output.table = undefined
+      column.output.table = undefined;
     }
     else {
-      column.output.table = this.tables.find(t => t.id === column.output.id)
+      column.output.table = this.tables.find(t => t.id === column.output.id);
     }
 
   }
@@ -305,21 +305,21 @@ export class HomeComponent implements OnInit {
 
   onSelectColumn(col: Column) {
     if(col) { // Edit existing
-      this.selectedColumn = col.clone() // Copy object for editing
+      this.selectedColumn = col.clone(); // Copy object for editing
     }
     else if(col === undefined) { // No selection
-      this.selectedColumn = undefined
+      this.selectedColumn = undefined;
     }
     else { // Create new
-      col = new Column("")
-      col.name = "New Column"
-      col.input.id = this.selectedTable.id
-      col.input.table = this.selectedTable
-      let type = this.tables.find(t => t.name === "String")
-      col.output.id = type.id
-      col.output.table = type
+      col = new Column("");
+      col.name = "New Column";
+      col.input.id = this.selectedTable.id;
+      col.input.table = this.selectedTable;
+      let type = this.tables.find(t => t.name === "String");
+      col.output.id = type.id;
+      col.output.table = type;
 
-      this.selectedColumn = col
+      this.selectedColumn = col;
     } 
   }
 
@@ -376,7 +376,7 @@ export class HomeComponent implements OnInit {
 
   onWriteSubmit() {
     // Write to the service
-    this._scService.write(this.selectedTable, this.writeJson)
+    this._scService.write(this.selectedTable, this.writeJson);
   }
 
 }

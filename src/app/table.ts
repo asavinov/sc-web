@@ -11,37 +11,37 @@ export class Table {
 
   isPrimitve(): boolean {
     if(!this.name) return false;
-    let n: string = this.name.toUpperCase()
-    if(n === "STRING" || n === "DOUBLE" || n === "INTEGER") return true
-    return false
+    let n: string = this.name.toUpperCase();
+    if(n === "STRING" || n === "DOUBLE" || n === "INTEGER") return true;
+    return false;
   }
 
   clone(): Table {
-    let tab: Table = new Table(this.id)
-    Object.assign(tab, this)
-    return tab
+    let tab: Table = new Table(this.id);
+    Object.assign(tab, this);
+    return tab;
   }
 
   toJson(): String {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Table {
-    let tab: Table = new Table("")
+    let tab: Table = new Table("");
 
-    tab.id = json.id
-    tab.name = json.name
-    tab.maxLength = json.maxLength
+    tab.id = json.id;
+    tab.name = json.name;
+    tab.maxLength = json.maxLength;
 
-    return tab
+    return tab;
   }
   static fromJsonList(json: any): Table[] {
-    let tabs: Table[] = []
-    if(!json) return tabs
+    let tabs: Table[] = [];
+    if(!json) return tabs;
 
     let tab: Table;
     for(let o of json) {
-      tab = Table.fromJsonObject(o)
-      tabs.push(tab)
+      tab = Table.fromJsonObject(o);
+      tabs.push(tab);
     }
 
     return tabs;

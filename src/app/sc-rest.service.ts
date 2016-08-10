@@ -52,7 +52,7 @@ export class ScRestService {
   private scColumnUrl = 'app/columns';
 
   login():Promise<String> {
-    let options = new RequestOptions({withCredentials: true})
+    let options = new RequestOptions({withCredentials: true});
 
     return this.http.get(this.scUrl + "/login", options)
         .toPromise()
@@ -66,7 +66,7 @@ export class ScRestService {
 
   getSchemas(): Promise<Schema[] | Object> {
 
-    let options = new RequestOptions({withCredentials: true})
+    let options = new RequestOptions({withCredentials: true});
 
     return this.http.get(this.scUrl + "/schemas", options)
         .toPromise()
@@ -83,9 +83,9 @@ export class ScRestService {
     // Header might be needed for authorization etc.
     let headers = new Headers();
     headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
 
-    let options = new RequestOptions({headers: headers, withCredentials: true})
+    let options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(this.scUrl + "/schemas", body, options)
         .toPromise()
@@ -110,7 +110,7 @@ export class ScRestService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, body: "", withCredentials: true})
+    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
 
     return this.http.delete(this.scUrl + "/schemas" + "/" + sch.id, options)
         .toPromise()
@@ -126,7 +126,7 @@ export class ScRestService {
     if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    let options = new RequestOptions({withCredentials: true})
+    let options = new RequestOptions({withCredentials: true});
 
     return this.http.get(this.scUrl + "/schemas/" + id + "/tables", options)
         .toPromise()
@@ -146,9 +146,9 @@ export class ScRestService {
     // Header might be needed for authorization etc.
     let headers = new Headers();
     headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
 
-    let options = new RequestOptions({headers: headers, withCredentials: true})
+    let options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(this.scUrl + "/schemas/" + id + "/tables", body, options)
         .toPromise()
@@ -173,7 +173,7 @@ export class ScRestService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, body: "", withCredentials: true})
+    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
 
     return this.http.delete(this.scUrl + "/tables" + "/" + tab.id, options)
         .toPromise()
@@ -189,7 +189,7 @@ export class ScRestService {
     if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
-    let options = new RequestOptions({withCredentials: true})
+    let options = new RequestOptions({withCredentials: true});
 
     return this.http.get(this.scUrl + "/schemas/" + id + "/columns", options)
         .toPromise()
@@ -225,9 +225,9 @@ export class ScRestService {
     // Header might be needed for authorization etc.
     let headers = new Headers();
     headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
 
-    let options = new RequestOptions({headers: headers, withCredentials: true})
+    let options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(this.scUrl + "/schemas/" + id + "/columns", body, options)
         .toPromise()
@@ -282,9 +282,9 @@ export class ScRestService {
     // Header might be needed for authorization etc.
     let headers = new Headers();
     headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
 
-    let options = new RequestOptions({headers: headers, withCredentials: true})
+    let options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(this.scUrl + "/tables/" + table.id + "/data", body, options)
         .toPromise()
@@ -339,17 +339,17 @@ export class ScRestService {
     if(body && body.error) {
       // Create and return new error object
 
-      return body.error || { }
+      return body.error || { };
     }
 
     //
     // Second, we process normal data
     //
     else if(body && body.data) {
-      return body.data || { }
+      return body.data || { };
     }
     else {
-      return body || { }
+      return body || { };
     }
   }
 
@@ -363,7 +363,7 @@ export class ScRestService {
     //
     if(body && body.error) {
       let err = new ScServiceError(body.error.code, body.error.message, body.error.message2);
-      return Promise.resolve(err)
+      return Promise.resolve(err);
     }
     else {
       let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
