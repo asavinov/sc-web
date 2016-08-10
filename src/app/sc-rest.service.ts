@@ -129,7 +129,7 @@ export class ScRestService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, withCredentials: true})
+    let options = new RequestOptions({headers: headers, body: "", withCredentials: true})
 
     return this.http.delete(this.scUrl + "/tables" + "/" + tab.id, options)
         .toPromise()
@@ -209,7 +209,7 @@ export class ScRestService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    let options = new RequestOptions({ headers: headers, body: "", withCredentials: true });
 
     return this.http.delete(this.scUrl + "/columns" + "/" + col.id, options)
         .toPromise()

@@ -10,12 +10,12 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 require("node_modules/ng2-toastr/bundles/ng2-toastr.min.css")
 
 @Component({
-  moduleId: module.id,
+  //moduleId: module.id, // Not needed when using Webpack and also produces error in rc5
   selector: 'sc-app',
   templateUrl: 'sc-app.component.html',
   styleUrls: ['sc-app.component.css'],
   //directives: [HomeComponent], // Use it if a component will be included in html explicitly 
-  directives: [...ROUTER_DIRECTIVES], // Use it in the case of routing
+  directives: [ROUTER_DIRECTIVES], // Use it in the case of routing
   providers: [
     ScRestService,
     ToastsManager

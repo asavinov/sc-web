@@ -3,6 +3,9 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 
 import { provide } from '@angular/core'; // !!! OLD: Do I need it
 
+import {disableDeprecatedForms, provideForms} from '@angular/forms';
+import {FORM_DIRECTIVES, FormBuilder, Validators, NgForm} from '@angular/forms';
+
 import { HTTP_PROVIDERS } from '@angular/http';
 import { RequestOptions, XHRBackend } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
@@ -23,6 +26,7 @@ if (process.env.ENV === 'build') {
 
 
 bootstrap(ScAppComponent, [
+    disableDeprecatedForms(), provideForms(),
     // These are dependencies of our App
     APP_ROUTER_PROVIDERS, // Inject our app-specific route definitions for displaying components depending on URL
     HTTP_PROVIDERS,
