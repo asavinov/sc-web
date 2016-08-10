@@ -74,6 +74,50 @@ export class ScRestService {
         .catch(this.handleError);
   }
 
+  createSchema(sch: Schema): Promise<Schema> {
+    if(sch == null || sch.id == null) return Promise.resolve({});
+    let id: string  = sch.id;
+
+    let body = sch.toJson();
+
+    // Header might be needed for authorization etc.
+    let headers = new Headers();
+    headers.append("Content-Type", 'application/json');
+    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'))
+
+    let options = new RequestOptions({headers: headers, withCredentials: true})
+
+    return this.http.post(this.scUrl + "/schemas", body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+  }
+
+  updateSchema(sch: Schema) {
+
+    let body = sch.toJson();
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+
+    return this.http.put(this.scUrl + "/schemas" + "/" + sch.id, body, options)
+        .toPromise()
+        .then(this.extractData)
+        .catch(this.handleError);
+  }
+
+  deleteSchema(sch: Schema) {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+
+    let options = new RequestOptions({headers: headers, body: "", withCredentials: true})
+
+    return this.http.delete(this.scUrl + "/schemas" + "/" + sch.id, options)
+        .toPromise()
+        .then()
+        .catch(this.handleError);
+  }
+
   //
   // Tables
   //

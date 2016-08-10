@@ -98,9 +98,33 @@ export class HomeComponent implements OnInit {
   //
   
   onSchemaSubmit() { 
+    if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Add new
+      this._scService.createSchema(this.selectedSchema).then(
+        x => {
+          this.getSchemas();
+        }
+      )
+    }
+    else { // Update existing
+      this._scService.updateSchema(this.selectedSchema).then(
+        x => {
+          this.getSchemas();
+        }
+      )
+    }
   }
 
   onSchemaDelete() { 
+    if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Nothing to do. Cannot delete new
+      return; 
+    }
+    else { // Delete existing
+      this._scService.deleteSchema(this.selectedSchema).then(
+        x => {
+          this.getSchemas();
+        }
+      )
+    }
   }
 
   //
