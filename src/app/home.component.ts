@@ -39,8 +39,7 @@ export class HomeComponent implements OnInit {
         this.getSchemas();
       },
       (error) => {
-        this._toastr.info('ERROR.');
-        console.error(error);
+        this._toastr.error('ERROR: ' + error.message);
       }
       );
 
@@ -73,7 +72,11 @@ export class HomeComponent implements OnInit {
             this.login();
           }
         }
-      });
+      }).catch(
+        error => { 
+          this._toastr.error(error.message);
+        }
+      );
   }
 
   onSelectSchema(sch: Schema) { 
@@ -182,7 +185,11 @@ export class HomeComponent implements OnInit {
             this.login();
           }
         }
-      });
+      }).catch(
+        error => { 
+          this._toastr.error(error.message);
+        }
+      );
   }
 
   onSelectTable(tab: Table) { 
@@ -260,7 +267,11 @@ export class HomeComponent implements OnInit {
             this.login();
           }
         }
-      });
+      }).catch(
+        error => { 
+          this._toastr.error(error.message);
+        }
+      );
   }
 
   resolveColumn(column: Column) { // Resolve all reference from the specified column

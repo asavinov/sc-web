@@ -29,7 +29,7 @@ export class ScMockService {
 
   getTablesSlowly() {
     return new Promise<Table[]>(resolve =>
-      setTimeout(()=>resolve(TABLES), 2000); // 2 seconds
+      setTimeout(()=>resolve(TABLES), 2000) // 2 seconds
     );
   }
 

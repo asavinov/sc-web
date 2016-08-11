@@ -366,9 +366,11 @@ export class ScRestService {
       return Promise.resolve(err);
     }
     else {
-      let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      let err = new ScServiceError(error.status, error.message, 'Server error');
-      console.error(errMsg); // log to console instead
+      // Use case no server at all: error.message = undefined, error.status = 0, error.statusText = ""
+
+      let status: number = error.status ? error.status : 0;
+      let message: string = error.message ? error.message : (error.statusText ? error.statusText : 'Server error');
+      let err = new ScServiceError(status, message, '');
       return Promise.reject(err);
     }
 
