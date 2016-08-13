@@ -31,12 +31,12 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" placeholder="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly />
+        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
       </div>
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input name="name" ngControl="name" placeholder="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required />
+        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
@@ -51,7 +51,7 @@
 
     <div class="form-group">
       <label for="file-upload">Select asset:</label>
-      <input name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="file-upload" />
+      <input name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
     </div>
     <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload">Upload</button>
     </form>
@@ -110,18 +110,18 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" placeholder="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly />
+        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input name="name" ngControl="name" placeholder="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required />
+        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
         <label for="maxLength">Maximum length</label>
-        <input name="maxLength" ngControl="maxLength" placeholder="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1"/>
+        <input name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
       </div>
 
       <div class="text-right">
@@ -174,31 +174,31 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" placeholder="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly />
+        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input name="name" ngControl="name" placeholder="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required />
+        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
         <label for="type">Choose type</label>
-        <select name="output" class="form-control" [(ngModel)]="selectedColumn.output.id" required>
+        <select name="output" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
           <option *ngFor="let tab of primitiveTables()" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="formula">Formula</label>
-        <input name="formula" ngControl="formula" placeholder="formula" type="text" class="form-control" [(ngModel)]="selectedColumn.formula" />
+        <input name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn.formula" placeholder="Column formula" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Formula has to be a valid expression and contain references in other columns in square brackets</div> -->
       </div>
 
       <div class="form-group">
         <label for="descriptor">Descriptor</label>
-        <input name="descriptor" ngControl="descriptor" placeholder="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" />
+        <input name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Descriptor has to be a valid JSON string</div> -->
       </div>
 
@@ -229,7 +229,7 @@
 
   <div class="form-group">
     <label for="readJson">Read JSON from table:</label>
-    <textarea name="readJson" ngControl="readJson" placeholder="readJson" id="readJson" [(ngModel)]="readJson" readonly class="form-control" rows="5"></textarea>
+    <textarea name="readJson" ngControl="readJson" id="readJson" [(ngModel)]="readJson" readonly class="form-control" rows="5" placeholder="readJson" ></textarea>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Read</button>
@@ -241,8 +241,8 @@
   <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
 
   <div class="form-group">
-    <label for="writeJson">Write JSON to table:</label>
-    <textarea name="writeJson" ngControl="writeJson" placeholder="writeJson" id="writeJson" [(ngModel)]="writeJson" required class="form-control" rows="5"></textarea>
+    <label for="writeCsv">Write CSV to table:</label>
+    <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="CSV with column names in first line" ></textarea>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Write</button>

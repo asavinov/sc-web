@@ -275,9 +275,9 @@ export class ScRestService {
         .catch(this.handleError);
   }
 
-  write(table: Table, json: string) {
+  write(table: Table, data: string) {
 
-    let body = json;
+    let body = data;
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
@@ -286,7 +286,7 @@ export class ScRestService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.scUrl + "/tables/" + table.id + "/data", body, options)
+    return this.http.post(this.scUrl + "/tables/" + table.id + "/data/csv", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);

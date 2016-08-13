@@ -383,11 +383,11 @@ export class HomeComponent implements OnInit {
 
   // Write
 
-  writeJson: string;
+  writeCsv: string;
 
   onWriteSubmit() {
     // Write to the service
-    this._scService.write(this.selectedTable, this.writeJson);
+    this._scService.write(this.selectedTable, this.writeCsv);
   }
 
 }
