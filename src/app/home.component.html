@@ -228,8 +228,19 @@
   <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
 
   <div class="form-group">
-    <label for="readJson">Read JSON from table:</label>
-    <textarea name="readJson" ngControl="readJson" id="readJson" [(ngModel)]="readJson" readonly class="form-control" rows="5" placeholder="readJson" ></textarea>
+    <label for="readJson">Data from the selected table:</label>
+    <table name="readJson" id="readJson" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
+        <thead class="thead-inverse">
+          <tr>
+              <th *ngFor="let col of columns">{{col.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of readJson">
+            <td *ngFor="let col of columns">{{row[col.name]}}</td>
+          </tr>
+        </tbody>
+    </table>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Read</button>
@@ -242,7 +253,7 @@
 
   <div class="form-group">
     <label for="writeCsv">Write CSV to table:</label>
-    <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="CSV with column names in first line" ></textarea>
+    <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Write</button>

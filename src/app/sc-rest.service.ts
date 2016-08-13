@@ -269,7 +269,7 @@ export class ScRestService {
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.scUrl + "/tables/" + table.id + "/data", options)
+    return this.http.get(this.scUrl + "/tables/" + table.id + "/data/json", options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
@@ -330,6 +330,10 @@ export class ScRestService {
   //
 
   private extractData(res: Response) {
+    if(! (res.text().charAt(0) === '[') && !(res.text().charAt(0) === '{')) { // Not JSON
+      return res.text();
+    }
+
     //let body = JSON.parse(res.text()); // Parse json string
     let body = res.json(); // Parse json string
 

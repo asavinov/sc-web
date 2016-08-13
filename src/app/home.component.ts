@@ -374,11 +374,13 @@ export class HomeComponent implements OnInit {
 
   // Read
 
-  readJson: string;
+  readJson: any = []
 
   onReadSubmit() {
-    // Write to the service
-    this._scService.read(this.selectedTable).then(records => this.readJson = JSON.stringify(records));
+    // Read data from the service
+    this._scService.read(this.selectedTable).then(
+      records => this.readJson = records
+      );
   }
 
   // Write
@@ -386,7 +388,7 @@ export class HomeComponent implements OnInit {
   writeCsv: string;
 
   onWriteSubmit() {
-    // Write to the service
+    // Write data to the service
     this._scService.write(this.selectedTable, this.writeCsv);
   }
 
