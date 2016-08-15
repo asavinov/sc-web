@@ -1,3 +1,10 @@
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+/* OLD (w/o modules)
 import { enableProdMode } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
@@ -37,3 +44,4 @@ bootstrap(ScAppComponent, [
 //    provide('webApiBaseUrl', { useValue: 'http://localhost:8080' })
     ])
   .catch(err => console.error(err));
+*/
