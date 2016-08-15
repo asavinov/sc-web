@@ -224,7 +224,7 @@
   </div>
   <div class="panel-body">
 
-  <div class="col-sm-6">
+  <div class="col-sm-12">
   <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
 
   <div class="form-group">
@@ -243,12 +243,12 @@
     </table>
   </div>
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Read</button>
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Evalute Table and Display</button>
 
   </form>
   </div>
 
-  <div class="col-sm-6">
+  <div class="col-sm-12">
   <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
 
   <div class="form-group">
@@ -256,7 +256,7 @@
     <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
   </div>
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Write</button>
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Load Data in Table</button>
 
   </form>
   </div>

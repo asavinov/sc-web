@@ -43,8 +43,6 @@
     "zone.js": "^0.6.12",
 
     "bootstrap": "^3.3.6",
-
-    "ng2-bootstrap": "^1.0.24",
     "ng2-toastr": "^0.3.1"
 	},
   "devDependencies": {
