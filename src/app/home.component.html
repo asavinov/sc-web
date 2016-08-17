@@ -153,8 +153,9 @@
         [class.active]="selectedColumn && selectedColumn.id === col.id" 
         (click)="onSelectColumn(col)"
         >
-        <span class="badge">{{col.output.table.name}}</span>
+        <span class="badge alert-info">{{col.output.table.name}}</span>
         <h4 class="list-group-item-heading">{{col.name}}</h4>
+        <div *ngIf="col.formula"><span class="label label-success label-as-badge">{{col.formula}}</span></div>
         <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
       </a>
       <a 
