@@ -2,7 +2,7 @@
 <!-- SCHEMA PANEL -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">SCHEMAS</h1>    
+    <h1 class="panel-title text-center"><b>SCHEMAS</b></h1>
   </div>
   <div class="panel-body">
 
@@ -81,7 +81,7 @@
 <!-- TABLE PANEL -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">TABLES</h1>    
+    <h1 class="panel-title text-center"><b>TABLES</b></h1>
   </div>
   <div class="panel-body">
 
@@ -141,7 +141,7 @@
 <!-- COLUMN PANEL -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">COLUMNS</h1>    
+    <h1 class="panel-title text-center"><b>COLUMNS</b></h1>
   </div>
   <div class="panel-body">
 
@@ -221,7 +221,7 @@
 <!-- DATA PANEL -->
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">DATA</h1>    
+    <h1 class="panel-title text-center"><b>DATA</b></h1>
   </div>
   <div class="panel-body">
 
@@ -229,15 +229,15 @@
   <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
 
   <div class="form-group">
-    <label for="readJson">Data from the selected table:</label>
-    <table name="readJson" id="readJson" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
+    <label for="records">Data from the selected table:</label>
+    <table name="records" id="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
           <tr>
               <th *ngFor="let col of columns">{{col.name}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of readJson">
+          <tr *ngFor="let row of records">
             <td *ngFor="let col of columns">{{row[col.name]}}</td>
           </tr>
         </tbody>

@@ -204,7 +204,8 @@ export class HomeComponent implements OnInit {
       this.selectedTable = tab;
     }
 
-    this.getColumns();
+    this.getColumns(); //Show columns
+    this.getRecords(); // Show records
   }
 
   //
@@ -235,6 +236,7 @@ export class HomeComponent implements OnInit {
     else { // Delete existing
       this._scService.deleteTable(this.selectedTable).then(
         x => {
+          this.allRecords.delete(this.selectedTable.id);
           this.onSelectSchema(this.selectedSchema);
         }
       )
@@ -372,12 +374,31 @@ export class HomeComponent implements OnInit {
 
   // Read
 
-  readJson: any = []
+  allRecords = new Map<string,any[]>(); // For each table is, we store its records in this cache
+  records: any = [] // Records of the selected table only (displayed in the table view)
+
+  getRecords() {
+    if(this.selectedTable) {
+      let recs = this.allRecords.get(this.selectedTable.id);
+      if(recs) {
+        this.records = recs;
+      }
+      else { // No records found
+        this.records = [];
+      }
+    }
+    else { // No selection - empty list of records
+      this.records = [];
+    } 
+}
 
   onReadSubmit() {
     // Read data from the service
     this._scService.read(this.selectedTable).then(
-      records => this.readJson = records
+      records => { 
+        this.allRecords.set(this.selectedTable.id, records);
+        this.records = records;
+      }
       );
   }
 
