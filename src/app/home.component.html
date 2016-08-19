@@ -230,10 +230,11 @@
 
   <div class="form-group">
     <label for="records">Data from the selected table:</label>
+    <div class="panel panel-primary" style="overflow: auto; max-height: 300px !important;">
     <table name="records" id="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
           <tr>
-              <th *ngFor="let col of columns">{{col.name}}</th>
+              <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
           </tr>
         </thead>
         <tbody>
@@ -242,6 +243,7 @@
           </tr>
         </tbody>
     </table>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Evalute Table and Display</button>
