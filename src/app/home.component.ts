@@ -395,9 +395,21 @@ export class HomeComponent implements OnInit {
   onReadSubmit() {
     // Read data from the service
     this._scService.read(this.selectedTable).then(
-      records => { 
-        this.allRecords.set(this.selectedTable.id, records);
-        this.records = records;
+      records => {
+        if(records instanceof Array) { // Success
+          this.allRecords.set(this.selectedTable.id, records);
+          this.records = records;
+
+          this._toastr.info('Successfully evaluated.');
+        }
+        else if(records instanceof Object) { // Error
+            let msg: string = records["message"] || 'Error evaluating table.';
+            msg += ' ' + (records["message2"] || '');
+            this._toastr.error(msg);
+        }
+      },
+      error => {
+        this._toastr.error('ERROR: ' + error.message);
       }
       );
   }
