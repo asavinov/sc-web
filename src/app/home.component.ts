@@ -102,6 +102,11 @@ export class HomeComponent implements OnInit {
     if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Add new
       this._scService.createSchema(this.selectedSchema).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error creating schema.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.getSchemas();
         }
       )
@@ -109,6 +114,11 @@ export class HomeComponent implements OnInit {
     else { // Update existing
       this._scService.updateSchema(this.selectedSchema).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error updating schema.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.getSchemas();
         }
       )
@@ -216,6 +226,11 @@ export class HomeComponent implements OnInit {
     if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Add new
       this._scService.createTable(this.selectedSchema, this.selectedTable).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error creating table.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.onSelectSchema(this.selectedSchema);
         }
       )
@@ -223,6 +238,11 @@ export class HomeComponent implements OnInit {
     else { // Update existing
       this._scService.updateTable(this.selectedTable).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error updating table.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.onSelectSchema(this.selectedSchema);
         }
       )
@@ -342,6 +362,11 @@ export class HomeComponent implements OnInit {
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Add new
       this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error creating column.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.onSelectTable(this.selectedTable);
         }
       )
@@ -349,6 +374,11 @@ export class HomeComponent implements OnInit {
     else { // Update existing
       this._scService.updateColumn(this.selectedColumn).then(
         x => {
+          if(x instanceof Object) { // Error
+            let msg: string = x["message"] || 'Error updating column.';
+            msg += ' ' + (x["message2"] || '');
+            this._toastr.error(msg);
+          }
           this.onSelectTable(this.selectedTable);
         }
       )
