@@ -35,14 +35,14 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Name</label> <span tooltip="Unique name of the schema" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
         <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="text-right">
-        <button type="button" class="btn btn-warning" (click)="onSchemaDelete()" [disabled]="!selectedSchema.id">Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!schemaForm.form.valid">Save</button>
+        <button type="button" class="btn btn-warning" (click)="onSchemaDelete()" [disabled]="!selectedSchema.id"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!schemaForm.form.valid"><span class="glyphicon glyphicon-ok"></span> Save</button>
       </div>
 
     </form>
@@ -53,7 +53,7 @@
       <label for="file-upload">Select asset:</label>
       <input name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
     </div>
-    <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload">Upload</button>
+    <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
     </form>
 
   <!-- [(ngModel)] doesn’t work.  In the current version of Angular 2, it doesn’t map correctly which is why I had to cheat with the change event. -->
@@ -114,19 +114,19 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Name</label> <span tooltip="Unique name of the table" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
         <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
-        <label for="maxLength">Maximum length</label>
+        <label for="maxLength">Maximum length</label> <span tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
         <input name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
       </div>
 
       <div class="text-right">
-        <button type="button" class="btn btn-warning" (click)="onTableDelete()" [disabled]="!selectedTable.id">Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!tableForm.form.valid">Save</button>
+        <button type="button" class="btn btn-warning" (click)="onTableDelete()" [disabled]="!selectedTable.id"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!tableForm.form.valid"><span class="glyphicon glyphicon-ok"></span> Save</button>
       </div>
 
     </form>
@@ -179,20 +179,20 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Name</label> <span tooltip="Unique name of the column" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
         <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
-        <label for="type">Choose type</label>
-        <select name="output" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
+        <label for="type">Data type</label> <span tooltip="Data type of the column" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
+        <select name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
           <option *ngFor="let tab of primitiveTables()" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="formula">Formula</label>
+        <label for="formula">Formula</label> <span tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
         <input name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn.formula" placeholder="Column formula" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Formula has to be a valid expression and contain references in other columns in square brackets</div> -->
       </div>
@@ -204,8 +204,8 @@
       </div>
 
       <div class="text-right">
-        <button type="button" class="btn btn-warning" (click)="onColumnDelete()" [disabled]="!selectedColumn.id">Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid">Save</button>
+        <button type="button" class="btn btn-warning" (click)="onColumnDelete()" [disabled]="!selectedColumn.id"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid"><span class="glyphicon glyphicon-ok"></span> Save</button>
       </div>
 
     </form>
@@ -229,7 +229,7 @@
   <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
 
   <div class="form-group">
-    <label for="records">Data from the selected table:</label>
+    <label for="records">Data from the selected table:</label> <span tooltip="This table dispays both uploaded data and data computed by column formulas" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
     <div class="panel panel-primary" style="overflow: auto; max-height: 300px !important;">
     <table name="records" id="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
@@ -246,7 +246,9 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable">Evalute Table and Display</button>
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable" tooltip="Evaluate formulas of all columns and display the selected table" tooltipPlacement="left">
+    <span class="glyphicon glyphicon-refresh"></span> Evalute Table and Display
+  </button>
 
   </form>
   </div>
@@ -255,11 +257,13 @@
   <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
 
   <div class="form-group">
-    <label for="writeCsv">Write CSV to table:</label>
+    <label for="writeCsv">Write CSV to table:</label> <span tooltip="The first row specifies column names and all other rows specify values for these columns" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
     <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
   </div>
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable">Load Data in Table</button>
+  <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable" tooltip="Upload CSV data and append it to the selected table" tooltipPlacement="left">
+    <span class="glyphicon glyphicon-upload"></span> Load Data in Table
+  </button>
 
   </form>
   </div>

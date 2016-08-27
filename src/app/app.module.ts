@@ -5,10 +5,12 @@ import { FormsModule }        from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
 
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
+import {TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'; // Usage: http://valor-software.com/ng2-bootstrap/#/tooltip
 
 require('node_modules/bootstrap/dist/css/bootstrap.min.css');
+
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
 
 //
 // App-specific
@@ -28,7 +30,8 @@ import { ScRestService }  from './sc-rest.service';
     ],
   declarations: [
     ScAppComponent,
-    HomeComponent
+    HomeComponent,
+    TOOLTIP_DIRECTIVES
     ],
   providers: [
     ScRestService,
