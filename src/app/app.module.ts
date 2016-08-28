@@ -15,7 +15,7 @@ require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
 //
 // App-specific
 //
-import { routing } from './app.routes';
+import { routing, appRoutingProviders } from './app.routes';
 
 import { AppComponent }  from './app.component';
 import { DcComponent }  from './dc.component';
@@ -35,7 +35,8 @@ import { AppService }  from './app.service';
     ],
   providers: [
     AppService,
-    ToastsManager
+    ToastsManager,
+    appRoutingProviders
     ],
   bootstrap: [ AppComponent ]
 })

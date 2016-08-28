@@ -1,16 +1,33 @@
+<div class="navbar navbar-inverse" role="navigation">
+<div class="navbar-inner">
+<div class="container">
+
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="brand" href="index.html"><img src="img/dc-logo.png" alt="Data Commandr" class="logo-header"><img src="img/dc-logo-header2.png" alt="Data Commandr" class="logo-header"></a>
+</div>
+
+<div class="collapse navbar-collapse">
+  <ul class="nav navbar-nav">
+    <li><a [routerLink]="['/dc']">APPLICATION</a></li>
+    <li><a [routerLink]="['/help']">HELP</a></li>
+    <li><a [routerLink]="['/info']">MORE INFO</a></li>
+  </ul>
+</div>
+		
+</div>
+</div>
+</div>
+
+<router-outlet></router-outlet>
+
+<!--
 <div class="jumbotron well well-lg">
   <h1><span class="label label-danger center-block">{{title}}</span></h1>
   <p class="text-center">Integrate. Transform. Analyze.</p>
 </div>
-<router-outlet></router-outlet>
-<!--
-    <h1>{{title}}</h1>
-    <div class="row">
-    <nav>
-      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/dc']">Dc</a>
-      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/schema']">Schema</a>
-      <a type="button" class="btn btn-default btn-lg col-sm-2" [routerLink]="['/data']">Data</a>
-    </nav>
-    </div>
-    <router-outlet></router-outlet>
 -->

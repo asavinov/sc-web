@@ -37,7 +37,7 @@ export class AppService {
   }
 
   // URL to web API
-  private scUrl = 'http://13.74.254.222:8000/api';
+  private scUrl = 'http://localhost:8000/api';
 
   // Alternatively (without in-mem server), we can point to a file 
   //private scSchemaUrl = 'app/mock-spaces.json';

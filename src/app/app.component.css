@@ -1,15 +1,49 @@
-/*
-h1 {
-  font-size: 1.2em;
-  color: #999;
-  margin-bottom: 0;
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+b.dc {
+  font-weight: "bolder";
+  color: #4f0000; 
 }
-h2 {
-  font-size: 2em;
-  margin-top: 0;
-  padding-top: 0;
+
+body {
+  /* padding-bottom: 40px; */
+  font-size: 18px;
+  font-weight: 300;
+  color: #00003f;
+  /* font-family: "Open Sans", Helvetica, Arial, serif; */
+  /* font-family: "PT Sans", helvetica, arial, serif; */
+  font-family: "Lato", sans-serif;
 }
-*/
+
+.container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: relative;
+  z-index: 15;
+}
+
+.navbar .brand {
+  /*position: fixed;*/
+  /*overflow: visible;*/
+  /* padding: 50px; */
+  /*style="padding:5px;" */
+  /*padding-bottom: 5px;*/
+  /*padding-top: 5px;*/
+}
+
+.navbar .logo-header {
+  padding: 10px;
+}
+
 /*
 nav a {
   padding: 5px 10px;
@@ -28,5 +62,23 @@ nav a:hover {
 }
 nav a.router-link-active {
   color: #039be5;
+}
+*/
+
+
+
+
+
+
+/* OLD
+h1 {
+  font-size: 1.2em;
+  color: #999;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 2em;
+  margin-top: 0;
+  padding-top: 0;
 }
 */
