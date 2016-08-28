@@ -2,7 +2,7 @@ import { Schema } from './schema';
 import { Table } from './table';
 import { Column } from './column';
 
-export class ScSampleData {
+export class SampleData {
   // We simulate a database with named tables which contain records (objects)
   // returns a map whose keys are collection names and whose values are arrays of objects in those collections
   createDb() {

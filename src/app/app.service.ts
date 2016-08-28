@@ -31,13 +31,13 @@ import { Column } from './column';
 // https://spring.io/blog/2015/01/12/the-login-page-angular-js-and-spring-security-part-ii
 
 @Injectable()
-export class ScRestService {
+export class AppService {
 
   constructor (private http: Http) {
   }
 
   // URL to web API
-  private scUrl = 'http://localhost:8000/api'; 
+  private scUrl = 'http://13.74.254.222:8000/api';
 
   // Alternatively (without in-mem server), we can point to a file 
   //private scSchemaUrl = 'app/mock-spaces.json';
@@ -366,7 +366,7 @@ export class ScRestService {
     // First, we process our own domain-specific error information
     //
     if(body && body.error) {
-      let err = new ScServiceError(body.error.code, body.error.message, body.error.message2);
+      let err = new ServiceError(body.error.code, body.error.message, body.error.message2);
       return Promise.resolve(err);
     }
     else {
@@ -374,7 +374,7 @@ export class ScRestService {
 
       let status: number = error.status ? error.status : 0;
       let message: string = error.message ? error.message : (error.statusText ? error.statusText : 'Server error');
-      let err = new ScServiceError(status, message, '');
+      let err = new ServiceError(status, message, '');
       return Promise.reject(err);
     }
 
@@ -382,19 +382,19 @@ export class ScRestService {
 
 }
 
-export class ScServiceError {
-  constructor(code: ScServiceErrorCode, message: string, message2: string) { 
+export class ServiceError {
+  constructor(code: ServiceErrorCode, message: string, message2: string) { 
     this.code = code;
     this.message = message;
     this.message2 = message2;
   }
 
-	code: ScServiceErrorCode;
+	code: ServiceErrorCode;
 	message: string;
 	message2: string;
 }
 
-export enum ScServiceErrorCode {
+export enum ServiceErrorCode {
     NOT_FOUND_IDENTITY = 1,
     GET_ELEMENT = 2,
     CREATE_ELEMENT = 3,

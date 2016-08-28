@@ -9,7 +9,7 @@ import { Column } from './column';
 //import { COLUMNS } from './mock-data';
 
 @Injectable()
-export class ScMockService {
+export class MockService {
 
   //
   // Schemas

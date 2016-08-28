@@ -1,1 +1,2 @@
-export {ScAppComponent} from './sc-app.component';
+export {AppComponent} from './app.component';
+export {DcComponent} from './dc.component';

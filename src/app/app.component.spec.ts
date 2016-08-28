@@ -6,18 +6,18 @@ import {
   it,
   inject
 } from '@angular/core/testing';
-import { ScAppComponent } from '../app/sc-app.component';
+import { AppComponent } from '../app/app.component';
 
-beforeEachProviders(() => [ScAppComponent]);
+beforeEachProviders(() => [AppComponent]);
 
 describe('App: ScApp', () => {
   it('should create the app',
-      inject([ScAppComponent], (app: ScAppComponent) => {
+      inject([AppComponent], (app: AppComponent) => {
     expect(app).toBeTruthy();
   }));
 
-  it('should have as title \'sc-app works!\'',
-      inject([ScAppComponent], (app: ScAppComponent) => {
+  it('should have as title \'app works!\'',
+      inject([AppComponent], (app: AppComponent) => {
     expect(app.title).toEqual('STREAM COMMANDR');
   }));
 });

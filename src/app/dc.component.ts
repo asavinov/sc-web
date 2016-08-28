@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { ScRestService, ScServiceError, ScServiceErrorCode } from './sc-rest.service';
+import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { Schema } from './schema';
@@ -9,13 +9,13 @@ import { Table, TableRef } from './table';
 import { Column } from './column';
 
 @Component({
-  selector: 'sc-home',
-  templateUrl: 'home.component.html',
-  styleUrls:  ['home.component.css']
+  selector: 'dc',
+  templateUrl: 'dc.component.html',
+  styleUrls:  ['dc.component.css']
 })
-export class HomeComponent implements OnInit {
+export class DcComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: ScRestService, public _toastr: ToastsManager) {
+  constructor(private _router: Router, private _scService: AppService, public _toastr: ToastsManager) {
     //this.filesToUpload = [];
   }
 
@@ -64,8 +64,8 @@ export class HomeComponent implements OnInit {
           this._toastr.info('New session created.');
         }
         else if(schemas instanceof Object) { // Error
-          let code: ScServiceErrorCode = schemas["code"] || 0;
-          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = schemas["code"] || 0;
+          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }
@@ -187,8 +187,8 @@ export class HomeComponent implements OnInit {
           this.getColumns();
         }
         else if(tables instanceof Object) { // Error
-          let code: ScServiceErrorCode = tables["code"] || 0;
-          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = tables["code"] || 0;
+          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }
@@ -281,8 +281,8 @@ export class HomeComponent implements OnInit {
           this.resolveColumns();
         }
         else if(columns instanceof Object) { // Error
-          let code: ScServiceErrorCode = columns["code"] || 0;
-          if(code == ScServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = columns["code"] || 0;
+          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.login();
           }

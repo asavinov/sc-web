@@ -229,7 +229,7 @@
   <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
 
   <div class="form-group">
-    <label for="records">Data from the selected table:</label> <span tooltip="This table dispays both uploaded data and data computed by column formulas" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
+    <label for="records">Data from the selected table:</label> <span tooltip="This table dispays uploaded data after evaluating all its column formulas" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
     <div class="panel panel-primary" style="overflow: auto; max-height: 300px !important;">
     <table name="records" id="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
