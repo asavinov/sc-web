@@ -2,8 +2,10 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
-b.dc {
-  font-weight: "bolder";
+.dc {
+  font-weight: bolder;
+  letter-spacing: 0.2px;
+  font-variant: small-caps;
   color: #4f0000; 
 }
 
