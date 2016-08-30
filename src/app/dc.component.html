@@ -33,12 +33,12 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
+        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
       </div>
 
       <div class="form-group">
         <label for="name">Name</label> <span tooltip="Unique name of the schema" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
+        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
@@ -53,7 +53,7 @@
 
     <div class="form-group">
       <label for="file-upload">Select asset:</label>
-      <input name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
+      <input id="file-upload" name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
     </div>
     <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
     </form>
@@ -112,18 +112,18 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
+        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label> <span tooltip="Unique name of the table" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
+        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
         <label for="maxLength">Maximum length</label> <span tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <input name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
+        <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
       </div>
 
       <div class="text-right">
@@ -177,31 +177,32 @@
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
+        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
       </div>
 
       <div class="form-group">
         <label for="name">Name</label> <span tooltip="Unique name of the column" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <input name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
+        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
       </div>
 
       <div class="form-group">
         <label for="type">Data type</label> <span tooltip="Data type of the column" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <select name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
+        <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
           <option *ngFor="let tab of primitiveTables()" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="formula">Formula</label> <span tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-        <input name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn.formula" placeholder="Column formula" />
+        <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
+        <span class="help-block">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Formula has to be a valid expression and contain references in other columns in square brackets</div> -->
       </div>
 
       <div class="form-group">
         <label for="descriptor">Descriptor</label>
-        <input name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
+        <input id="descriptor" name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
         <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Descriptor has to be a valid JSON string</div> -->
       </div>
 
@@ -233,7 +234,7 @@
   <div class="form-group">
     <label for="records">Data from the selected table:</label> <span tooltip="This table dispays uploaded data after evaluating all its column formulas" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
     <div class="panel panel-primary" style="overflow: auto; max-height: 300px !important;">
-    <table name="records" id="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
+    <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
           <tr>
               <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
@@ -265,7 +266,7 @@
 
   <div class="form-group">
     <label for="writeCsv">Write CSV to table:</label> <span tooltip="The first row specifies column names and all other rows specify values for these columns" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
-    <textarea name="writeCsv" id="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
+    <textarea id="writeCsv" name="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
   </div>
 
   <button type="submit" class="btn btn-success pull-right" [disabled]="!writeForm.form.valid || !selectedTable" tooltip="Upload CSV data and append it to the selected table" tooltipPlacement="left">
