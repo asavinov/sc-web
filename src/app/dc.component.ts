@@ -109,7 +109,7 @@ export class DcComponent implements OnInit {
           }
           this.getSchemas();
         }
-      )
+      );
     }
     else { // Update existing
       this._scService.updateSchema(this.selectedSchema).then(
@@ -121,7 +121,7 @@ export class DcComponent implements OnInit {
           }
           this.getSchemas();
         }
-      )
+      );
     }
   }
 
@@ -134,7 +134,7 @@ export class DcComponent implements OnInit {
         x => {
           this.getSchemas();
         }
-      )
+      );
     }
   }
 
@@ -200,7 +200,7 @@ export class DcComponent implements OnInit {
       );
   }
 
-  onSelectTable(tab: Table) { 
+  onSelectTable(tab: Table) {
     if(tab) { // Edit existing 
       this.selectedTable = tab.clone(); // Copy object for editing
     }
@@ -233,7 +233,7 @@ export class DcComponent implements OnInit {
           }
           this.onSelectSchema(this.selectedSchema);
         }
-      )
+      );
     }
     else { // Update existing
       this._scService.updateTable(this.selectedTable).then(
@@ -245,7 +245,7 @@ export class DcComponent implements OnInit {
           }
           this.onSelectSchema(this.selectedSchema);
         }
-      )
+      );
     }
   }
 
@@ -259,7 +259,7 @@ export class DcComponent implements OnInit {
           this.allRecords.delete(this.selectedTable.id);
           this.onSelectSchema(this.selectedSchema);
         }
-      )
+      );
     }
   }
 
@@ -369,7 +369,7 @@ export class DcComponent implements OnInit {
           }
           this.onSelectTable(this.selectedTable);
         }
-      )
+      );
     }
     else { // Update existing
       this._scService.updateColumn(this.selectedColumn).then(
@@ -381,7 +381,7 @@ export class DcComponent implements OnInit {
           }
           this.onSelectTable(this.selectedTable);
         }
-      )
+      );
     }
   }
 
@@ -394,7 +394,7 @@ export class DcComponent implements OnInit {
         x => {
           this.onSelectTable(this.selectedTable);
         }
-      )
+      );
     }
   }
 
@@ -420,7 +420,7 @@ export class DcComponent implements OnInit {
     else { // No selection - empty list of records
       this.records = [];
     } 
-}
+  }
 
   onReadSubmit() {
     // Read data from the service
@@ -441,7 +441,17 @@ export class DcComponent implements OnInit {
       error => {
         this._toastr.error('ERROR: ' + error.message);
       }
-      );
+    );
+  }
+
+  onTableEmpty() {
+    // Empty data in one table
+    this._scService.empty(this.selectedTable).then(
+      x => {
+        this._toastr.info('Data removed.');
+        this.onReadSubmit(); // Read data from the table (has to be empty)
+      }
+    );
   }
 
   // Write

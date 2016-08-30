@@ -292,6 +292,18 @@ export class AppService {
         .catch(this.handleError);
   }
 
+  empty(table: Table) {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+
+    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
+
+    return this.http.delete(this.scUrl + "/tables/" + table.id + "/data", options)
+        .toPromise()
+        .then()
+        .catch(this.handleError);
+  }
+
   //
   // File upload http://stackoverflow.com/questions/32423348/angular2-post-uploaded-file
   //

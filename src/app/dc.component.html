@@ -248,9 +248,14 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-success pull-right" [disabled]="!selectedTable" tooltip="Evaluate formulas of all columns and display the selected table" tooltipPlacement="left">
-    <span class="glyphicon glyphicon-refresh"></span> Evalute Table and Display
-  </button>
+  <div class="text-right">
+    <button type="button" class="btn btn-warning" (click)="onTableEmpty()" [disabled]="!selectedTable" tooltip="Remove all records from the selected tables" tooltipPlacement="left">
+      <span class="glyphicon glyphicon-trash"></span> Empty Table
+    </button>
+    <button type="submit" class="btn btn-success" [disabled]="!selectedTable" tooltip="Evaluate formulas of all columns and display the selected table" tooltipPlacement="left">
+      <span class="glyphicon glyphicon-refresh"></span> Evalute Table and Display
+    </button>
+  </div>
 
   </form>
   </div>
