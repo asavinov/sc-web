@@ -30,17 +30,10 @@
 </div>
 </div>
 
-<dc [hidden]="activeComponent !== 'dc'"></dc>
-<help [hidden]="activeComponent !== 'help'"></help>
-<info [hidden]="activeComponent !== 'info'"></info>
+<dc [hidden]="activeComponent != 'dc'"></dc>
+<help [hidden]="activeComponent != 'help'"></help>
+<info [hidden]="activeComponent != 'info'"></info>
 
 <!--
 <router-outlet></router-outlet>
--->
-
-<!--
-<div class="jumbotron well well-lg">
-  <h1><span class="label label-danger center-block">{{title}}</span></h1>
-  <p class="text-center">Integrate. Transform. Analyze.</p>
-</div>
 -->

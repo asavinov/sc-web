@@ -1,7 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }        from '@angular/forms';
-//import { CommonModule }       from '@angular/common';
 
 import { HttpModule } from '@angular/http';
 
@@ -15,30 +14,38 @@ require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
 //
 // App-specific
 //
-import { routing, appRoutingProviders } from './app.routes';
+//import { routing, appRoutingProviders } from './app.routes';
 
 import { AppComponent }  from './app.component';
+
 import { DcComponent }  from './dc.component';
+import { HelpComponent } from './help.component';
+import { InfoComponent } from './info.component';
+
 import { AppService }  from './app.service';
 
 @NgModule({
   imports: [
     BrowserModule, 
     FormsModule, // !!! Do not add NgModel — or the FORMS_DIRECTIVES — to the AppModule metadata's declarations! These directives belong to the FormsModule. Components, directives and pipes belong to one module — and one module only.
-    HttpModule,
-    routing
-    ],
-  declarations: [
-    AppComponent,
-    DcComponent,
-    TOOLTIP_DIRECTIVES
+    HttpModule
+    //routing
     ],
   providers: [
     AppService,
-    ToastsManager,
-    appRoutingProviders
+    ToastsManager
+    //appRoutingProviders
     ],
-  bootstrap: [ AppComponent ]
+  exports: [ AppComponent ],
+  declarations: [
+    TOOLTIP_DIRECTIVES,
+    AppComponent,
+    DcComponent,
+    HelpComponent,
+    InfoComponent
+    ],
+  // WORKAROUND: we need only AppComponent. We add also other components because otherwise production build does not work
+  bootstrap: [ AppComponent, DcComponent, InfoComponent, HelpComponent ]
 })
 export class AppModule { }
 

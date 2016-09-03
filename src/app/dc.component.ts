@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -15,7 +14,7 @@ import { Column } from './column';
 })
 export class DcComponent implements OnInit {
 
-  constructor(private _router: Router, private _scService: AppService, public _toastr: ToastsManager) {
+  constructor(private _scService: AppService, public _toastr: ToastsManager) {
     //this.filesToUpload = [];
   }
 

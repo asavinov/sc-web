@@ -1,8 +1,8 @@
 {
   "name": "sc-app",
   "version": "0.1.0",
-  "description": "StreamCommandr",
-  "keywords": ["StreamCommandr", "DataCommandr"],
+  "description": "DataCommandr: Integrate. Transform. Analyze.",
+  "keywords": ["DataCommandr"],
   "author": "Alexandr Savinov",
   "license": "MIT",
   "scripts": {
