@@ -13,9 +13,16 @@
 
 <div class="collapse navbar-collapse">
   <ul class="nav navbar-nav">
+
+    <li><a (click)="activeComponent = 'dc'">APPLICATION</a></li>
+    <li><a (click)="activeComponent = 'help'">HELP</a></li>
+    <li><a (click)="activeComponent = 'info'">MORE INFO</a></li>
+
+    <!--
     <li><a [routerLink]="['/dc']" routerLinkActive="active">APPLICATION</a></li>
     <li><a [routerLink]="['/help']" routerLinkActive="active">HELP</a></li>
     <li><a [routerLink]="['/info']" routerLinkActive="active">MORE INFO</a></li>
+    -->
   </ul>
 </div>
 		
@@ -23,7 +30,13 @@
 </div>
 </div>
 
+<dc [hidden]="activeComponent !== 'dc'"></dc>
+<help [hidden]="activeComponent !== 'help'"></help>
+<info [hidden]="activeComponent !== 'info'"></info>
+
+<!--
 <router-outlet></router-outlet>
+-->
 
 <!--
 <div class="jumbotron well well-lg">

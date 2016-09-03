@@ -10,4 +10,5 @@ import { DcComponent } from './dc.component';
 })
 export class AppComponent {
   title = 'DATA COMMANDR';
+  activeComponent = 'dc';
 }
