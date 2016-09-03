@@ -9,7 +9,9 @@
   <div class="panel-body">
 
     <!-- SCHEMA LIST -->
-    <div class="list-group col-sm-6">
+
+    <div class="col-sm-6">
+    <div class="list-group" *ngIf="selectedAccount">
       <a *ngFor="let spa of schemas"
         class="list-group-item"
         [class.active]="selectedSchema && spa.id === selectedSchema.id" 
@@ -25,10 +27,10 @@
         <h4 class="list-group-item-heading">[ADD NEW SCHEMA]</h4>
       </a>
     </div>
+    </div>
 
     <!-- SCHEMA PROPERTIES -->
     <div class="col-sm-6">
-
     <form *ngIf="selectedSchema" (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
 
       <div class="form-group">
@@ -56,22 +58,8 @@
       <input id="file-upload" name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
     </div>
     <button type="submit" class="btn btn-success pull-right" [disabled]="!fileToUpload"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</button>
+
     </form>
-
-  <!-- [(ngModel)] doesn’t work.  In the current version of Angular 2, it doesn’t map correctly which is why I had to cheat with the change event. -->
-  <!--
-  <input type="file" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
-  <button type="button" class="btn btn-success" [disabled]="!fileToUpload" (click)="onUploadClick()">Upload</button>
-  -->
-
-  <!--
-  <label for="file">Select a File to Upload</label>
-
-  <input type="file" id="msds" name="msds" ng-model="msds" />
-  <input type="file" ng-model-instant id="file" multiple onchange="angular.element(this).scope().setFiles(this)" />
-  <button ng-click="uploadFile()">Upload</button>
-  -->
-
     </div>
 
   </div>

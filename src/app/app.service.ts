@@ -36,25 +36,21 @@ export class AppService {
   constructor (private http: Http) {
   }
 
+  //
   // URL to web API
-  private scUrl = 'http://localhost:8000/api';
+  //
+  private serviceHost = 'http://localhost:8000';
+  //private serviceHost = 'http://dc.conceptoriented.com:8000';
+  private url = this.serviceHost + '/api';
 
-  // Alternatively (without in-mem server), we can point to a file 
-  //private scSchemaUrl = 'app/mock-spaces.json';
-  //private scTableUrl = 'app/mock-tables.json';
-  //private scColumnUrl = 'app/mock-columns.json';
-  
-  // With in-mem server, we point to table names used as a key in dictionary
-  // It is configured in main.ts. We need to create a class which contains (and initializes the dict with data)
-  // The name in this url must correspond to the name in the sample database  
-  private scSchemaUrl = 'app/schemas';
-  private scTableUrl = 'app/tables';
-  private scColumnUrl = 'app/columns';
+  //
+  // Account, uer, session, authentication
+  //
 
-  login():Promise<String> {
+  getAccount():Promise<Object> {
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.scUrl + "/login", options)
+    return this.http.get(this.url + "/account", options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -68,7 +64,7 @@ export class AppService {
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.scUrl + "/schemas", options)
+    return this.http.get(this.url + "/schemas", options)
         .toPromise()
         .then(res => Schema.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -87,7 +83,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.scUrl + "/schemas", body, options)
+    return this.http.post(this.url + "/schemas", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -100,7 +96,7 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.scUrl + "/schemas" + "/" + sch.id, body, options)
+    return this.http.put(this.url + "/schemas" + "/" + sch.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -112,7 +108,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
 
-    return this.http.delete(this.scUrl + "/schemas" + "/" + sch.id, options)
+    return this.http.delete(this.url + "/schemas" + "/" + sch.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -128,7 +124,7 @@ export class AppService {
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.scUrl + "/schemas/" + id + "/tables", options)
+    return this.http.get(this.url + "/schemas/" + id + "/tables", options)
         .toPromise()
         .then(res => Table.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -150,7 +146,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.scUrl + "/schemas/" + id + "/tables", body, options)
+    return this.http.post(this.url + "/schemas/" + id + "/tables", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -163,7 +159,7 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.scUrl + "/tables" + "/" + tab.id, body, options)
+    return this.http.put(this.url + "/tables" + "/" + tab.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -175,7 +171,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
 
-    return this.http.delete(this.scUrl + "/tables" + "/" + tab.id, options)
+    return this.http.delete(this.url + "/tables" + "/" + tab.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -191,7 +187,7 @@ export class AppService {
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.scUrl + "/schemas/" + id + "/columns", options)
+    return this.http.get(this.url + "/schemas/" + id + "/columns", options)
         .toPromise()
         .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -229,7 +225,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.scUrl + "/schemas/" + id + "/columns", body, options)
+    return this.http.post(this.url + "/schemas/" + id + "/columns", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -243,7 +239,7 @@ export class AppService {
 
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.scUrl + "/columns" + "/" + col.id, body, options)
+    return this.http.put(this.url + "/columns" + "/" + col.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -255,7 +251,7 @@ export class AppService {
 
     let options = new RequestOptions({ headers: headers, body: "", withCredentials: true });
 
-    return this.http.delete(this.scUrl + "/columns" + "/" + col.id, options)
+    return this.http.delete(this.url + "/columns" + "/" + col.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -269,7 +265,7 @@ export class AppService {
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.scUrl + "/tables/" + table.id + "/data/json", options)
+    return this.http.get(this.url + "/tables/" + table.id + "/data/json", options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
@@ -286,7 +282,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.scUrl + "/tables/" + table.id + "/data/csv", body, options)
+    return this.http.post(this.url + "/tables/" + table.id + "/data/csv", body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -298,7 +294,7 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
 
-    return this.http.delete(this.scUrl + "/tables/" + table.id + "/data", options)
+    return this.http.delete(this.url + "/tables/" + table.id + "/data", options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -331,7 +327,7 @@ export class AppService {
             }
         };
 
-        xhr.open('POST', this.scUrl + "/assets/", true);
+        xhr.open('POST', this.url + "/assets/", true);
         xhr.send(formData);
     });
 

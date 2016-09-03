@@ -20,28 +20,58 @@ export class DcComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: clean the state (no login)
+    //this.clean();
+    this.getAccount();
+  }
+
+  ngOnDestroy() {
+    ; // Notify server
+  }
+
+  clean() {
+    this.selectedAccount = undefined;
+
     this.schemas = [];
     this.selectedSchema = undefined; 
+
     this.tables = [];
     this.selectedTable = undefined; 
+
     this.columns = [];
     this.selectedColumn = undefined;
 
-    let loginStatus = this.login();
+    this.allRecords = new Map<string,any[]>();
+    this.records = [];
   }
 
-  login() {
-    this._scService.login().then(
-      (result) => {
-        this.getSchemas();
-      },
-      (error) => {
-        this._toastr.error('ERROR: ' + error.message);
-      }
-      );
+  //
+  // Account, user, session, authentication
+  //
+  
+  selectedAccount: Object;
 
-    return true;
+  getAccount() {
+    this.clean();
+    this._scService.getAccount().then(
+      d => {
+        if(d["code"]) { // Error
+          let msg: string = d["message"] || 'Error creating schema.';
+          msg += ' ' + (d["message2"] || '');
+          this._toastr.error(msg);
+        }
+        else { // Success
+          if(!this.selectedAccount || this.selectedAccount['id'] != d['id']) {
+            this._toastr.info('New session created.');
+          }
+          this.selectedAccount = d;
+
+          this.getSchemas();
+        }
+      },
+      e => {
+        this._toastr.error('ERROR: ' + e.message);
+      }
+    );
   }
 
   //
@@ -59,15 +89,14 @@ export class DcComponent implements OnInit {
 
         if(schemas instanceof Array) { // Success
           this.schemas = schemas;
+          if(schemas.length > 0) this.selectedSchema = schemas[0]; 
           this.getTables();
-
-          this._toastr.info('New session created.');
         }
         else if(schemas instanceof Object) { // Error
           let code: ServiceErrorCode = schemas["code"] || 0;
           if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.login();
+            this.getAccount();
           }
         }
       }).catch(
@@ -190,7 +219,7 @@ export class DcComponent implements OnInit {
           let code: ServiceErrorCode = tables["code"] || 0;
           if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.login();
+            this.getAccount();
           }
         }
       }).catch(
@@ -284,7 +313,7 @@ export class DcComponent implements OnInit {
           let code: ServiceErrorCode = columns["code"] || 0;
           if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.login();
+            this.getAccount();
           }
         }
       }).catch(
@@ -346,7 +375,7 @@ export class DcComponent implements OnInit {
       col.name = "New Column";
       col.input.id = this.selectedTable.id;
       col.input.table = this.selectedTable;
-      let type = this.tables.find(t => t.name === "String");
+      let type = this.tables.find(t => t.name === "Double");
       col.output.id = type.id;
       col.output.table = type;
 
@@ -405,7 +434,7 @@ export class DcComponent implements OnInit {
   // Read
 
   allRecords = new Map<string,any[]>(); // For each table is, we store its records in this cache
-  records: any = [] // Records of the selected table only (displayed in the table view)
+  records: any = []; // Records of the selected table only (displayed in the table view)
 
   getRecords() {
     if(this.selectedTable) {
