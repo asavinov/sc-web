@@ -21,13 +21,14 @@ import { AppComponent }  from './app.component';
 import { DcComponent }  from './dc.component';
 import { HelpComponent } from './help.component';
 import { InfoComponent } from './info.component';
+import { AboutComponent } from './about.component';
 
 import { AppService }  from './app.service';
 
 @NgModule({
   imports: [
     BrowserModule, 
-    FormsModule, // !!! Do not add NgModel — or the FORMS_DIRECTIVES — to the AppModule metadata's declarations! These directives belong to the FormsModule. Components, directives and pipes belong to one module — and one module only.
+    FormsModule,
     HttpModule
     //routing
     ],
@@ -42,52 +43,10 @@ import { AppService }  from './app.service';
     AppComponent,
     DcComponent,
     HelpComponent,
-    InfoComponent
+    InfoComponent,
+    AboutComponent
     ],
   // WORKAROUND: we need only AppComponent. We add also other components because otherwise production build does not work
-  bootstrap: [ AppComponent, DcComponent, InfoComponent, HelpComponent ]
+  bootstrap: [ AppComponent, DcComponent, InfoComponent, HelpComponent, AboutComponent ]
 })
 export class AppModule { }
-
-
-/* OLD (w/o modules). Previously it was in main.ts
-import { enableProdMode } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-
-import { provide } from '@angular/core'; // !!! OLD: Do I need it
-
-import {disableDeprecatedForms, provideForms} from '@angular/forms';
-import {FORM_DIRECTIVES, FormBuilder, Validators, NgForm} from '@angular/forms';
-
-import { HTTP_PROVIDERS } from '@angular/http';
-import { RequestOptions, XHRBackend } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-
-// Imports for loading & configuring the in-memory web api
-//import { InMemoryBackendConfig, InMemoryBackendService, SEED_DATA }  from 'angular2-in-memory-web-api';
-//import { ScSampleData }   from './sc-sample-data';
-
-import { APP_ROUTER_PROVIDERS } from './app/app.routes'; // Our app-specific route definitions are in a separate file
-
-import { AppComponent } from './app/app.component';
-
-
-// depending on the env mode, enable prod mode or add debugging modules
-if (process.env.ENV === 'build') {
-  enableProdMode();
-}
-
-
-bootstrap(AppComponent, [
-    disableDeprecatedForms(), provideForms(),
-    // These are dependencies of our App
-    APP_ROUTER_PROVIDERS, // Inject our app-specific route definitions for displaying components depending on URL
-    HTTP_PROVIDERS,
-//    { provide: XHRBackend, useClass: InMemoryBackendService },    // in-mem server will be used to serve http requests
-//    { provide: SEED_DATA,  useClass: ScSampleData },              // data to be used by in-mem server
-//    { provide: InMemoryBackendConfig, useValue: { delay: 1000, rootPath: "api" } }, // config. delay in ms
-//    { provide: RequestOptions, useValue: { url: "http://localhost:8080" } },
-//    provide('webApiBaseUrl', { useValue: 'http://localhost:8080' })
-    ])
-  .catch(err => console.error(err));
-*/

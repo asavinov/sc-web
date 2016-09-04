@@ -2,7 +2,7 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>Working with Tables</b></h1>
+    <h1 class="panel-title text-center"><b>WORKING WITH TABLES</b></h1>
   </div>
   <div class="panel-body">
     In <span class="dc">Data Commandr</span>, data is organized into many tables which are displayed in the TABLES panel as a list. 
@@ -12,7 +12,7 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>Working with Columns</b></h1>
+    <h1 class="panel-title text-center"><b>WORKING WITH COLUMNS</b></h1>
   </div>
   <div class="panel-body">
     <span class="dc">Data Commandr</span> is a column-oriented system because all data is stored and processed in columns. 
@@ -23,21 +23,32 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>Column Formulas</b></h1>
+    <h1 class="panel-title text-center"><b>COLUMN FORMULAS</b></h1>
   </div>
   <div class="panel-body">
-    Column formulas are the primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed. 
+    <p>Column formulas are the primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed. 
     Data in columns can be either uploaded or computed from other columns. 
     If the data has to be computed then the user has to provide a formula that will be used to derive its value from other columns.
-    Column formula is an arithmetic expression which is composed of other column name and operations. 
-    Column names used in formulas must be written in square brackets. 
+    Column formula is an arithmetic expression which is composed of other column name and operations.
+    </p>
+    <p>Column names used in formulas must be written in square brackets. 
     For example, if we want to compute the sum of two existing columns then the (third) column formula has to be defined as follows: <code>[Column 1] + [Column 2]</code>
+    </p>
+    <p>Column formulas can use the following operators: 
+    addition <code>2+2</code>, subtraction <code>2-2</code>, multiplication <code>2*2</code>, division <code>2/2</code>, 
+    exponential <code>2^2</code>, unary minus or plus <code>+2-(-2)</code>, modulo <code>2%2</code>.
+    </p>
+    <p>Column formulas can use the following functions: 
+    <code>abs</code>, <code>acos</code>, <code>asin</code>, <code>atan</code>, <code>cbrt</code>, <code>ceil</code>, 
+    <code>cos</code>, <code>cosh</code>, <code>exp</code>, <code>floor</code>, <code>log</code>, <code>log2</code>, <code>log10</code>, 
+    <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, <code>signum</code>. 
+    </p>
   </div>
 </div>
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>Displaying Data</b></h1>
+    <h1 class="panel-title text-center"><b>EVALUATING AND DISPLAYING DATA</b></h1>
   </div>
   <div class="panel-body">
     When a formula is defined or modified then it is not immediately evaluated and the column data is not updated. 
@@ -48,7 +59,7 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>Uploading Data</b></h1>
+    <h1 class="panel-title text-center"><b>UPLOADING DATA</b></h1>
   </div>
   <div class="panel-body">
     Columns whithout a formula get their data from outside by uploading it to the selected table. 
