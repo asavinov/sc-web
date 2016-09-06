@@ -4,11 +4,11 @@ import { FormsModule }        from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
 
-import {TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'; // Usage: http://valor-software.com/ng2-bootstrap/#/tooltip
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+
+import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 require('node_modules/bootstrap/dist/css/bootstrap.min.css');
-
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
 
 //
@@ -29,17 +29,17 @@ import { AppService }  from './app.service';
   imports: [
     BrowserModule, 
     FormsModule,
-    HttpModule
+    HttpModule,
+    ToastModule,
+    TooltipModule
     //routing
     ],
   providers: [
-    AppService,
-    ToastsManager
+    AppService
     //appRoutingProviders
     ],
   exports: [ AppComponent ],
   declarations: [
-    TOOLTIP_DIRECTIVES,
     AppComponent,
     DcComponent,
     HelpComponent,

@@ -39,8 +39,8 @@ export class AppService {
   //
   // URL to web API
   //
-  //private serviceHost = 'http://localhost:8000';
-  private serviceHost = 'http://dc.conceptoriented.com:8000';
+  private serviceHost = 'http://localhost:8000';
+  //private serviceHost = 'http://dc.conceptoriented.com:8000';
   private url = this.serviceHost + '/api';
 
   //
