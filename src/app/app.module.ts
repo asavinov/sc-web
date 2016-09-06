@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 require('node_modules/bootstrap/dist/css/bootstrap.min.css');
 require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
@@ -31,7 +32,8 @@ import { AppService }  from './app.service';
     FormsModule,
     HttpModule,
     ToastModule,
-    TooltipModule
+    TooltipModule,
+    ModalModule
     //routing
     ],
   providers: [
@@ -46,7 +48,6 @@ import { AppService }  from './app.service';
     InfoComponent,
     AboutComponent
     ],
-  // WORKAROUND: we need only AppComponent. We add also other components because otherwise production build does not work
-  bootstrap: [ AppComponent, DcComponent, InfoComponent, HelpComponent, AboutComponent ]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

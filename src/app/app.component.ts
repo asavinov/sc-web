@@ -1,9 +1,4 @@
-import { Component } from '@angular/core';
-
-import { DcComponent } from './dc.component';
-import { HelpComponent } from './help.component';
-import { InfoComponent } from './info.component';
-import { AboutComponent } from './about.component';
+import { Component, ViewContainerRef } from '@angular/core';
 
 @Component({
   //moduleId: module.id, // Not needed when using Webpack and also produces error in rc5
@@ -14,4 +9,10 @@ import { AboutComponent } from './about.component';
 export class AppComponent {
   title = 'DATA COMMANDR';
   activeComponent = 'dc';
+
+  public constructor(public viewContainerRef:ViewContainerRef) {
+    // HACK: See https://valor-software.com/ng2-bootstrap/#/modals
+    // You need this small hack in order to catch application root view container ref
+    this.viewContainerRef = viewContainerRef;
+  }
 }
