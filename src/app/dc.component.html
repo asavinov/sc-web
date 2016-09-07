@@ -9,7 +9,7 @@
   <!-- SCHEMA LIST -->
   <div class="panel-body">
     <div class="col-sm-6">
-    <div class="list-group" *ngIf="selectedAccount">
+    <div *ngIf="selectedAccount" class="list-inline">
       <a *ngFor="let spa of schemas"
         class="list-group-item"
         [class.active]="selectedSchema && spa.id === selectedSchema.id" 
@@ -59,22 +59,20 @@
     </form>
     </div>
     -->
+
   </div>
-  <div class="panel-footer">
-    <button type="button" class="btn btn-primary" (click)="schemaModal.show()" ><span class="glyphicon glyphicon-plus"></span> Add</button>
-    <button type="button" class="btn btn-primary" [disabled]="!selectedSchema || !selectedSchema.id" (click)="schemaModal.show()"><span class="glyphicon glyphicon-pencil"></span> Edit...</button>
-    <button type="button" class="btn btn-warning" [disabled]="!selectedSchema || !selectedSchema.id" (click)="onSchemaDelete()" ><span class="glyphicon glyphicon-trash"></span> Delete</button>
+  <div class="panel-footer text-right">
+    <button type="button" class="btn btn-primary" (click)="schemaModal.show()" ><span class="glyphicon glyphicon-plus"></span> Add Schema...</button>
+    <button type="button" class="btn btn-primary" [disabled]="!selectedSchema || !selectedSchema.id" (click)="schemaModal.show()"><span class="glyphicon glyphicon-pencil"></span> Edit Schema...</button>
+    <button type="button" class="btn btn-warning" [disabled]="!selectedSchema || !selectedSchema.id" (click)="onSchemaDelete()" ><span class="glyphicon glyphicon-trash"></span> Delete Schema</button>
   </div>
 
 </div>
 
-<!--
-*ngIf="selectedSchema" -> causes exception "Cannot set property stack of [object Object] which has only a getter"
-without ngIf -> causes exception [(ngModel)]="selectedSchema.id" of input fields (probably before selectedSchema is assigned)
--->
-
 <!-- SCHEMA DIALOG -->
-<div bsModal class="modal fade" #schemaModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
+<!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
+<!-- NOTE: We cannot show/hide dialog from code - only from html -->
+<div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
@@ -84,8 +82,8 @@ without ngIf -> causes exception [(ngModel)]="selectedSchema.id" of input fields
         </button>
         <h4 class="modal-title">Edit Schema</h4>
       </div>
-<!--
-      <div class="modal-body">
+
+      <div class="modal-body" *ngIf="selectedSchema">
         <form (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
           <div class="form-group">
             <label for="id">Id</label>
@@ -97,7 +95,7 @@ without ngIf -> causes exception [(ngModel)]="selectedSchema.id" of input fields
           </div>
         </form>
       </div>
--->
+
       <div class="modal-footer">
         <div class="text-right">
           <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span> Ok</button>
@@ -119,7 +117,7 @@ without ngIf -> causes exception [(ngModel)]="selectedSchema.id" of input fields
 
     <!-- TABLE LIST -->
     <div class="col-sm-6">
-    <div class="list-group" *ngIf="selectedSchema && selectedSchema.id.length != 0">
+    <div *ngIf="selectedSchema && selectedSchema.id.length != 0" class="list-group">
       <a class="list-group-item"
         *ngFor="let tab of nonprimitiveTables()"
         [class.active]="selectedTable && selectedTable.id === tab.id" 
@@ -179,7 +177,7 @@ without ngIf -> causes exception [(ngModel)]="selectedSchema.id" of input fields
 
     <!-- COLUMN LIST -->
     <div class="col-sm-6">
-    <div class="list-group" *ngIf="selectedTable && selectedTable.id.length != 0">
+    <div *ngIf="selectedTable && selectedTable.id.length != 0" class="list-group">
       <a class="list-group-item"
         *ngFor="let col of columns"
         [class.active]="selectedColumn && selectedColumn.id === col.id" 

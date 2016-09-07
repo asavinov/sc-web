@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 
@@ -15,6 +15,16 @@ import { Column } from './column';
 })
 export class DcComponent implements OnInit {
 
+/*
+  //@ViewChild(SchemaModal) schemaDialog: SchemaModal;
+  @ViewChild('schemaDialog') public schemaDialog:SchemaModal;
+  @ViewChild('schemaModal') public schemaModal: ModalDirective;
+  schshow(): any {
+    this.schemaDialog.show();
+    this.schemaModal.show();
+  }
+  isshown: boolean = true;
+*/
   constructor(private _scService: AppService, public _toastr: ToastsManager) {
     //this.filesToUpload = [];
   }
