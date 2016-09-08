@@ -76,10 +76,12 @@
 
 <!-- SCHEMA DIALOG -->
 <!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
+<!-- NOTE: We could try to use ngIf to hide/show modal -->
 <!-- NOTE: We cannot show/hide dialog from code - only from html -->
 <div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="selectedSchema">
+      <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
 
       <div class="modal-header">
         <button type="button" class="close" (click)="schemaModal.hide()" aria-label="Close">
@@ -88,8 +90,7 @@
         <h4 class="modal-title">Edit Schema</h4>
       </div>
 
-      <div class="modal-body" *ngIf="selectedSchema">
-        <form (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
+      <div class="modal-body">
           <div class="form-group">
             <label for="id">Id</label>
             <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
@@ -98,14 +99,16 @@
             <label for="name">Name</label> <span tooltip="Unique name of the schema" tooltipPlacement="right" class="glyphicon glyphicon-info-sign"></span>
             <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
           </div>
-        </form>
       </div>
 
       <div class="modal-footer">
         <div class="text-right">
+          <button type="button" class="btn btn-default" (click)="schemaModal.hide()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok"></span> Ok</button>
         </div>
       </div>
+
+      </form>
     </div>
   </div>
 </div>

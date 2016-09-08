@@ -4,19 +4,19 @@
 
 .dc {
   font-weight: bolder;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
   font-variant: small-caps;
   color: #4f0000; 
 }
 
 body {
   /* padding-bottom: 40px; */
-  font-size: 18px;
-  font-weight: 300;
-  color: #00003f;
+  /* font-size: 18px; */
+  /* font-weight: 300; */
+  /* color: #00003f; */
   /* font-family: "Open Sans", Helvetica, Arial, serif; */
   /* font-family: "PT Sans", helvetica, arial, serif; */
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; */
 }
 
 .container {
