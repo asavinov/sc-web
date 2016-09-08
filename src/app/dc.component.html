@@ -8,7 +8,7 @@
   </div>
   <!-- SCHEMA LIST -->
   <div class="panel-body">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
     <div *ngIf="selectedAccount" class="list-inline">
       <a *ngFor="let spa of schemas"
         class="list-group-item"
@@ -16,6 +16,10 @@
         (click)="onSelectSchema(spa)"
         >
         <h4 class="list-group-item-heading">{{spa.name}}</h4>
+        <div *ngIf="selectedSchema && spa.id === selectedSchema.id" class="text-right">
+          <button type="button" class="btn btn-warning" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><span class="glyphicon glyphicon-trash"></span> Delete Schema...</button>
+          <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><span class="glyphicon glyphicon-pencil"></span> Edit Schema...</button>
+        </div>
       </a>
       <a 
         class="list-group-item"
@@ -23,6 +27,9 @@
         (click)="onSelectSchema(null)"
         >
         <h4 class="list-group-item-heading">[ADD NEW SCHEMA]</h4>
+        <div *ngIf="selectedSchema && selectedSchema.id.length === 0" class="text-right">
+          <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><span class="glyphicon glyphicon-plus"></span> New Schema...</button>
+        </div>
       </a>
     </div>
     </div>
@@ -61,10 +68,8 @@
     -->
 
   </div>
-  <div class="panel-footer text-right">
-    <button type="button" class="btn btn-primary" (click)="schemaModal.show()" ><span class="glyphicon glyphicon-plus"></span> Add Schema...</button>
-    <button type="button" class="btn btn-primary" [disabled]="!selectedSchema || !selectedSchema.id" (click)="schemaModal.show()"><span class="glyphicon glyphicon-pencil"></span> Edit Schema...</button>
-    <button type="button" class="btn btn-warning" [disabled]="!selectedSchema || !selectedSchema.id" (click)="onSchemaDelete()" ><span class="glyphicon glyphicon-trash"></span> Delete Schema</button>
+  <div class="panel-footer text-center">
+      <pre class="card card-block card-header">Number of schemas: {{schemas.length}}</pre>
   </div>
 
 </div>
