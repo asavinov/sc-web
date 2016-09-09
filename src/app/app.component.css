@@ -27,23 +27,21 @@ body {
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
-/* Special class on .container surrounding .navbar, used for positioning it into place. */
-.navbar-wrapper {
-  position: relative;
-  z-index: 15;
-}
-
-.navbar .brand {
+.navbar-brand {
+  padding: 0;
+  /* padding: 50px; */
   /*position: fixed;*/
   /*overflow: visible;*/
-  /* padding: 50px; */
   /*style="padding:5px;" */
   /*padding-bottom: 5px;*/
   /*padding-top: 5px;*/
 }
 
-.navbar .logo-header {
-  padding: 10px;
+.navbar-nav .nav-link {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 50px;
+  line-height: 50px;
 }
 
 /*
@@ -64,23 +62,5 @@ nav a:hover {
 }
 nav a.router-link-active {
   color: #039be5;
-}
-*/
-
-
-
-
-
-
-/* OLD
-h1 {
-  font-size: 1.2em;
-  color: #999;
-  margin-bottom: 0;
-}
-h2 {
-  font-size: 2em;
-  margin-top: 0;
-  padding-top: 0;
 }
 */

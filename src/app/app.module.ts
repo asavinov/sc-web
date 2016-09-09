@@ -9,9 +9,6 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-require('node_modules/bootstrap/dist/css/bootstrap.min.css');
-require('node_modules/ng2-toastr/bundles/ng2-toastr.min.css');
-
 //
 // App-specific
 //

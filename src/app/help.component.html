@@ -1,31 +1,31 @@
-<div class="panel-group" style="margin-left: 10px; margin-right: 10px;">
+<div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px;">
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>WORKING WITH TABLES</b></h1>
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>WORKING WITH TABLES</b></h4>
   </div>
-  <div class="panel-body">
+  <div class="card-block">
     In <span class="dc">Data Commandr</span>, data is organized into many tables which are displayed in the TABLES panel as a list. 
     Each table must have a unique name.
   </div>
 </div>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>WORKING WITH COLUMNS</b></h1>
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>WORKING WITH COLUMNS</b></h4>
   </div>
-  <div class="panel-body">
+  <div class="card-block">
     <span class="dc">Data Commandr</span> is a column-oriented system because all data is stored and processed in columns. 
     All existing columns of the selected tables are displayed in the COLUMNS panel. Each column must have a unique name within its table. 
     A column is characterized by its type which is type of data it is intended to store.
   </div>
 </div>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>COLUMN FORMULAS</b></h1>
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>COLUMN FORMULAS</b></h4>
   </div>
-  <div class="panel-body">
+  <div class="card-block">
     <p>Column formulas are the primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed. 
     Data in columns can be either uploaded or computed from other columns. 
     If the data has to be computed then the user has to provide a formula that will be used to derive its value from other columns.
@@ -46,22 +46,22 @@
   </div>
 </div>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>EVALUATING AND DISPLAYING DATA</b></h1>
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>EVALUATING AND DISPLAYING DATA</b></h4>
   </div>
-  <div class="panel-body">
+  <div class="card-block">
     When a formula is defined or modified then it is not immediately evaluated and the column data is not updated. 
     The result of all column of one table can be visualized by explicitly evaluating the currently selected table.
     The result is then visualized as a number of rows where values have been either uploaded or computed from column formulas. 
   </div>
 </div>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title text-center"><b>UPLOADING DATA</b></h1>
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>UPLOADING DATA</b></h4>
   </div>
-  <div class="panel-body">
+  <div class="card-block">
     Columns whithout a formula get their data from outside by uploading it to the selected table. 
     Currently <span class="dc">Data Commandr</span> supports import from CSV format. 
     This means that the first row of the text has to be a list of column names, for example, <code>Column 1, Column 2</code>. 

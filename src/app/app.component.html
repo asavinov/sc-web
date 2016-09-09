@@ -1,4 +1,40 @@
-<nav class="navbar navbar-default "></nav>
+<nav class="navbar navbar-light navbar-static-top bg-faded" role="navigation">
+
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc'">
+      <img class="logo-header" src="img/dc-logo.png" alt="Data Commandr">
+  </a>
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc'">
+      <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
+  </a>
+
+  <ul class="nav navbar-nav">
+    <li class="nav-item" [class.active]="activeComponent == 'dc'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc'"><b>APPLICATION</b></a>
+    </li>
+    <li class="nav-item" [class.active]="activeComponent == 'help'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'help'"><b>HELP</b></a>
+    </li>
+    <li class="nav-item" [class.active]="activeComponent == 'info'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'info'"><b>MORE INFO</b></a>
+    </li>
+    <li class="nav-item" [class.active]="activeComponent == 'about'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'about'"><b>ABOUT</b></a>
+    </li>
+  </ul>
+
+</nav>
+
+<dc [hidden]="activeComponent != 'dc'"></dc>
+<help [hidden]="activeComponent != 'help'"></help>
+<info [hidden]="activeComponent != 'info'"></info>
+<about [hidden]="activeComponent != 'about'"></about>
+<!--
+<router-outlet></router-outlet>
+-->
+
+<!-- OLD - bootstrap 3 
+<nav class="navbar navbar-default "></nav> 
+
 <div class="navbar navbar-fixed-top navbar-default" role="navigation">
 <div class="navbar-inner">
 <div class="container">
@@ -23,23 +59,10 @@
     <li [class.active]="activeComponent == 'info'"><a (click)="activeComponent = 'info'"><b>MORE INFO</b></a></li>
     <li [class.active]="activeComponent == 'about'"><a (click)="activeComponent = 'about'"><b>ABOUT</b></a></li>
 
-    <!--
-    <li><a [routerLink]="['/dc']" routerLinkActive="active">APPLICATION</a></li>
-    <li><a [routerLink]="['/help']" routerLinkActive="active">HELP</a></li>
-    <li><a [routerLink]="['/info']" routerLinkActive="active">MORE INFO</a></li>
-    -->
   </ul>
 </div>
 		
 </div>
 </div>
 </div>
-
-<dc [hidden]="activeComponent != 'dc'"></dc>
-<help [hidden]="activeComponent != 'help'"></help>
-<info [hidden]="activeComponent != 'info'"></info>
-<about [hidden]="activeComponent != 'about'"></about>
-
-<!--
-<router-outlet></router-outlet>
 -->

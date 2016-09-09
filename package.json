@@ -43,7 +43,8 @@
     "zone.js": "^0.6.17",
 
     "ng2-bootstrap": "1.1.1",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-alpha.4",
+    "font-awesome": "4.6.3",
     "ng2-toastr": "^0.4.2"
 	},
   "devDependencies": {
@@ -79,7 +80,9 @@
     "rimraf": "^2.5.2",
     "sass-loader": "^4.0.0",
     "shelljs": "^0.7.0",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
+    "less": "^2.7.1",
+    "less-loader": "2.2.3",
     "ts-helpers": "^1.1.1",
     "ts-loader": "^0.8.1",
     "tslint": "^3.7.4",
