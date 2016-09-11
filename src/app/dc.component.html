@@ -225,7 +225,7 @@
       <div class="form-group">
         <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
         <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
-          <option *ngFor="let tab of primitiveTables()" [ngValue]="tab.id">{{tab.name}}</option>
+          <option *ngFor="let tab of tables" [disabled]="tab.id == selectedTable.id" [ngValue]="tab.id">{{tab.name}}</option>
         </select>
       </div>
 
@@ -273,11 +273,13 @@
     <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
         <thead class="thead-inverse">
           <tr>
+              <th class="bg-primary"><h4>#</h4></th>
               <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let row of records">
+            <td>{{row['_id']}}</td>
             <td *ngFor="let col of columns">{{row[col.name]}}</td>
           </tr>
         </tbody>

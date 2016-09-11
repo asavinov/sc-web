@@ -215,6 +215,12 @@ export class DcComponent implements OnInit {
     return this.tables.filter(t => !t.isPrimitve());
   }
 
+  selectedTablePossibleTypes(): Table[] {
+    if(!this.tables) return undefined;
+    if(!this.selectedTable) return undefined;
+    return this.tables.filter(t => !t.isPrimitve());
+  }
+
   getTables() {
     this._scService.getTables(this.selectedSchema).then(
       tables => {
