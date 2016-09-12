@@ -1,5 +1,90 @@
 <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px;">
 
+<!-- <div class="card-group"> stretches to have full width and ignore card max-width -->
+
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>TEST</b></h4>
+  </div>
+  <div class="card">
+
+
+<!-- <div class="card" style="overflow: auto; max-height: 300px !important;"> -->
+<!-- style="white-space:nowrap;"  it is for line items -->
+<!--
+.nowrap {
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space: nowrap;
+}
+style="overflow-x:auto; overflow-y:hidden; white-space: nowrap;"
+
+display: inline-flex; --- ???
+-->
+<!--
+white-space: normal;
+style="word-wrap: break-word !important;"
+-->
+
+<!-- how to use list-group-item and a -->
+
+
+
+<div class="card dc-horizontal-list">
+<ul class="list-inline">
+
+<!--
+      <a *ngFor="let spa of schemas"
+        class="list-group-item"
+        [class.active]="selectedSchema && spa.id === selectedSchema.id" 
+        (click)="onSelectSchema(spa)"
+        >
+active: card-inverse + card-primary
+
+-->
+
+<a class="list-inline-item">
+<div class="card dc-horizontal-list-item">
+  <div class="card-header">Card 1 Header</div>
+  <div class="card-block">
+    <h4 class="card-title">Card title that wraps to a new line asdfasdf asdfasdfas adsfasdf</h4>
+    <p class="card-text">Description with text Description with text Description with text Description with text .</p>
+  </div>
+</div>
+</a>
+
+<a class="list-inline-item">
+<div class="card dc-horizontal-list-item" style="border-width:0.5em">
+  <div class="card-header">Card 1 Header</div>
+  <div class="card-block">
+    <h4 class="card-title">Title</h4>
+    <p class="card-text">Description with text.</p>
+  </div>
+</div>
+</a>
+
+<a class="list-inline-item">
+<div class="card card-primary dc-horizontal-list-item">
+  <div class="card-header">Card 3 Header</div>
+  <div class="card-block">
+    <h4 class="card-title">Title</h4>
+    <p class="card-text">Description with text.</p>
+  </div>
+</div>
+</a>
+
+</ul>
+</div>
+
+  </div>
+  <div class="card-footer text-xs-center">
+      <div class="card-title">FOOTER</div>
+  </div>
+</div>
+
+
+
 <!-- ----------- -->
 <!-- SCHEMA PANEL -->
 <div class="card">
@@ -8,8 +93,8 @@
   </div>
   <!-- SCHEMA LIST -->
   <div class="card-block">
-    <div class="col-sm-12">
-    <div *ngIf="selectedAccount" class="list-inline">
+
+    <div *ngIf="selectedAccount" class="list-group">
       <a *ngFor="let spa of schemas"
         class="list-group-item"
         [class.active]="selectedSchema && spa.id === selectedSchema.id" 
@@ -32,7 +117,7 @@
         </div>
       </a>
     </div>
-    </div>
+
     <!-- SCHEMA PROPERTIES -->
     <!-- DEPRECATED
     <div class="col-sm-6">
@@ -256,7 +341,7 @@
 
 
 
-<!-- ------------ -->
+<!-- ---------- -->
 <!-- DATA PANEL -->
 <div class="card">
   <div class="card-header">
