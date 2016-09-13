@@ -3,13 +3,6 @@
 <!-- <div class="card-group"> stretches to have full width and ignore card max-width -->
 
 
-<div class="card">
-  <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>TEST</b></h4>
-  </div>
-  <div class="card">
-
-
 <!-- <div class="card" style="overflow: auto; max-height: 300px !important;"> -->
 <!-- style="white-space:nowrap;"  it is for line items -->
 <!--
@@ -29,20 +22,16 @@ style="word-wrap: break-word !important;"
 
 <!-- how to use list-group-item and a -->
 
+<!--
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-xs-center"><b>TEST</b></h4>
+  </div>
+  <div class="card">
 
 
 <div class="card dc-horizontal-list">
 <ul class="list-inline">
-
-<!--
-      <a *ngFor="let spa of schemas"
-        class="list-group-item"
-        [class.active]="selectedSchema && spa.id === selectedSchema.id" 
-        (click)="onSelectSchema(spa)"
-        >
-active: card-inverse + card-primary
-
--->
 
 <a class="list-inline-item">
 <div class="card dc-horizontal-list-item">
@@ -55,7 +44,7 @@ active: card-inverse + card-primary
 </a>
 
 <a class="list-inline-item">
-<div class="card dc-horizontal-list-item" style="border-width:0.5em">
+<div class="card dc-horizontal-list-item dc-list-item-active">
   <div class="card-header">Card 1 Header</div>
   <div class="card-block">
     <h4 class="card-title">Title</h4>
@@ -65,7 +54,7 @@ active: card-inverse + card-primary
 </a>
 
 <a class="list-inline-item">
-<div class="card card-primary dc-horizontal-list-item">
+<div class="card dc-horizontal-list-item">
   <div class="card-header">Card 3 Header</div>
   <div class="card-block">
     <h4 class="card-title">Title</h4>
@@ -82,19 +71,60 @@ active: card-inverse + card-primary
       <div class="card-title">FOOTER</div>
   </div>
 </div>
-
-
+-->
 
 <!-- ----------- -->
 <!-- SCHEMA PANEL -->
 <div class="card">
-  <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>SCHEMAS</b></h4>
-  </div>
-  <!-- SCHEMA LIST -->
-  <div class="card-block">
 
+  <div class="card-header">
+    <h4 class="card-title">
+      <b>SCHEMAS</b>
+      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
+    </h4>
+  </div>
+
+  <!-- SCHEMA LIST -->
+  <div class="card dc-horizontal-list">
+  <ul *ngIf="selectedAccount" class="list-inline">
+
+    <a *ngFor="let spa of schemas"
+      class="list-inline-item"
+      (click)="onSelectSchema(spa)"
+      >
+      <div [class.dc-list-item-active]="selectedSchema && spa.id === selectedSchema.id" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">{{spa.name}}</h5>
+        </div>
+      </div>
+    </a>
+    <a
+      class="list-inline-item"
+      (click)="onSelectSchema(null)"
+      >
+      <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">[ADD NEW SCHEMA]</h5>
+        </div>
+      </div>
+    </a>
+  </ul>
+  </div>
+
+</div>
+
+
+
+
+
+<!--
+  <div class="card-block">
     <div *ngIf="selectedAccount" class="list-group">
+
       <a *ngFor="let spa of schemas"
         class="list-group-item"
         [class.active]="selectedSchema && spa.id === selectedSchema.id" 
@@ -116,7 +146,11 @@ active: card-inverse + card-primary
           <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
         </div>
       </a>
+
     </div>
+  </div>
+-->
+
 
     <!-- SCHEMA PROPERTIES -->
     <!-- DEPRECATED
@@ -152,12 +186,6 @@ active: card-inverse + card-primary
     </div>
     -->
 
-  </div>
-  <div class="card-footer text-xs-center">
-      <pre class="card card-block card-header">Number of schemas: {{schemas.length}}</pre>
-  </div>
-
-</div>
 
 <!-- SCHEMA DIALOG -->
 <!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->

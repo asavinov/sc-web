@@ -8,11 +8,16 @@
 }
 
 .dc-horizontal-list-item {
-  width: 30rem; 
+  min-width: 10rem; 
+  max-width: 20rem; 
   overflow: hidden; 
   text-overflow: ellipsis;
 }
 
+.dc-list-item-active {
+  border-width:0.2em; 
+  border-color:blue;
+}
 
 /* OLD
 -------------------------------------------------- */
