@@ -145,7 +145,7 @@ style="word-wrap: break-word !important;"
 
 
 <!-- ----------- -->
-<!-- SCHEMA PANEL -->
+<!-- SCHEMA LIST -->
 <div class="card">
 
   <div class="card-header">
@@ -161,7 +161,6 @@ style="word-wrap: break-word !important;"
     </h4>
   </div>
 
-  <!-- SCHEMA LIST -->
   <div class="card dc-horizontal-list">
   <ul *ngIf="selectedAccount" class="list-inline">
 
@@ -225,6 +224,7 @@ style="word-wrap: break-word !important;"
           <div class="form-group">
             <label for="name">Name</label> <i tooltip="Unique name of the schema" tooltipPlacement="right" class="fa fa-info-circle"></i>
             <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
+            <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
           </div>
       </div>
 
@@ -242,143 +242,195 @@ style="word-wrap: break-word !important;"
 
 
 
-<!-- ----------- -->
-<!-- TABLE PANEL -->
+<!-- ---------- -->
+<!-- TABLE LIST -->
 <div class="card">
+
   <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>TABLES</b></h4>
+    <h4 class="card-title">
+      <b>TABLES</b>
+    </h4>
   </div>
-  <div class="card-block">
 
-    <!-- TABLE LIST -->
-    <div class="col-sm-6">
-    <div *ngIf="selectedSchema && selectedSchema.id.length != 0" class="list-group">
-      <a class="list-group-item"
-        *ngFor="let tab of nonprimitiveTables()"
-        [class.active]="selectedTable && selectedTable.id === tab.id" 
-        (click)="onSelectTable(tab)"
-        >
-        <h4 class="list-group-item-heading">{{tab.name}}</h4>
-      </a>
-      <a class="list-group-item"
-        [class.active]="selectedTable && selectedTable.id.length == 0" 
-        (click)="onSelectTable(null)"
-        >
-        <h4 class="list-group-item-heading">[ADD NEW TABLE]</h4>
-      </a>
+  <div class="card dc-horizontal-list">
+  <ul *ngIf="selectedSchema && selectedSchema.id.length != 0" class="list-inline">
+    <a *ngFor="let tab of nonprimitiveTables()"
+      class="list-inline-item"
+      (click)="onSelectTable(tab)"
+      >
+      <div [class.dc-list-item-active]="selectedTable && selectedTable.id === tab.id" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">{{tab.name}}</h5>
+        </div>
+        <div class="card-footer" [style.visibility]="selectedTable && selectedTable.id === tab.id ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-warning" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" ><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()"><i class="fa fa-edit"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a
+      class="list-inline-item"
+      (click)="onSelectTable(null)"
+      >
+      <div [class.dc-list-item-active]="selectedTable && selectedTable.id.length == 0" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">[ADD]</h5>
+        </div>
+        <div class="card-footer" [style.visibility]="selectedTable && selectedTable.id.length === 0 ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-success" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+  </ul>
+  </div>
+
+</div>
+
+<!-- TABLE DIALOG -->
+<div bsModal #tableModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Table" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableSubmit(); tableModal.hide();" #tableForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="tableModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Table</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label> <i tooltip="Unique name of the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
+        </div>
+        <div class="form-group">
+          <label for="maxLength">Maximum length</label> <i tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="tableModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+        </div>
+      </div>
+
+      </form>
     </div>
-    </div>
-
-    <!-- TABLE PROPERTIES -->
-    <div class="col-sm-6">
-    <form *ngIf="(selectedSchema && selectedSchema.id.length != 0) && selectedTable" (ngSubmit)="onTableSubmit()" #tableForm="ngForm">
-
-      <div class="form-group">
-        <label for="id">Id</label>
-        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
-      </div>
-
-      <div class="form-group">
-        <label for="name">Name</label> <i tooltip="Unique name of the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
-        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
-      </div>
-
-      <div class="form-group">
-        <label for="maxLength">Maximum length</label> <i tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
-      </div>
-
-      <div class="text-xs-right">
-        <button type="button" class="btn btn-warning" (click)="onTableDelete()" [disabled]="!selectedTable.id"><i class="fa fa-trash"></i> Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!tableForm.form.valid"><i class="fa fa-check"></i> Save</button>
-      </div>
-
-    </form>
-    </div>
-
   </div>
 </div>
 
 
-
-<!-- ------------ -->
-<!-- COLUMN PANEL -->
+<!-- ----------- -->
+<!-- COLUMN LIST -->
 <div class="card">
+
   <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>COLUMNS</b></h4>
-  </div>
-  <div class="card-block">
-
-    <!-- COLUMN LIST -->
-    <div class="col-sm-6">
-    <div *ngIf="selectedTable && selectedTable.id.length != 0" class="list-group">
-      <a class="list-group-item"
-        *ngFor="let col of columns"
-        [class.active]="selectedColumn && selectedColumn.id === col.id" 
-        (click)="onSelectColumn(col)"
-        >
-        <span class="tag tag-pill tag-info pull-right">{{col.output.table.name}}</span>
-        <h4 class="list-group-item-heading">{{col.name}}</h4>
-        <div *ngIf="col.formula"><span class="tag tag-success">{{col.formula}}</span></div>
-        <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
-      </a>
-      <a 
-        class="list-group-item"
-        [class.active]="selectedColumn && selectedColumn.id.length == 0" 
-        (click)="onSelectColumn(null)"
-        >
-        <h4 class="list-group-item-heading">[ADD NEW COLUMN]</h4>
-      </a>
-
-    </div>
-    </div>
-
-    <!-- COLUMN PROPERTIES -->
-    <div class="col-sm-6">
-    <form *ngIf="(selectedTable && selectedTable.id.length != 0) && selectedColumn" (ngSubmit)="onColumnSubmit()" #columnForm="ngForm">
-
-      <div class="form-group">
-        <label for="id">Id</label>
-        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
-      </div>
-
-      <div class="form-group">
-        <label for="name">Name</label> <i tooltip="Unique name of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
-        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
-      </div>
-
-      <div class="form-group">
-        <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
-          <option *ngFor="let tab of tables" [disabled]="tab.id == selectedTable.id" [ngValue]="tab.id">{{tab.name}}</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
-        <span class="help-block">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
-        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Formula has to be a valid expression and contain references in other columns in square brackets</div> -->
-      </div>
-
-      <div class="form-group">
-        <label for="descriptor">Descriptor</label>
-        <input id="descriptor" name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
-        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Descriptor has to be a valid JSON string</div> -->
-      </div>
-
-      <div class="text-xs-right">
-        <button type="button" class="btn btn-warning" (click)="onColumnDelete()" [disabled]="!selectedColumn.id"><i class="fa fa-trash"></i> Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!columnForm.form.valid"><i class="fa fa-check"></i> Save</button>
-      </div>
-
-    </form>
-    </div>
-
+    <h4 class="card-title">
+      <b>COLUMNS</b>
+    </h4>
   </div>
 
+  <div class="card dc-horizontal-list">
+  <ul *ngIf="selectedTable && selectedTable.id.length != 0" class="list-inline">
+    <a *ngFor="let col of columns"
+      class="list-inline-item"
+      (click)="onSelectColumn(col)"
+      >
+      <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id === col.id" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <span class="tag tag-pill tag-info pull-right">{{col.output.table.name}}</span>
+          <h5 class="card-title">{{col.name}}</h5>
+          <div><span class="tag tag-success">{{col.formula}}</span></div>
+          <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
+        </div>
+        <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id === col.id ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-warning" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" ><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-success" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()"><i class="fa fa-edit"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a
+      class="list-inline-item"
+      (click)="onSelectColumn(null)"
+      >
+      <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id.length == 0" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">[ADD]</h5>
+        </div>
+        <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id.length === 0 ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-success" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+  </ul>
+  </div>
+
+</div>
+
+<!-- COLUMN DIALOG -->
+<div bsModal #columnModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Column" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="selectedColumn">
+      <form (ngSubmit)="onColumnSubmit(); columnModal.hide();" #columnForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="columnModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Column</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label> <i tooltip="Unique name of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
+        </div>
+        <div class="form-group">
+          <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
+            <option *ngFor="let tab of tables" [disabled]="tab.id == selectedTable.id" [ngValue]="tab.id">{{tab.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
+          <span class="help-block">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
+        </div>
+        <div class="form-group">
+          <label for="descriptor">Descriptor</label>
+          <input id="descriptor" name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="columnModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
 </div>
 
 
