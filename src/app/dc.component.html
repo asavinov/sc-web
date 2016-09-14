@@ -73,50 +73,6 @@ style="word-wrap: break-word !important;"
 </div>
 -->
 
-<!-- ----------- -->
-<!-- SCHEMA PANEL -->
-<div class="card">
-
-  <div class="card-header">
-    <h4 class="card-title">
-      <b>SCHEMAS</b>
-      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
-    </h4>
-  </div>
-
-  <!-- SCHEMA LIST -->
-  <div class="card dc-horizontal-list">
-  <ul *ngIf="selectedAccount" class="list-inline">
-
-    <a *ngFor="let spa of schemas"
-      class="list-inline-item"
-      (click)="onSelectSchema(spa)"
-      >
-      <div [class.dc-list-item-active]="selectedSchema && spa.id === selectedSchema.id" class="card dc-horizontal-list-item">
-        <div class="card-block">
-          <h5 class="card-title">{{spa.name}}</h5>
-        </div>
-      </div>
-    </a>
-    <a
-      class="list-inline-item"
-      (click)="onSelectSchema(null)"
-      >
-      <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
-        <div class="card-block">
-          <h5 class="card-title">[ADD NEW SCHEMA]</h5>
-        </div>
-      </div>
-    </a>
-  </ul>
-  </div>
-
-</div>
-
 
 
 
@@ -150,7 +106,6 @@ style="word-wrap: break-word !important;"
     </div>
   </div>
 -->
-
 
     <!-- SCHEMA PROPERTIES -->
     <!-- DEPRECATED
@@ -187,10 +142,69 @@ style="word-wrap: break-word !important;"
     -->
 
 
-<!-- SCHEMA DIALOG -->
+
+
+<!-- ----------- -->
+<!-- SCHEMA PANEL -->
+<div class="card">
+
+  <div class="card-header">
+    <h4 class="card-title">
+      <b>SCHEMAS</b>
+      <!--
+      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
+      -->
+    </h4>
+  </div>
+
+  <!-- SCHEMA LIST -->
+  <div class="card dc-horizontal-list">
+  <ul *ngIf="selectedAccount" class="list-inline">
+
+    <a *ngFor="let spa of schemas"
+      class="list-inline-item"
+      (click)="onSelectSchema(spa)"
+      >
+      <div [class.dc-list-item-active]="selectedSchema && spa.id === selectedSchema.id" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">{{spa.name}}</h5>
+        </div>
+        <div class="card-footer" [style.visibility]="selectedSchema && spa.id === selectedSchema.id ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-warning" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a
+      class="list-inline-item"
+      (click)="onSelectSchema(null)"
+      >
+      <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
+        <div class="card-block">
+          <h5 class="card-title">[ADD]</h5>
+        </div>
+        <div class="card-footer" [style.visibility]="selectedSchema && selectedSchema.id.length === 0 ? 'inherit' : 'hidden'">
+          <div class="text-xs-right">
+            <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </a>
+  </ul>
+  </div>
+
+</div>
+
 <!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
 <!-- NOTE: We could try to use ngIf to hide/show modal -->
 <!-- NOTE: We cannot show/hide dialog from code - only from html -->
+<!-- SCHEMA DIALOG -->
 <div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="selectedSchema">
