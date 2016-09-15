@@ -114,12 +114,12 @@ style="word-wrap: break-word !important;"
 
       <div class="form-group">
         <label for="id">Id</label>
-        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
+        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.id" readonly placeholder="Schema identifier"/>
       </div>
 
       <div class="form-group">
         <label for="name">Name</label> <i tooltip="Unique name of the schema" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
+        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Schema name"/>
       </div>
 
       <div class="text-xs-right">
@@ -219,11 +219,11 @@ style="word-wrap: break-word !important;"
       <div class="modal-body">
           <div class="form-group">
             <label for="id">Id</label>
-            <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema.id" readonly placeholder="Schema identifier"/>
+            <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.id" readonly placeholder="Schema identifier"/>
           </div>
           <div class="form-group">
             <label for="name">Name</label> <i tooltip="Unique name of the schema" tooltipPlacement="right" class="fa fa-info-circle"></i>
-            <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema.name" required placeholder="Schema name"/>
+            <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Schema name"/>
             <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div> -->
           </div>
       </div>
@@ -306,15 +306,15 @@ style="word-wrap: break-word !important;"
       <div class="modal-body">
         <div class="form-group">
           <label for="id">Id</label>
-          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable.id" readonly placeholder="Table identifier" />
+          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable && selectedTable.id" readonly placeholder="Table identifier" />
         </div>
         <div class="form-group">
           <label for="name">Name</label> <i tooltip="Unique name of the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable.name" required placeholder="Table name"/>
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable && selectedTable.name" required placeholder="Table name"/>
         </div>
         <div class="form-group">
           <label for="maxLength">Maximum length</label> <i tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
+          <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable && selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
         </div>
       </div>
 
@@ -380,6 +380,36 @@ style="word-wrap: break-word !important;"
   </ul>
   </div>
 
+  <!-- FORMULA BAR: TODO: hide or disable field without removing it using [invisible] property (also for NEW column). 
+  use elvis operator also in other bindings to object fields like selectedSchema?.name
+  [ngModel]="hero && hero.name" DONE
+
+  <div class="invisible">...</div>
+  
+  .invisible {
+  visibility: hidden;
+}
+
+// Usage as a mixin
+.element {
+  @include invisible;
+} 
+  -->
+  <div class="card card-outline-info">
+    <form *ngIf="selectedColumn" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
+      <div class="input-group input-group-lg">
+        <span id="formula-addon" class="input-group-addon">Formula</span>
+        <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-success" [disabled]="!formulaForm.form.valid"><i class="fa fa-check"></i></button>
+        </span>
+      </div>
+      <div class="card-block">
+        <span class="form-text text-muted">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
+      </div>
+    </form>
+  </div>
+
 </div>
 
 <!-- COLUMN DIALOG -->
@@ -398,26 +428,26 @@ style="word-wrap: break-word !important;"
       <div class="modal-body">
         <div class="form-group">
           <label for="id">Id</label>
-          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn.id" readonly placeholder="Column identifier" />
+          <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.id" readonly placeholder="Column identifier" />
         </div>
         <div class="form-group">
           <label for="name">Name</label> <i tooltip="Unique name of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn.name" required placeholder="Column name" />
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.name" required placeholder="Column name" />
         </div>
         <div class="form-group">
           <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn.output.id" required >
+          <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.output.id" required >
             <option *ngFor="let tab of tables" [disabled]="tab.id == selectedTable.id" [ngValue]="tab.id">{{tab.name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
+          <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
           <span class="help-block">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
         </div>
         <div class="form-group">
           <label for="descriptor">Descriptor</label>
-          <input id="descriptor" name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
+          <input id="descriptor" name="descriptor" ngControl="descriptor" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.descriptor" placeholder="Column descriptor (JSON)" />
         </div>
       </div>
 
@@ -439,7 +469,7 @@ style="word-wrap: break-word !important;"
 <!-- DATA PANEL -->
 <div class="card">
   <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>DATA</b></h4>
+    <h4 class="card-title"><b>DATA</b></h4>
   </div>
   <div class="card-block">
 
