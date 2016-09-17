@@ -1,12 +1,37 @@
 /* CARD LIST
 -------------------------------------------------- */
 
+/*
+style="overflow: auto; max-height: 300px !important;"
+style="white-space:nowrap;" -- it is for line items
+.nowrap {
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space: nowrap;
+}
+style="word-wrap: break-word !important;"
+style="overflow-x:auto; overflow-y:hidden; white-space: nowrap;"
+white-space: normal;
+
+// Class
+.invisible {
+  visibility: hidden;
+}
+
+// Usage as a mixin
+.element {
+  @include invisible;
+}
+*/
+
+/* It is for schema/table/column horizontal lists with scrolling */
 .dc-horizontal-list {
   overflow-x:auto; 
   overflow-y:hidden; 
   white-space:nowrap;
 }
 
+/* It is for items in the schema/table/column horizontal lists */
 .dc-horizontal-list-item {
   min-width: 10rem; 
   max-width: 20rem; 
@@ -14,6 +39,7 @@
   text-overflow: ellipsis;
 }
 
+/* It is a selected schema/table/column item */
 .dc-list-item-active {
   border-width:0.2em; 
   border-color:blue;

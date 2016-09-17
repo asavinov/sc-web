@@ -1,27 +1,17 @@
 <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px;">
 
-<!-- <div class="card-group"> stretches to have full width and ignore card max-width -->
+<!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
+<!-- NOTE: We could try to use ngIf to hide/show modal -->
+<!-- NOTE: We cannot show/hide dialog from code - only from html -->
 
-
-<!-- <div class="card" style="overflow: auto; max-height: 300px !important;"> -->
-<!-- style="white-space:nowrap;"  it is for line items -->
-<!--
-.nowrap {
-    overflow-x:auto;
-    overflow-y:hidden;
-    white-space: nowrap;
-}
-style="overflow-x:auto; overflow-y:hidden; white-space: nowrap;"
-
-display: inline-flex; --- ???
--->
-<!--
-white-space: normal;
-style="word-wrap: break-word !important;"
+<!-- 
+  <div class="card-group"> stretches to have full width and ignore card max-width
+  [ngModel]="hero && hero.name" DONE
+  <div class="invisible">...</div>
 -->
 
-<!-- how to use list-group-item and a -->
 
+<!-- TEST: how to use list-group-item and a -->
 <!--
 <div class="card">
   <div class="card-header">
@@ -77,7 +67,7 @@ style="word-wrap: break-word !important;"
 
 
 
-<!--
+<!-- OLD, TO DELETE
   <div class="card-block">
     <div *ngIf="selectedAccount" class="list-group">
 
@@ -108,7 +98,7 @@ style="word-wrap: break-word !important;"
 -->
 
     <!-- SCHEMA PROPERTIES -->
-    <!-- DEPRECATED
+<!-- OLD, TO DELETE
     <div class="col-sm-6">
     <form *ngIf="selectedSchema" (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
 
@@ -139,7 +129,7 @@ style="word-wrap: break-word !important;"
 
     </form>
     </div>
-    -->
+-->
 
 
 
@@ -151,13 +141,11 @@ style="word-wrap: break-word !important;"
   <div class="card-header">
     <h4 class="card-title">
       <b>SCHEMAS</b>
-      <!--
       <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
       <span class="pull-xs-right">&nbsp;</span>
       <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
       <span class="pull-xs-right">&nbsp;</span>
       <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
-      -->
     </h4>
   </div>
 
@@ -172,12 +160,14 @@ style="word-wrap: break-word !important;"
         <div class="card-block">
           <h5 class="card-title">{{spa.name}}</h5>
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedSchema && spa.id === selectedSchema.id ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-warning" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i></button>
             <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
     <a
@@ -188,11 +178,13 @@ style="word-wrap: break-word !important;"
         <div class="card-block">
           <h5 class="card-title">[ADD]</h5>
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedSchema && selectedSchema.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
   </ul>
@@ -200,9 +192,6 @@ style="word-wrap: break-word !important;"
 
 </div>
 
-<!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
-<!-- NOTE: We could try to use ngIf to hide/show modal -->
-<!-- NOTE: We cannot show/hide dialog from code - only from html -->
 <!-- SCHEMA DIALOG -->
 <div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
   <div class="modal-dialog">
@@ -249,6 +238,11 @@ style="word-wrap: break-word !important;"
   <div class="card-header">
     <h4 class="card-title">
       <b>TABLES</b>
+      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" ><i class="fa fa-trash"></i> Delete Table...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()"><i class="fa fa-edit"></i> Edit Table...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i> New Table...</button>
     </h4>
   </div>
 
@@ -262,12 +256,14 @@ style="word-wrap: break-word !important;"
         <div class="card-block">
           <h5 class="card-title">{{tab.name}}</h5>
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedTable && selectedTable.id === tab.id ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-warning" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" ><i class="fa fa-trash"></i></button>
             <button type="button" class="btn btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()"><i class="fa fa-edit"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
     <a
@@ -278,11 +274,13 @@ style="word-wrap: break-word !important;"
         <div class="card-block">
           <h5 class="card-title">[ADD]</h5>
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedTable && selectedTable.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-success" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
   </ul>
@@ -331,6 +329,7 @@ style="word-wrap: break-word !important;"
 </div>
 
 
+
 <!-- ----------- -->
 <!-- COLUMN LIST -->
 <div class="card">
@@ -338,6 +337,11 @@ style="word-wrap: break-word !important;"
   <div class="card-header">
     <h4 class="card-title">
       <b>COLUMNS</b>
+      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" ><i class="fa fa-trash"></i> Delete Column...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()"><i class="fa fa-edit"></i> Edit Column...</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()"><i class="fa fa-plus"></i> New Column...</button>
     </h4>
   </div>
 
@@ -354,12 +358,14 @@ style="word-wrap: break-word !important;"
           <div><span class="tag tag-success">{{col.formula}}</span></div>
           <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id === col.id ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-warning" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" ><i class="fa fa-trash"></i></button>
             <button type="button" class="btn btn-success" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()"><i class="fa fa-edit"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
     <a
@@ -370,33 +376,21 @@ style="word-wrap: break-word !important;"
         <div class="card-block">
           <h5 class="card-title">[ADD]</h5>
         </div>
+        <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
             <button type="button" class="btn btn-success" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()"><i class="fa fa-plus"></i></button>
           </div>
         </div>
+        -->
       </div>
     </a>
   </ul>
   </div>
 
-  <!-- FORMULA BAR: TODO: hide or disable field without removing it using [invisible] property (also for NEW column). 
-  use elvis operator also in other bindings to object fields like selectedSchema?.name
-  [ngModel]="hero && hero.name" DONE
-
-  <div class="invisible">...</div>
-  
-  .invisible {
-  visibility: hidden;
-}
-
-// Usage as a mixin
-.element {
-  @include invisible;
-} 
-  -->
+  <!-- FORMULA BAR -->
   <div class="card card-outline-info">
-    <form *ngIf="selectedColumn" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
+    <form *ngIf="selectedTable && selectedTable.id.length != 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
       <div class="input-group input-group-lg">
         <span id="formula-addon" class="input-group-addon">Formula</span>
         <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
@@ -404,8 +398,10 @@ style="word-wrap: break-word !important;"
           <button type="submit" class="btn btn-success" [disabled]="!formulaForm.form.valid"><i class="fa fa-check"></i></button>
         </span>
       </div>
-      <div class="card-block">
-        <span class="form-text text-muted">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
+      <div class="card">
+        <span class="alert alert-info form-text small">
+          Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code>
+        </span>
       </div>
     </form>
   </div>
@@ -436,14 +432,13 @@ style="word-wrap: break-word !important;"
         </div>
         <div class="form-group">
           <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
-          <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.output.id" required >
-            <option *ngFor="let tab of tables" [disabled]="tab.id == selectedTable.id" [ngValue]="tab.id">{{tab.name}}</option>
+          <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.output && selectedColumn.output.id" required >
+            <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || (tab.id == selectedTable.id)" [ngValue]="tab.id">{{tab.name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="fa fa-info-circle"></i>
           <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
-          <span class="help-block">Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code></span>
         </div>
         <div class="form-group">
           <label for="descriptor">Descriptor</label>
