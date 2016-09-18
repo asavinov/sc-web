@@ -391,21 +391,29 @@ export class AppService {
 }
 
 export class ServiceError {
-  constructor(code: ServiceErrorCode, message: string, message2: string) { 
+  constructor(code: ServiceErrorCode, message: string, description: string) { 
     this.code = code;
     this.message = message;
-    this.message2 = message2;
+    this.description = description;
   }
 
 	code: ServiceErrorCode;
 	message: string;
-	message2: string;
+	description: string;
 }
 
 export enum ServiceErrorCode {
-    NOT_FOUND_IDENTITY = 1,
-    GET_ELEMENT = 2,
-    CREATE_ELEMENT = 3,
-    UPATE_ELEMENT = 4,
-    DELETE_ELEMENT = 5
+    NONE = 0,
+    GENERAL = 1,
+
+    NOT_FOUND_IDENTITY = 10,
+
+    GET_ELEMENT = 21,
+    CREATE_ELEMENT = 22,
+    UPATE_ELEMENT = 23,
+    DELETE_ELEMENT = 24,
+
+    PARSE_ERROR = 51, 
+    BIND_ERROR = 52, 
+    EVALUATE_ERROR = 53
 }
