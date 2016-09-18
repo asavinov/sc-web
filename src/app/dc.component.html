@@ -247,7 +247,7 @@
   </div>
 
   <div class="card dc-horizontal-list">
-  <ul *ngIf="selectedSchema && selectedSchema.id.length != 0" class="list-inline">
+  <ul *ngIf="selectedSchema && selectedSchema.id.length > 0" class="list-inline">
     <a *ngFor="let tab of nonprimitiveTables()"
       class="list-inline-item"
       (click)="onSelectTable(tab)"
@@ -346,18 +346,19 @@
   </div>
 
   <div class="card dc-horizontal-list">
-  <ul *ngIf="selectedTable && selectedTable.id.length != 0" class="list-inline">
+  <ul *ngIf="selectedTable && selectedTable.id.length > 0" class="list-inline">
     <a *ngFor="let col of columns"
       class="list-inline-item"
       (click)="onSelectColumn(col)"
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id === col.id" class="card dc-horizontal-list-item">
         <div class="card-block">
-          <span class="tag tag-pill tag-info pull-right">{{col.output.table.name}}</span>
           <h5 class="card-title">{{col.name}}</h5>
-          <div><span class="tag tag-success">{{col.formula}}</span></div>
-          <!-- <p class="list-group-item-text">Type: {{col.output.table.name}}</p> -->
+          <h6 class="card-subtitle text-muted">{{col.output.table.name}}</h6>
         </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-faded"><label class="list-group-item-text">{{col.formula}}</label></li>
+        </ul>
         <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id === col.id ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
@@ -375,7 +376,11 @@
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id.length == 0" class="card dc-horizontal-list-item">
         <div class="card-block">
           <h5 class="card-title">[ADD]</h5>
+          <h6 class="card-subtitle text-muted">&nbsp;</h6>
         </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-faded"><label class="list-group-item-text"></label></li>
+        </ul>
         <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
@@ -390,7 +395,7 @@
 
   <!-- FORMULA BAR -->
   <div class="card card-outline-info">
-    <form *ngIf="selectedTable && selectedTable.id.length != 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
+    <form *ngIf="selectedTable && selectedTable.id.length > 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
       <div class="input-group input-group-lg">
         <span id="formula-addon" class="input-group-addon">Formula</span>
         <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
@@ -400,7 +405,9 @@
       </div>
       <div class="card">
         <span class="alert alert-info form-text small">
-          Formula is an expression which uses arithmetic operations and other columns. Other column names have to be written in square brackets. For example, a column could be defined as follows: <code>([Column 1] + [Column 2]) * 2.0</code>
+          Column names in formulas are written in square brackets like <code>[My Column]</code>. 
+          Formulas for primitive columns use arithmetic expressions, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>. 
         </span>
       </div>
     </form>
