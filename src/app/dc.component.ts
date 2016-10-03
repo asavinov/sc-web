@@ -467,13 +467,35 @@ export class DcComponent implements OnInit {
     } 
   }
 
-  onReadSubmit() {
+  onTableRead() {
     // Read data from the service
     this._scService.read(this.selectedTable).then(
       records => {
         if(records instanceof Array) { // Success
           this.allRecords.set(this.selectedTable.id, records);
           this.records = records;
+
+          this._toastr.info('Successfully loaded.');
+        }
+        else if(records instanceof Object) { // Error
+            let msg: string = records["message"] || 'Error loading table data.';
+            msg += ' ' + (records["message2"] || '');
+            this._toastr.error(msg);
+        }
+      },
+      error => {
+        this._toastr.error('ERROR: ' + error.message);
+      }
+    );
+  }
+
+  onTableEvaluate() {
+    // Evaluate data from the service
+    this._scService.evaluate(this.selectedSchema).then(
+      records => {
+        if(records instanceof Array) { // Success
+          this.allRecords.set(this.selectedTable.id, []);
+          this.records = [];
 
           this._toastr.info('Successfully evaluated.');
         }
@@ -494,18 +516,18 @@ export class DcComponent implements OnInit {
     this._scService.empty(this.selectedTable).then(
       x => {
         this._toastr.info('Data removed.');
-        this.onReadSubmit(); // Read data from the table (has to be empty)
+        this.onTableRead(); // Read data from the table (should be empty)
       }
     );
   }
 
   // Write
 
-  writeCsv: string;
+  uploadCsv: string;
 
-  onWriteSubmit() {
+  onTableUpload() {
     // Write data to the service
-    this._scService.write(this.selectedTable, this.writeCsv);
+    this._scService.write(this.selectedTable, this.uploadCsv);
   }
 
 }

@@ -470,61 +470,67 @@
 <!-- ---------- -->
 <!-- DATA PANEL -->
 <div class="card">
+
   <div class="card-header">
-    <h4 class="card-title"><b>DATA</b></h4>
-  </div>
-  <div class="card-block">
-
-  <div class="col-sm-12">
-  <form (ngSubmit)="onReadSubmit()" #readForm="ngForm">
-
-  <div class="form-group">
-    <label for="records">Data from the selected table</label> <i tooltip="This table dispays uploaded data after evaluating all its column formulas" tooltipPlacement="right" class="fa fa-info-circle"></i>
-    <div class="card" style="overflow: auto; max-height: 300px !important;">
-    <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
-        <thead class="thead-inverse">
-          <tr>
-              <th class="bg-primary"><h4>#</h4></th>
-              <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of records">
-            <td>{{row['_id']}}</td>
-            <td *ngFor="let col of columns">{{row[col.name]}}</td>
-          </tr>
-        </tbody>
-    </table>
-    </div>
+    <h4 class="card-title">
+      <b>DATA</b>
+      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" tooltipPlacement="left"><i class="fa fa-trash"></i> Empty Table</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" tooltipPlacement="left"><i class="fa fa-cloud-download"></i> Load Table</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" tooltip="Evaluate formulas of all columns in the selected table" tooltipPlacement="left"><i class="fa fa-refresh"></i> Evalute Table</button>
+      <span class="pull-xs-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" tooltip="Upload CSV data and append it to the selected table"><i class="fa fa-cloud-upload"></i> Upload Table...</button>
+    </h4>
   </div>
 
-  <div class="text-xs-right">
-    <button type="button" class="btn btn-warning" (click)="onTableEmpty()" [disabled]="!selectedTable" tooltip="Remove all records from the selected tables" tooltipPlacement="left">
-      <i class="fa fa-trash"></i> Empty Table
-    </button>
-    <button type="submit" class="btn btn-success" [disabled]="!selectedTable" tooltip="Evaluate formulas of all columns and display the selected table" tooltipPlacement="left">
-      <i class="fa fa-refresh"></i> Evalute Table and Display
-    </button>
-  </div>
-
-  </form>
-  </div>
-
-  <div class="col-sm-12">
-  <form (ngSubmit)="onWriteSubmit()" #writeForm="ngForm">
-
-  <div class="form-group">
-    <label for="writeCsv">Write CSV to table</label> <i tooltip="The first row specifies column names and all other rows specify values for these columns" tooltipPlacement="right" class="fa fa-info-circle"></i>
-    <textarea id="writeCsv" name="writeCsv" ngControl="writeCsv" [(ngModel)]="writeCsv" required class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-success pull-xs-right" [disabled]="!writeForm.form.valid || !selectedTable" tooltip="Upload CSV data and append it to the selected table" tooltipPlacement="left">
-    <i class="fa fa-cloud-upload" aria-hidden="true"></i> Load Data in Table
-  </button>
-
-  </form>
+  <div class="card" style="overflow: auto; max-height: 300px !important;">
+  <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
+      <thead class="thead-inverse">
+        <tr>
+            <th class="bg-primary"><h4>#</h4></th>
+            <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of records">
+          <td>{{row['_id']}}</td>
+          <td *ngFor="let col of columns">{{row[col.name]}}</td>
+        </tr>
+      </tbody>
+  </table>
   </div>
 
 </div>
 
+<!-- UPLOAD DIALOG -->
+<div bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Upload Table" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableUpload(); uploadModal.hide();" #uploadForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="uploadModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Upload Table</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="uploadCsv">Write CSV to table</label> <i tooltip="The first row specifies column names and all other rows specify values for these columns" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
 </div>

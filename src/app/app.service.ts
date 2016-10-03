@@ -271,6 +271,16 @@ export class AppService {
         .catch(this.handleError);
   }
 
+  evaluate(schema: Schema) {
+
+    let options = new RequestOptions({ withCredentials: true });
+
+    return this.http.get(this.url + "/schemas/" + schema.id + "/evaluate", options)
+        .toPromise()
+        .then(res => this.extractData(res))
+        .catch(this.handleError);
+  }
+
   write(table: Table, data: string) {
 
     let body = data;
