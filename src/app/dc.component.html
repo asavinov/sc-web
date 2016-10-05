@@ -358,6 +358,13 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item bg-faded"><label class="list-group-item-text">{{col.formula}}</label></li>
+          <li class="list-group-item bg-faded"
+            [class.dc-status-red]="col.getStatusColor() == 'red'"
+            [class.dc-status-yellow]="col.getStatusColor() == 'yellow'"
+            [class.dc-status-green]="col.getStatusColor() == 'green'"
+          >
+            <label class="list-group-item-text">STATUS</label>
+          </li>
         </ul>
         <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id === col.id ? 'inherit' : 'hidden'">
@@ -379,6 +386,7 @@
           <h6 class="card-subtitle text-muted">&nbsp;</h6>
         </div>
         <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-faded"><label class="list-group-item-text"></label></li>
           <li class="list-group-item bg-faded"><label class="list-group-item-text"></label></li>
         </ul>
         <!--

@@ -45,6 +45,17 @@ white-space: normal;
   border-color:blue;
 }
 
+/* Style for showing absent status or no formula */
+.dc-status-red {
+  background-color: #ff8080 !important;
+}
+.dc-status-yellow {
+  background-color: #ffff40 !important;
+}
+.dc-status-green {
+  background-color: lightgreen !important;
+}
+
 /* OLD
 -------------------------------------------------- */
 

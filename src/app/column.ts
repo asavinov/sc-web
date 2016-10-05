@@ -1,4 +1,5 @@
 import { Table, TableRef } from './table';
+import { ServiceError, ServiceErrorCode } from './app.service';
 
 export class Column {
 
@@ -17,6 +18,20 @@ export class Column {
 
   formula: string;
   descriptor: string;
+
+  status: ServiceError;
+
+  getStatusColor(): string {
+    if(!this.formula || this.formula.trim().length == 0) return '';
+
+    if(!this.status || !this.status.code || this.status.code == ServiceErrorCode.NONE.valueOf() ) return 'green';
+
+    if(this.status.code == ServiceErrorCode.PARSE_ERROR.valueOf() ) return 'yellow';
+
+    // TODO: Return status color depending on the status error
+
+    return 'green';
+  }
 
   clone(): Column {
     let col: Column = new Column(this.id);
