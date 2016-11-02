@@ -141,11 +141,11 @@
   <div class="card-header">
     <h4 class="card-title">
       <b>SCHEMAS</b>
-      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
     </h4>
   </div>
 
@@ -238,11 +238,11 @@
   <div class="card-header">
     <h4 class="card-title">
       <b>TABLES</b>
-      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" ><i class="fa fa-trash"></i> Delete Table...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()"><i class="fa fa-edit"></i> Edit Table...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i> New Table...</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" ><i class="fa fa-trash"></i> Delete Table...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()"><i class="fa fa-edit"></i> Edit Table...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i> New Table...</button>
     </h4>
   </div>
 
@@ -337,11 +337,11 @@
   <div class="card-header">
     <h4 class="card-title">
       <b>COLUMNS</b>
-      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" ><i class="fa fa-trash"></i> Delete Column...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()"><i class="fa fa-edit"></i> Edit Column...</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()"><i class="fa fa-plus"></i> New Column...</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" ><i class="fa fa-trash"></i> Delete Column...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()"><i class="fa fa-edit"></i> Edit Column...</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()"><i class="fa fa-plus"></i> New Column...</button>
     </h4>
   </div>
 
@@ -482,13 +482,13 @@
   <div class="card-header">
     <h4 class="card-title">
       <b>DATA</b>
-      <button type="button" class="btn btn-warning pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" tooltipPlacement="left"><i class="fa fa-trash"></i> Empty Table</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" tooltipPlacement="left"><i class="fa fa-cloud-download"></i> Load Table</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" tooltip="Evaluate formulas of all columns in the selected table" tooltipPlacement="left"><i class="fa fa-refresh"></i> Evalute Table</button>
-      <span class="pull-xs-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-xs-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" tooltip="Upload CSV data and append it to the selected table"><i class="fa fa-cloud-upload"></i> Upload Table...</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" tooltipPlacement="left"><i class="fa fa-trash"></i> Empty Table</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" tooltipPlacement="left"><i class="fa fa-cloud-download"></i> Load Table</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" tooltip="Evaluate formulas of all columns in the selected table" tooltipPlacement="left"><i class="fa fa-refresh"></i> Evalute Table</button>
+      <span class="pull-right">&nbsp;</span>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" tooltip="Upload CSV data and append it to the selected table"><i class="fa fa-cloud-upload"></i> Upload Table...</button>
     </h4>
   </div>
 
