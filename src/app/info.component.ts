@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'info',
+  selector: 'dc-info',
   templateUrl: 'info.component.html',
   styleUrls: ['app.component.css']
 })

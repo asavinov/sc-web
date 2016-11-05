@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { DcComponent } from './dc.component';
+import { MainComponent } from './main.component';
 import { HelpComponent } from './help.component';
 import { InfoComponent } from './info.component';
 
 export const routes: Routes = [
-  {path: '', component: DcComponent},
-  {path: 'dc', component: DcComponent},
+  {path: '', component: MainComponent},
+  {path: 'main', component: MainComponent},
   {path: 'help', component: HelpComponent},
   {path: 'info', component: InfoComponent}
 
@@ -23,11 +23,11 @@ export const routing = RouterModule.forRoot(routes);
 /* NEW
 import { Routes, RouterModule } from '@angular/router';
 
-import { DcComponent } from './dc.component';
+import { MainComponent } from './main.component';
 
 export const routes: Routes = [
-  {path: '', component: DcComponent},
-  {path: 'dc', component: DcComponent}
+  {path: '', component: MainComponent},
+  {path: 'dc', component: MainComponent}
 
 //  { path: '', redirectTo: 'contact', pathMatch: 'full'},
 //  { path: 'crisis', loadChildren: 'app/crisis/crisis.module' },
@@ -40,11 +40,11 @@ export const routing = RouterModule.forRoot(routes);
 /* OLD
 import { provideRouter, RouterConfig } from '@angular/router';
 
-import { DcComponent } from './dc.component';
+import { MainComponent } from './main.component';
 
 export const routes: RouterConfig = [
-  {path: '', component: DcComponent},
-  {path: 'dc', component: DcComponent},
+  {path: '', component: MainComponent},
+  {path: 'dc', component: MainComponent},
   //{path: 'documentation', component: DocumentationComponent},
   //{path: 'about', component: AboutComponent}
 ];

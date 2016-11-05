@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'help',
+  selector: 'dc-help',
   templateUrl: 'help.component.html',
   styleUrls: ['app.component.css']
 })

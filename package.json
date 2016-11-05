@@ -26,15 +26,15 @@
     "postinstall": "npm run webdriver-update && typings install"
   },
   "dependencies": {
-    "@angular/common": "~2.1.1",
-    "@angular/compiler": "~2.1.1",
-    "@angular/core": "~2.1.1",
-    "@angular/forms": "~2.1.1",
-    "@angular/http": "~2.1.1",
-    "@angular/platform-browser": "~2.1.1",
-    "@angular/platform-browser-dynamic": "~2.1.1",
+    "@angular/common": "~2.1.2",
+    "@angular/compiler": "~2.1.2",
+    "@angular/core": "~2.1.2",
+    "@angular/forms": "~2.1.2",
+    "@angular/http": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@angular/platform-browser-dynamic": "~2.1.2",
 
-    "@angular/router": "~3.1.1",
+    "@angular/router": "~3.1.2",
 
     "es6-shim": "^0.35.1",
     "reflect-metadata": "^0.1.8",
@@ -48,6 +48,33 @@
     "ng2-toastr": "^1.3.0"
 	},
   "devDependencies": {
+
+    "typescript": "^2.0.7",
+    "ts-helpers": "^1.1.2",
+    "tslint": "^3.15.1",
+
+    "node-sass": "^3.10.1",
+    "phantomjs-prebuilt": "^2.1.13",
+    "protractor": "^4.0.10",
+    "remap-istanbul": "^0.7.0",
+    "rimraf": "^2.5.4",
+    "shelljs": "^0.7.5",
+    "less": "^2.7.1",
+    "typedoc": "^0.5.1",
+
+    "autoprefixer": "^6.5.1",
+    "codelyzer": "1.0.0-beta.3",
+
+
+    "typings": "^1.5.0",
+    "@types/es6-shim": "^0.31.32",
+    "@types/node": "^6.0.46",
+    "@types/jasmine": "^2.5.37",
+
+
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+
     "copy-webpack-plugin": "^4.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.24.1",
@@ -69,8 +96,6 @@
     "tslint-loader": "^2.1.5",
     "url-loader": "^0.5.7",
 
-    "autoprefixer": "^6.5.1",
-    "codelyzer": "1.0.0-beta.3",
 
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "^2.7.0",
@@ -82,27 +107,6 @@
     "karma-mocha-reporter": "^2.1.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-remap-istanbul": "0.2.1",
-    "karma-webpack": "1.8.0",
-
-    "node-sass": "^3.10.1",
-    "phantomjs-prebuilt": "^2.1.13",
-    "protractor": "^4.0.10",
-    "remap-istanbul": "^0.7.0",
-    "rimraf": "^2.5.4",
-    "shelljs": "^0.7.5",
-    "less": "^2.7.1",
-    "ts-helpers": "^1.1.2",
-    "tslint": "^3.15.1",
-    "typedoc": "^0.5.1",
-
-    "typescript": "^2.0.6",
-
-    "typings": "^1.5.0",
-    "@types/es6-shim": "^0.31.32",
-    "@types/node": "^6.0.46",
-    "@types/jasmine": "^2.5.37",
-
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "karma-webpack": "1.8.0"
   }
 }

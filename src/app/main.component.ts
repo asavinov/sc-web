@@ -9,11 +9,11 @@ import { Table, TableRef } from './table';
 import { Column } from './column';
 
 @Component({
-  selector: 'dc',
-  templateUrl: 'dc.component.html',
-  styleUrls:  ['dc.component.css']
+  selector: 'dc-main',
+  templateUrl: 'main.component.html',
+  styleUrls:  ['main.component.css']
 })
-export class DcComponent implements OnInit {
+export class MainComponent implements OnInit {
 
 /*
   //@ViewChild(SchemaModal) schemaDialog: SchemaModal;
@@ -42,10 +42,10 @@ export class DcComponent implements OnInit {
     this.selectedAccount = undefined;
 
     this.schemas = [];
-    this.selectedSchema = undefined; 
+    this.selectedSchema = undefined;
 
     this.tables = [];
-    this.selectedTable = undefined; 
+    this.selectedTable = undefined;
 
     this.columns = [];
     this.selectedColumn = undefined;
@@ -57,20 +57,20 @@ export class DcComponent implements OnInit {
   //
   // Account, user, session, authentication
   //
-  
+
   selectedAccount: Object;
 
   getAccount() {
     this.clean();
     this._scService.getAccount().then(
       d => {
-        if(d["code"]) { // Error
-          let msg: string = d["message"] || 'Error creating schema.';
-          msg += ' ' + (d["message2"] || '');
+        if(d['code']) { // Error
+          let msg: string = d['message'] || 'Error creating schema.';
+          msg += ' ' + (d['message2'] || '');
           this._toastr.error(msg);
         }
         else { // Success
-          if(!this.selectedAccount || this.selectedAccount['id'] != d['id']) {
+          if(!this.selectedAccount || this.selectedAccount['id'] !== d['id']) {
             this._toastr.info('New session created.');
           }
           this.selectedAccount = d;
@@ -87,7 +87,7 @@ export class DcComponent implements OnInit {
   //
   // Schema list
   //
-  
+
   schemas: Schema[];
   selectedSchema: Schema;
 
@@ -99,24 +99,24 @@ export class DcComponent implements OnInit {
 
         if(schemas instanceof Array) { // Success
           this.schemas = schemas;
-          if(schemas.length > 0) this.selectedSchema = schemas[0]; 
+          if(schemas.length > 0) this.selectedSchema = schemas[0];
           this.getTables();
         }
         else if(schemas instanceof Object) { // Error
-          let code: ServiceErrorCode = schemas["code"] || 0;
-          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = schemas['code'] || 0;
+          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.getAccount();
           }
         }
       }).catch(
-        error => { 
+        error => {
           this._toastr.error(error.message);
         }
       );
   }
 
-  onSelectSchema(sch: Schema) { 
+  onSelectSchema(sch: Schema) {
     if(sch) { // Edit existing
       this.selectedSchema = sch.clone(); // Copy object for editing
     }
@@ -124,8 +124,8 @@ export class DcComponent implements OnInit {
       this.selectedSchema = undefined;
     }
     else { // null. Create new
-      sch = new Schema("");
-      sch.name = "New Schema";
+      sch = new Schema('');
+      sch.name = 'New Schema';
 
       this.selectedSchema = sch;
     }
@@ -136,14 +136,14 @@ export class DcComponent implements OnInit {
   //
   // Schema details
   //
-  
-  onSchemaSubmit() { 
+
+  onSchemaSubmit() {
     if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Add new
       this._scService.createSchema(this.selectedSchema).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error creating schema.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error creating schema.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.getSchemas();
@@ -153,9 +153,9 @@ export class DcComponent implements OnInit {
     else { // Update existing
       this._scService.updateSchema(this.selectedSchema).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error updating schema.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error updating schema.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.getSchemas();
@@ -164,9 +164,9 @@ export class DcComponent implements OnInit {
     }
   }
 
-  onSchemaDelete() { 
+  onSchemaDelete() {
     if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Nothing to do. Cannot delete new
-      return; 
+      return;
     }
     else { // Delete existing
       this._scService.deleteSchema(this.selectedSchema).then(
@@ -180,7 +180,7 @@ export class DcComponent implements OnInit {
   //
   // Schema assets
   //
-  
+
   fileToUpload: File;
   // filesToUpload: Array<File>; // For multiple files
 
@@ -201,7 +201,7 @@ export class DcComponent implements OnInit {
   //
   // Table list
   //
-  
+
   tables: Table[];
   selectedTable: Table;
 
@@ -232,14 +232,14 @@ export class DcComponent implements OnInit {
           this.getColumns();
         }
         else if(tables instanceof Object) { // Error
-          let code: ServiceErrorCode = tables["code"] || 0;
-          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = tables['code'] || 0;
+          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.getAccount();
           }
         }
       }).catch(
-        error => { 
+        error => {
           this._toastr.error(error.message);
         }
       );
@@ -253,8 +253,8 @@ export class DcComponent implements OnInit {
       this.selectedTable = undefined;
     }
     else { // null. Create new
-      tab = new Table("");
-      tab.name = "New Table";
+      tab = new Table('');
+      tab.name = 'New Table';
 
       this.selectedTable = tab;
     }
@@ -266,14 +266,14 @@ export class DcComponent implements OnInit {
   //
   // Table details
   //
-  
+
   onTableSubmit() {
     if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Add new
       this._scService.createTable(this.selectedSchema, this.selectedTable).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error creating table.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error creating table.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.onSelectSchema(this.selectedSchema);
@@ -283,9 +283,9 @@ export class DcComponent implements OnInit {
     else { // Update existing
       this._scService.updateTable(this.selectedTable).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error updating table.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error updating table.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.onSelectSchema(this.selectedSchema);
@@ -294,9 +294,9 @@ export class DcComponent implements OnInit {
     }
   }
 
-  onTableDelete() { 
+  onTableDelete() {
     if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Nothing to do. Cannot delete new
-      return; 
+      return;
     }
     else { // Delete existing
       this._scService.deleteTable(this.selectedTable).then(
@@ -311,14 +311,14 @@ export class DcComponent implements OnInit {
   //
   // Column list
   //
-  
+
   columns: Column[];
   selectedColumn: Column;
 
   getColumns() {
     if(!this.selectedTable) return new Array<Column>();
     this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
-      columns => { 
+      columns => {
         this.columns = [];
         this.selectedColumn = undefined;
         if(columns instanceof Array) { // Success
@@ -326,14 +326,14 @@ export class DcComponent implements OnInit {
           this.resolveColumns();
         }
         else if(columns instanceof Object) { // Error
-          let code: ServiceErrorCode = columns["code"] || 0;
-          if(code == ServiceErrorCode.NOT_FOUND_IDENTITY) {
+          let code: ServiceErrorCode = columns['code'] || 0;
+          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
             this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
             this.getAccount();
           }
         }
       }).catch(
-        error => { 
+        error => {
           this._toastr.error(error.message);
         }
       );
@@ -344,7 +344,7 @@ export class DcComponent implements OnInit {
 
     // Resolve input table reference
 
-    let inId: string = "";
+    let inId: string = '';
     if(colAny.input) inId = colAny.input.id;
 
     if(!column.input) column.input = new TableRef(inId);
@@ -359,7 +359,7 @@ export class DcComponent implements OnInit {
 
     // Resolve output table reference
 
-    let outId: string = "";
+    let outId: string = '';
     if(colAny.output) outId = colAny.output.id;
 
     if(!column.output) column.output = new TableRef(outId);
@@ -387,29 +387,29 @@ export class DcComponent implements OnInit {
       this.selectedColumn = undefined;
     }
     else { // Create new
-      col = new Column("");
-      col.name = "New Column";
+      col = new Column('');
+      col.name = 'New Column';
       col.input.id = this.selectedTable.id;
       col.input.table = this.selectedTable;
-      let type = this.tables.find(t => t.name === "Double");
+      let type = this.tables.find(t => t.name === 'Double');
       col.output.id = type.id;
       col.output.table = type;
 
       this.selectedColumn = col;
-    } 
+    }
   }
 
   //
   // Column details
   //
-  
-  onColumnSubmit() { 
+
+  onColumnSubmit() {
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Add new
       this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error creating column.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error creating column.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.onSelectTable(this.selectedTable);
@@ -419,9 +419,9 @@ export class DcComponent implements OnInit {
     else { // Update existing
       this._scService.updateColumn(this.selectedColumn).then(
         x => {
-          if(x["code"]) { // Error
-            let msg: string = x["message"] || 'Error updating column.';
-            msg += ' ' + (x["message2"] || '');
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error updating column.';
+            msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
           this.onSelectTable(this.selectedTable);
@@ -430,9 +430,9 @@ export class DcComponent implements OnInit {
     }
   }
 
-  onColumnDelete() { 
+  onColumnDelete() {
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Nothing to do. Cannot delete new
-      return; 
+      return;
     }
     else { // Delete existing
       this._scService.deleteColumn(this.selectedColumn).then(
@@ -464,7 +464,7 @@ export class DcComponent implements OnInit {
     }
     else { // No selection - empty list of records
       this.records = [];
-    } 
+    }
   }
 
   onTableRead() {
@@ -478,8 +478,8 @@ export class DcComponent implements OnInit {
           this._toastr.info('Successfully loaded.');
         }
         else if(records instanceof Object) { // Error
-            let msg: string = records["message"] || 'Error loading table data.';
-            msg += ' ' + (records["message2"] || '');
+            let msg: string = records['message'] || 'Error loading table data.';
+            msg += ' ' + (records['message2'] || '');
             this._toastr.error(msg);
         }
       },
@@ -500,8 +500,8 @@ export class DcComponent implements OnInit {
           this._toastr.info('Successfully evaluated.');
         }
         else if(records instanceof Object) { // Error
-            let msg: string = records["message"] || 'Error evaluating table.';
-            msg += ' ' + (records["message2"] || '');
+            let msg: string = records['message'] || 'Error evaluating table.';
+            msg += ' ' + (records['message2'] || '');
             this._toastr.error(msg);
         }
       },

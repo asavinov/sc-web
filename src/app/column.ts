@@ -3,11 +3,11 @@ import { ServiceError, ServiceErrorCode } from './app.service';
 
 export class Column {
 
-  constructor(id: string) { 
+  constructor(id: string) {
     this.id = id;
-    this.name = "";
-    this.input = new TableRef("");
-    this.output = new TableRef("");
+    this.name = '';
+    this.input = new TableRef('');
+    this.output = new TableRef('');
   }
 
   id: string;
@@ -22,11 +22,11 @@ export class Column {
   status: ServiceError;
 
   getStatusColor(): string {
-    if(!this.formula || this.formula.trim().length == 0) return '';
+    if (!this.formula || this.formula.trim().length === 0) return '';
 
-    if(!this.status || !this.status.code || this.status.code == ServiceErrorCode.NONE.valueOf() ) return 'green';
+    if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'green';
 
-    if(this.status.code == ServiceErrorCode.PARSE_ERROR.valueOf() ) return 'yellow';
+    if (this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() ) return 'yellow';
 
     // TODO: Return status color depending on the status error
 
@@ -43,7 +43,7 @@ export class Column {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Column {
-    let col: Column = new Column("");
+    let col: Column = new Column('');
 
     col.id = json.id;
     col.name = json.name;
@@ -58,10 +58,10 @@ export class Column {
   }
   static fromJsonList(json: any): Column[] {
     let cols: Column[] = [];
-    if(!json) return cols;
+    if (!json) return cols;
 
     let col: Column;
-    for(let o of json) {
+    for (let o of json) {
       col = Column.fromJsonObject(o);
       cols.push(col);
     }

@@ -1,7 +1,7 @@
 export class Table {
-  constructor(id: string) { 
+  constructor(id: string) {
     this.id = id;
-    this.name = "";
+    this.name = '';
     this.maxLength = -1;
   }
 
@@ -12,7 +12,7 @@ export class Table {
   isPrimitve(): boolean {
     if(!this.name) return false;
     let n: string = this.name.toUpperCase();
-    if(n === "STRING" || n === "DOUBLE" || n === "INTEGER") return true;
+    if(n === 'STRING' || n === 'DOUBLE' || n === 'INTEGER') return true;
     return false;
   }
 
@@ -26,7 +26,7 @@ export class Table {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Table {
-    let tab: Table = new Table("");
+    let tab: Table = new Table('');
 
     tab.id = json.id;
     tab.name = json.name;
@@ -51,7 +51,7 @@ export class Table {
 
 export class TableRef {
 
-  constructor(id: string) { 
+  constructor(id: string) {
     this.id = id;
   }
 

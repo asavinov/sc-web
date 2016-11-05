@@ -16,7 +16,7 @@ import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent }  from './app.component';
 
-import { DcComponent }  from './dc.component';
+import { MainComponent }  from './main.component';
 import { HelpComponent } from './help.component';
 import { InfoComponent } from './info.component';
 import { AboutComponent } from './about.component';
@@ -25,7 +25,7 @@ import { AppService }  from './app.service';
 
 @NgModule({
   imports: [
-    BrowserModule, 
+    BrowserModule,
     FormsModule,
     HttpModule,
     ToastModule,
@@ -40,7 +40,7 @@ import { AppService }  from './app.service';
   exports: [ AppComponent ],
   declarations: [
     AppComponent,
-    DcComponent,
+    MainComponent,
     HelpComponent,
     InfoComponent,
     AboutComponent

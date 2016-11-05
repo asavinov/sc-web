@@ -13,18 +13,18 @@ import { Column } from './column';
 
 // How to implement authentication and session management
 // Configure http accordingly: http://blog.ionic.io/angularjs-authentication/
-//.config(['$httpProvider', function($httpProvider) {
+// .config(['$httpProvider', function($httpProvider) {
 //  $httpProvider.defaults.withCredentials = true;
-//}])
+// }])
 // http://corpus.hubwiz.com/2/angularjs/19383311.html
-// res.header("Access-Control-Allow-Credentials", true);
+// res.header('Access-Control-Allow-Credentials', true);
 
 // https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/
-// Server responds with "Set-Cookie: session=sid" on the first client login.
-// For each next request, the client sets "Cookie: session=sid" so the server can recognize it.
+// Server responds with 'Set-Cookie: session=sid' on the first client login.
+// For each next request, the client sets 'Cookie: session=sid' so the server can recognize it.
 
-// Server responds to login with "token: ‘...JWT…’ "
-// Next client request contain: "Authorization: Bearer ...JWT..." (Jason Web Token)
+// Server responds to login with 'token: ‘...JWT…’ '
+// Next client request contain: 'Authorization: Bearer ...JWT...' (Jason Web Token)
 // - HTTP header transmits the user information (in contrast to cookies)
 // - Server does not have to maintain session store
 
@@ -40,7 +40,7 @@ export class AppService {
   // URL to web API
   //
   private serviceHost = 'http://localhost:8000';
-  //private serviceHost = 'http://dc.conceptoriented.com:8000';
+  // private serviceHost = 'http://dc.conceptoriented.com:8000';
   private url = this.serviceHost + '/api';
 
   //
@@ -50,7 +50,7 @@ export class AppService {
   getAccount():Promise<Object> {
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.url + "/account", options)
+    return this.http.get(this.url + '/account', options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -64,7 +64,7 @@ export class AppService {
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.url + "/schemas", options)
+    return this.http.get(this.url + '/schemas', options)
         .toPromise()
         .then(res => Schema.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -78,12 +78,12 @@ export class AppService {
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
-    headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.url + "/schemas", body, options)
+    return this.http.post(this.url + '/schemas', body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -96,7 +96,7 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.url + "/schemas" + "/" + sch.id, body, options)
+    return this.http.put(this.url + '/schemas' + '/' + sch.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -106,9 +106,9 @@ export class AppService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
+    let options = new RequestOptions({headers: headers, body: '', withCredentials: true});
 
-    return this.http.delete(this.url + "/schemas" + "/" + sch.id, options)
+    return this.http.delete(this.url + '/schemas' + '/' + sch.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -119,12 +119,12 @@ export class AppService {
   //
 
   getTables(sch: Schema): Promise<Table[] | Object> {
-    if(sch == null || sch.id == null|| sch.id.length == 0) return Promise.resolve([]);
+    if(sch === null || sch.id === null|| sch.id.length === 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.url + "/schemas/" + id + "/tables", options)
+    return this.http.get(this.url + '/schemas/' + id + '/tables', options)
         .toPromise()
         .then(res => Table.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -141,12 +141,12 @@ export class AppService {
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
-    headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.url + "/schemas/" + id + "/tables", body, options)
+    return this.http.post(this.url + '/schemas/' + id + '/tables', body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -159,7 +159,7 @@ export class AppService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.url + "/tables" + "/" + tab.id, body, options)
+    return this.http.put(this.url + '/tables' + '/' + tab.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -169,9 +169,9 @@ export class AppService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
+    let options = new RequestOptions({headers: headers, body: '', withCredentials: true});
 
-    return this.http.delete(this.url + "/tables" + "/" + tab.id, options)
+    return this.http.delete(this.url + '/tables' + '/' + tab.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -182,12 +182,12 @@ export class AppService {
   //
 
   getColumns(sch: Schema): Promise<Column[] | Object> {
-    if(sch == null || sch.id == null || sch.id.length == 0) return Promise.resolve([]);
+    if(sch === null || sch.id === null || sch.id.length === 0) return Promise.resolve([]);
     let id: string  = sch.id;
 
     let options = new RequestOptions({withCredentials: true});
 
-    return this.http.get(this.url + "/schemas/" + id + "/columns", options)
+    return this.http.get(this.url + '/schemas/' + id + '/columns', options)
         .toPromise()
         .then(res => Column.fromJsonList(this.extractData(res)))
         .catch(this.handleError);
@@ -220,12 +220,12 @@ export class AppService {
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
-    headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.url + "/schemas/" + id + "/columns", body, options)
+    return this.http.post(this.url + '/schemas/' + id + '/columns', body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -239,7 +239,7 @@ export class AppService {
 
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this.http.put(this.url + "/columns" + "/" + col.id, body, options)
+    return this.http.put(this.url + '/columns' + '/' + col.id, body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -249,9 +249,9 @@ export class AppService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({ headers: headers, body: "", withCredentials: true });
+    let options = new RequestOptions({ headers: headers, body: '', withCredentials: true });
 
-    return this.http.delete(this.url + "/columns" + "/" + col.id, options)
+    return this.http.delete(this.url + '/columns' + '/' + col.id, options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -265,7 +265,7 @@ export class AppService {
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.url + "/tables/" + table.id + "/data/json", options)
+    return this.http.get(this.url + '/tables/' + table.id + '/data/json', options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
@@ -275,7 +275,7 @@ export class AppService {
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.url + "/schemas/" + schema.id + "/evaluate", options)
+    return this.http.get(this.url + '/schemas/' + schema.id + '/evaluate', options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
@@ -287,12 +287,12 @@ export class AppService {
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
-    headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'));
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.url + "/tables/" + table.id + "/data/csv", body, options)
+    return this.http.post(this.url + '/tables/' + table.id + '/data/csv', body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
@@ -302,9 +302,9 @@ export class AppService {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
-    let options = new RequestOptions({headers: headers, body: "", withCredentials: true});
+    let options = new RequestOptions({headers: headers, body: '', withCredentials: true});
 
-    return this.http.delete(this.url + "/tables/" + table.id + "/data", options)
+    return this.http.delete(this.url + '/tables/' + table.id + '/data', options)
         .toPromise()
         .then()
         .catch(this.handleError);
@@ -320,10 +320,10 @@ export class AppService {
     return new Promise((resolve, reject) => {
 
         let formData = new FormData();
-        formData.append("file", file, file.name);
-        //for(let i = 0; i < files.length; i++) {
-        //  formData.append("uploads[]", files[i], files[i].name);
-        //}
+        formData.append('file', file, file.name);
+        // for(let i = 0; i < files.length; i++) {
+        //   formData.append('uploads[]', files[i], files[i].name);
+        // }
 
         let xhr:XMLHttpRequest = new XMLHttpRequest();
         xhr.withCredentials = true;
@@ -337,7 +337,7 @@ export class AppService {
             }
         };
 
-        xhr.open('POST', this.url + "/assets/", true);
+        xhr.open('POST', this.url + '/assets/', true);
         xhr.send(formData);
     });
 
@@ -352,7 +352,7 @@ export class AppService {
       return res.text();
     }
 
-    //let body = JSON.parse(res.text()); // Parse json string
+    // let body = JSON.parse(res.text()); // Parse json string
     let body = res.json(); // Parse json string
 
     //
@@ -388,7 +388,7 @@ export class AppService {
       return Promise.resolve(err);
     }
     else {
-      // Use case no server at all: error.message = undefined, error.status = 0, error.statusText = ""
+      // Use case no server at all: error.message = undefined, error.status = 0, error.statusText = ''
 
       let status: number = error.status ? error.status : 0;
       let message: string = error.message ? error.message : (error.statusText ? error.statusText : 'Server error');
@@ -401,15 +401,15 @@ export class AppService {
 }
 
 export class ServiceError {
-  constructor(code: ServiceErrorCode, message: string, description: string) { 
+  constructor(code: ServiceErrorCode, message: string, description: string) {
     this.code = code;
     this.message = message;
     this.description = description;
   }
 
-	code: ServiceErrorCode;
-	message: string;
-	description: string;
+  code: ServiceErrorCode;
+  message: string;
+  description: string;
 }
 
 export enum ServiceErrorCode {
@@ -423,7 +423,7 @@ export enum ServiceErrorCode {
     UPATE_ELEMENT = 23,
     DELETE_ELEMENT = 24,
 
-    PARSE_ERROR = 51, 
-    BIND_ERROR = 52, 
+    PARSE_ERROR = 51,
+    BIND_ERROR = 52,
     EVALUATE_ERROR = 53
 }

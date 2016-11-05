@@ -1,33 +1,33 @@
 <nav class="navbar navbar-light navbar-static-top bg-faded" role="navigation">
 
-  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc'">
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-main'">
       <img class="logo-header" src="img/dc-logo.png" alt="Data Commandr">
   </a>
-  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc'">
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-main'">
       <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
   </a>
 
   <ul class="nav navbar-nav">
-    <li class="nav-item" [class.active]="activeComponent == 'dc'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc'"><b>APPLICATION</b></a>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-main'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-main'"><b>APPLICATION</b></a>
     </li>
-    <li class="nav-item" [class.active]="activeComponent == 'help'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'help'"><b>HELP</b></a>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-help'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-help'"><b>HELP</b></a>
     </li>
-    <li class="nav-item" [class.active]="activeComponent == 'info'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'info'"><b>MORE INFO</b></a>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-info'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-info'"><b>MORE INFO</b></a>
     </li>
-    <li class="nav-item" [class.active]="activeComponent == 'about'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'about'"><b>ABOUT</b></a>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-about'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-about'"><b>ABOUT</b></a>
     </li>
   </ul>
 
 </nav>
 
-<dc [hidden]="activeComponent != 'dc'"></dc>
-<help [hidden]="activeComponent != 'help'"></help>
-<info [hidden]="activeComponent != 'info'"></info>
-<about [hidden]="activeComponent != 'about'"></about>
+<dc-main [hidden]="activeComponent != 'dc-main'"></dc-main>
+<dc-help [hidden]="activeComponent != 'dc-help'"></dc-help>
+<dc-info [hidden]="activeComponent != 'dc-info'"></dc-info>
+<dc-about [hidden]="activeComponent != 'dc-about'"></dc-about>
 <!--
 <router-outlet></router-outlet>
 -->

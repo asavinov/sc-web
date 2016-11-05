@@ -2,13 +2,13 @@ import { Component, ViewContainerRef } from '@angular/core';
 
 @Component({
   //moduleId: module.id, // Not needed when using Webpack and also produces error in rc5
-  selector: 'app',
+  selector: 'dc-app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
 export class AppComponent {
   title = 'DATA COMMANDR';
-  activeComponent = 'dc';
+  activeComponent = 'dc-main';
 
   public constructor(public viewContainerRef:ViewContainerRef) {
     // HACK: See https://valor-software.com/ng2-bootstrap/#/modals
