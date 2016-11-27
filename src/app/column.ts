@@ -17,6 +17,8 @@ export class Column {
   output: TableRef;
 
   formula: string;
+  facttable: string;
+  grouppath: string;
   descriptor: string;
 
   status: ServiceError;
@@ -52,6 +54,8 @@ export class Column {
     col.output.id = json.output.id;
     col.output.table = undefined;
     col.formula = json.formula;
+    col.facttable = json.facttable;
+    col.grouppath = json.grouppath;
     col.descriptor = json.descriptor;
 
     return col;

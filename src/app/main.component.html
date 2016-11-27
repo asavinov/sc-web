@@ -404,6 +404,7 @@
   <!-- FORMULA BAR -->
   <div class="card card-outline-info">
     <form *ngIf="selectedTable && selectedTable.id.length > 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
+
       <div class="input-group input-group-lg">
         <span id="formula-addon" class="input-group-addon">Formula</span>
         <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
@@ -411,11 +412,23 @@
           <button type="submit" class="btn btn-success" [disabled]="!formulaForm.form.valid"><i class="fa fa-check"></i></button>
         </span>
       </div>
+
+      <div class="input-group">
+        <span id="facttable-addon" class="input-group-addon">FROM Table</span>
+        <select id="facttable" name="facttable" ngControl="facttable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.facttable" >
+          <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
+        </select>
+        <span id="grouppath-addon" class="input-group-addon">VIA Group Path</span>
+        <input id="grouppath" name="grouppath" ngControl="grouppath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.grouppath" placeholder="Example: [Column 1].[Column 2]">
+        <span class="input-group-addon">TO Table '{{selectedTable.name}}'</span>
+      </div>
+
       <div class="card">
         <span class="alert alert-info form-text small">
           Column names in formulas are written in square brackets like <code>[My Column]</code>. 
-          Formulas for primitive columns use arithmetic expressions, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
-          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>. 
+          Arithmetic expressions can be used, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
+          Accumulate formulas use a reserived <code>output</code> variable storing the current output which has to be updated, for example, <code>output + [Column 1]</code>. 
         </span>
       </div>
     </form>
