@@ -57,6 +57,7 @@ export class Column {
     col.facttable = json.facttable;
     col.grouppath = json.grouppath;
     col.descriptor = json.descriptor;
+    col.status = ServiceError.fromJsonObject(json.status);
 
     return col;
   }

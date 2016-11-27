@@ -410,6 +410,18 @@ export class ServiceError {
   code: ServiceErrorCode;
   message: string;
   description: string;
+
+  static fromJsonObject(json: any): ServiceError {
+    let er: ServiceError = new ServiceError(ServiceErrorCode.NONE, '', '');
+
+    if(!json) return er;
+
+    er.code = json.code;
+    er.message = json.message;
+    er.description = json.description;
+
+    return er;
+  }
 }
 
 export enum ServiceErrorCode {
