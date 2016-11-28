@@ -363,7 +363,7 @@
             [class.dc-status-yellow]="col.getStatusColor() == 'yellow'"
             [class.dc-status-green]="col.getStatusColor() == 'green'"
           >
-            <label class="list-group-item-text">STATUS</label>
+            <label class="list-group-item-text">{{col.getStatusMessage()}}</label>
           </li>
         </ul>
         <!--
@@ -421,6 +421,10 @@
         <span id="grouppath-addon" class="input-group-addon">VIA Group Path</span>
         <input id="grouppath" name="grouppath" ngControl="grouppath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.grouppath" placeholder="Example: [Column 1].[Column 2]">
         <span class="input-group-addon">TO Table '{{selectedTable.name}}'</span>
+      </div>
+
+      <div class="card">
+        <span class="alert form-text small">STATUS: {{selectedColumn ? selectedColumn.getStatusDescription() : ''}}</span>
       </div>
 
       <div class="card">
