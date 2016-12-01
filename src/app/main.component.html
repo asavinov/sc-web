@@ -157,7 +157,7 @@
       (click)="onSelectSchema(spa)"
       >
       <div [class.dc-list-item-active]="selectedSchema && spa.id === selectedSchema.id" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">{{spa.name}}</h5>
         </div>
         <!--
@@ -175,7 +175,7 @@
       (click)="onSelectSchema(null)"
       >
       <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">[ADD]</h5>
         </div>
         <!--
@@ -253,7 +253,7 @@
       (click)="onSelectTable(tab)"
       >
       <div [class.dc-list-item-active]="selectedTable && selectedTable.id === tab.id" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">{{tab.name}}</h5>
         </div>
         <!--
@@ -271,7 +271,7 @@
       (click)="onSelectTable(null)"
       >
       <div [class.dc-list-item-active]="selectedTable && selectedTable.id.length == 0" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">[ADD]</h5>
         </div>
         <!--
@@ -352,7 +352,7 @@
       (click)="onSelectColumn(col)"
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id === col.id" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">{{col.name}}</h5>
           <h6 class="card-subtitle text-muted">{{col.output.table.name}}</h6>
         </div>
@@ -381,7 +381,7 @@
       (click)="onSelectColumn(null)"
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id.length == 0" class="card dc-horizontal-list-item">
-        <div class="card-block">
+        <div>
           <h5 class="card-title">[ADD]</h5>
           <h6 class="card-subtitle text-muted">&nbsp;</h6>
         </div>

@@ -37,12 +37,21 @@ white-space: normal;
   max-width: 20rem; 
   overflow: hidden; 
   text-overflow: ellipsis;
+
+  padding: 0.5rem;
+  border-radius:0.5rem;
+}
+
+.dc-horizontal-list-item:hover {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
 /* It is a selected schema/table/column item */
 .dc-list-item-active {
   border-width:0.2em; 
   border-color:blue;
+
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
 /* Style for showing absent status or no formula */
