@@ -414,12 +414,14 @@
       </div>
 
       <div class="input-group">
-        <span id="facttable-addon" class="input-group-addon">FROM Table</span>
-        <select id="facttable" name="facttable" ngControl="facttable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.facttable" >
+        <span id="accuformula-addon" class="input-group-addon">Accumulation Formula</span>
+        <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: output + [Amount]">
+        <span id="accutable-addon" class="input-group-addon">FROM Table</span>
+        <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
           <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
         </select>
-        <span id="grouppath-addon" class="input-group-addon">VIA Group Path</span>
-        <input id="grouppath" name="grouppath" ngControl="grouppath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.grouppath" placeholder="Example: [Column 1].[Column 2]">
+        <span id="accupath-addon" class="input-group-addon">VIA Accumulation Path</span>
+        <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
         <span class="input-group-addon">TO Table '{{selectedTable.name}}'</span>
       </div>
 

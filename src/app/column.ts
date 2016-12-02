@@ -17,8 +17,11 @@ export class Column {
   output: TableRef;
 
   formula: string;
-  facttable: string;
-  grouppath: string;
+
+  accuformula: string;
+  accutable: string;
+  accupath: string;
+
   descriptor: string;
 
   status: ServiceError;
@@ -73,9 +76,13 @@ export class Column {
     col.input.table = undefined;
     col.output.id = json.output.id;
     col.output.table = undefined;
+
     col.formula = json.formula;
-    col.facttable = json.facttable;
-    col.grouppath = json.grouppath;
+
+    col.accuformula = json.accuformula;
+    col.accutable = json.accutable;
+    col.accupath = json.accupath;
+
     col.descriptor = json.descriptor;
     col.status = ServiceError.fromJsonObject(json.status);
 
