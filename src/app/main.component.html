@@ -4,6 +4,21 @@
 <!-- NOTE: We could try to use ngIf to hide/show modal -->
 <!-- NOTE: We cannot show/hide dialog from code - only from html -->
 
+<!-- Visibility Options and Conditional Styling
+
+*ngIf="CONDITION-EXPRESSION" - removes element from DOM
+[style.visibility]="CONDITION-EXPRESSION ? 'inherit' : 'hidden'" - changes only visibility without removing from DOM
+[class.invisible]="CONDITION-EXPRESSION"
+[hidden]="CONDITION-EXPRESSION" - acts like display: none
+
+[disabled]="CONDITION-EXPRESSION" - make inactive, e.g., button
+
+[style.some-style]="CONDITION-EXPRESSION ? 'value1' : 'value2'" - use style value1 or value2
+[class.my-class]="CONDITION-EXPRESSION" - use class (or not use at all)
+[class.active]="CONDITION-EXPRESSION" - make item active, e.g., list item
+
+-->
+
 <!-- 
   <div class="card-group"> stretches to have full width and ignore card max-width
   [ngModel]="hero && hero.name" DONE
@@ -12,125 +27,6 @@
 
 
 <!-- TEST: how to use list-group-item and a -->
-<!--
-<div class="card">
-  <div class="card-header">
-    <h4 class="card-title text-xs-center"><b>TEST</b></h4>
-  </div>
-  <div class="card">
-
-
-<div class="card dc-horizontal-list">
-<ul class="list-inline">
-
-<a class="list-inline-item">
-<div class="card dc-horizontal-list-item">
-  <div class="card-header">Card 1 Header</div>
-  <div class="card-block">
-    <h4 class="card-title">Card title that wraps to a new line asdfasdf asdfasdfas adsfasdf</h4>
-    <p class="card-text">Description with text Description with text Description with text Description with text .</p>
-  </div>
-</div>
-</a>
-
-<a class="list-inline-item">
-<div class="card dc-horizontal-list-item dc-list-item-active">
-  <div class="card-header">Card 1 Header</div>
-  <div class="card-block">
-    <h4 class="card-title">Title</h4>
-    <p class="card-text">Description with text.</p>
-  </div>
-</div>
-</a>
-
-<a class="list-inline-item">
-<div class="card dc-horizontal-list-item">
-  <div class="card-header">Card 3 Header</div>
-  <div class="card-block">
-    <h4 class="card-title">Title</h4>
-    <p class="card-text">Description with text.</p>
-  </div>
-</div>
-</a>
-
-</ul>
-</div>
-
-  </div>
-  <div class="card-footer text-xs-center">
-      <div class="card-title">FOOTER</div>
-  </div>
-</div>
--->
-
-
-
-
-
-<!-- OLD, TO DELETE
-  <div class="card-block">
-    <div *ngIf="selectedAccount" class="list-group">
-
-      <a *ngFor="let spa of schemas"
-        class="list-group-item"
-        [class.active]="selectedSchema && spa.id === selectedSchema.id" 
-        (click)="onSelectSchema(spa)"
-        >
-        <h4 class="list-group-item-heading">{{spa.name}}</h4>
-        <div *ngIf="selectedSchema && spa.id === selectedSchema.id" class="text-xs-right">
-          <button type="button" class="btn btn-warning" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" ><i class="fa fa-trash"></i> Delete Schema...</button>
-          <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()"><i class="fa fa-edit"></i> Edit Schema...</button>
-        </div>
-      </a>
-      <a 
-        class="list-group-item"
-        [class.active]="selectedSchema && selectedSchema.id === ''" 
-        (click)="onSelectSchema(null)"
-        >
-        <h4 class="list-group-item-heading">[ADD NEW SCHEMA]</h4>
-        <div *ngIf="selectedSchema && selectedSchema.id.length === 0" class="text-xs-right">
-          <button type="button" class="btn btn-success" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()"><i class="fa fa-plus"></i> New Schema...</button>
-        </div>
-      </a>
-
-    </div>
-  </div>
--->
-
-    <!-- SCHEMA PROPERTIES -->
-<!-- OLD, TO DELETE
-    <div class="col-sm-6">
-    <form *ngIf="selectedSchema" (ngSubmit)="onSchemaSubmit()" #schemaForm="ngForm">
-
-      <div class="form-group">
-        <label for="id">Id</label>
-        <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.id" readonly placeholder="Schema identifier"/>
-      </div>
-
-      <div class="form-group">
-        <label for="name">Name</label> <i tooltip="Unique name of the schema" tooltipPlacement="right" class="fa fa-info-circle"></i>
-        <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Schema name"/>
-      </div>
-
-      <div class="text-xs-right">
-        <button type="button" class="btn btn-warning" (click)="onSchemaDelete()" [disabled]="!selectedSchema.id"><i class="fa fa-trash"></i> Delete</button>
-        <button type="submit" class="btn btn-success" [disabled]="!schemaForm.form.valid"><i class="fa fa-check"></i> Save</button>
-      </div>
-
-    </form>
-
-    <form *ngIf="selectedSchema" (ngSubmit)="onUploadClick()" #readForm="ngForm">
-
-    <div class="form-group">
-      <label for="file-upload">Select asset</label>
-      <input id="file-upload" name="file-upload" type="file" class="form-control" (change)="fileChangeEvent2($event)" placeholder="Upload file..." />
-    </div>
-    <button type="submit" class="btn btn-success pull-xs-right" [disabled]="!fileToUpload"><i class="fa fa-cloud-upload"></i> Upload</button>
-
-    </form>
-    </div>
--->
-
 
 
 
@@ -355,7 +251,16 @@
         <div>
           <h5 class="card-title">{{col.name}}</h5>
           <h6 class="card-subtitle text-muted">{{col.output.table.name}}</h6>
+          <h5 class="card-text">
+            <i class="fa fa-circle-o pull-right" *ngIf="col.getStatusColor() == ''"></i>
+            <i class="fa fa-check-circle dc-status-green-icon pull-right" *ngIf="col.getStatusColor() == 'green'"></i>
+            <i class="fa fa-exclamation-circle dc-status-yellow-icon pull-right" *ngIf="col.getStatusColor() == 'yellow'"></i>
+            <i class="fa fa-warning dc-status-red-icon pull-right" *ngIf="col.getStatusColor() == 'red'"></i>
+            {{col.formula}}
+          </h5>
         </div>
+
+        <!--
         <ul class="list-group list-group-flush">
           <li class="list-group-item bg-faded"><label class="list-group-item-text">{{col.formula}}</label></li>
           <li class="list-group-item bg-faded"
@@ -366,6 +271,7 @@
             <label class="list-group-item-text">{{col.getStatusMessage()}}</label>
           </li>
         </ul>
+        -->
         <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id === col.id ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
@@ -384,11 +290,16 @@
         <div>
           <h5 class="card-title">[ADD]</h5>
           <h6 class="card-subtitle text-muted">&nbsp;</h6>
+          <h5 class="card-text">
+            <i class="fa fa-plus-circle pull-right"></i>
+          </h5>
         </div>
+        <!--
         <ul class="list-group list-group-flush">
           <li class="list-group-item bg-faded"><label class="list-group-item-text"></label></li>
           <li class="list-group-item bg-faded"><label class="list-group-item-text"></label></li>
         </ul>
+        -->
         <!--
         <div class="card-footer" [style.visibility]="selectedColumn && selectedColumn.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">

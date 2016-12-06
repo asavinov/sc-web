@@ -55,6 +55,18 @@ white-space: normal;
 }
 
 /* Style for showing absent status or no formula */
+.dc-status-red-icon {
+  color: red;
+}
+.dc-status-yellow-icon {
+  color: red;
+  /* font-size: large; */
+}
+.dc-status-green-icon {
+  color: green;
+}
+
+/* Style for showing absent status or no formula */
 .dc-status-red {
   background-color: #ff8080 !important;
 }
