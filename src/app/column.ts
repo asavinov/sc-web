@@ -31,7 +31,11 @@ export class Column {
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'green';
 
-    if (this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf()) return 'yellow';
+    if (
+      this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      )
+      return 'yellow';
 
     // TODO: Return status color depending on the status error
 
@@ -43,7 +47,11 @@ export class Column {
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'OK';
 
-    if (this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf()) return this.status.message ? this.status.message : 'ERROR';
+    if (
+      this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      )
+      return this.status.message ? this.status.message : 'ERROR';
 
     return 'ERROR';
   }
@@ -53,7 +61,11 @@ export class Column {
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'No errors found.';
 
-    if (this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf()) return this.status.description ? this.status.description : 'Errors have been found.';
+    if (
+      this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      )
+      return this.status.description ? this.status.description : 'Errors have been found.';
 
     return 'Errors have been found.';
   }
