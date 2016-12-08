@@ -56,14 +56,14 @@ white-space: normal;
 
 /* Style for showing absent status or no formula */
 .dc-status-red-icon {
-  color: red;
+  color: #D8000C;
 }
 .dc-status-yellow-icon {
-  color: red;
+  color: #9F6000;
   /* font-size: large; */
 }
 .dc-status-green-icon {
-  color: green;
+  color :#4F8A10;
 }
 
 /* Style for showing absent status or no formula */

@@ -253,9 +253,9 @@
           <h6 class="card-subtitle text-muted">{{col.output.table.name}}</h6>
           <h5 class="card-text">
             <i class="fa fa-circle-o pull-right" *ngIf="col.getStatusColor() == ''"></i>
-            <i class="fa fa-check-circle dc-status-green-icon pull-right" *ngIf="col.getStatusColor() == 'green'"></i>
-            <i class="fa fa-exclamation-circle dc-status-yellow-icon pull-right" *ngIf="col.getStatusColor() == 'yellow'"></i>
-            <i class="fa fa-warning dc-status-red-icon pull-right" *ngIf="col.getStatusColor() == 'red'"></i>
+            <i class="fa fa-check-square dc-status-green-icon pull-right" *ngIf="col.getStatusColor() == 'green'"></i>
+            <i class="fa fa-warning dc-status-yellow-icon pull-right" *ngIf="col.getStatusColor() == 'yellow'"></i>
+            <i class="fa fa-exclamation-circle dc-status-red-icon pull-right" *ngIf="col.getStatusColor() == 'red'"></i>
             {{col.formula}}
           </h5>
         </div>
