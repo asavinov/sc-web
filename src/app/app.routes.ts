@@ -2,13 +2,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MainComponent } from './main.component';
 import { HelpComponent } from './help.component';
-import { InfoComponent } from './info.component';
+import { AboutComponent } from './about.component';
 
 export const routes: Routes = [
   {path: '', component: MainComponent},
   {path: 'main', component: MainComponent},
   {path: 'help', component: HelpComponent},
-  {path: 'info', component: InfoComponent}
+  {path: 'about', component: AboutComponent}
 
 //  { path: '', redirectTo: 'contact', pathMatch: 'full'},
 //  { path: 'crisis', loadChildren: 'app/crisis/crisis.module' },

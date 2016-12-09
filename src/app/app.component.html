@@ -14,9 +14,6 @@
     <li class="nav-item" [class.active]="activeComponent == 'dc-help'">
       <a class="nav-link" href="#" (click)="activeComponent = 'dc-help'"><b>HELP</b></a>
     </li>
-    <li class="nav-item" [class.active]="activeComponent == 'dc-info'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-info'"><b>MORE INFO</b></a>
-    </li>
     <li class="nav-item" [class.active]="activeComponent == 'dc-about'">
       <a class="nav-link" href="#" (click)="activeComponent = 'dc-about'"><b>ABOUT</b></a>
     </li>
@@ -26,7 +23,6 @@
 
 <dc-main [hidden]="activeComponent != 'dc-main'"></dc-main>
 <dc-help [hidden]="activeComponent != 'dc-help'"></dc-help>
-<dc-info [hidden]="activeComponent != 'dc-info'"></dc-info>
 <dc-about [hidden]="activeComponent != 'dc-about'"></dc-about>
 <!--
 <router-outlet></router-outlet>
@@ -56,7 +52,6 @@
 
     <li [class.active]="activeComponent == 'dc'"><a (click)="activeComponent = 'dc'"><b>APPLICATION</b></a></li>
     <li [class.active]="activeComponent == 'help'"><a (click)="activeComponent = 'help'"><b>HELP</b></a></li>
-    <li [class.active]="activeComponent == 'info'"><a (click)="activeComponent = 'info'"><b>MORE INFO</b></a></li>
     <li [class.active]="activeComponent == 'about'"><a (click)="activeComponent = 'about'"><b>ABOUT</b></a></li>
 
   </ul>

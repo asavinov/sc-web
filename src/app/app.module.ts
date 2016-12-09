@@ -18,7 +18,6 @@ import { AppComponent }  from './app.component';
 
 import { MainComponent }  from './main.component';
 import { HelpComponent } from './help.component';
-import { InfoComponent } from './info.component';
 import { AboutComponent } from './about.component';
 
 import { AppService }  from './app.service';
@@ -42,7 +41,6 @@ import { AppService }  from './app.service';
     AppComponent,
     MainComponent,
     HelpComponent,
-    InfoComponent,
     AboutComponent
     ],
   bootstrap: [ AppComponent ]
