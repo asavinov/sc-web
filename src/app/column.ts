@@ -32,7 +32,8 @@ export class Column {
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'green';
 
     if (
-      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.DEPENDENCY_CYCLE_ERROR.valueOf()
       )
       return 'yellow';
 
@@ -51,7 +52,8 @@ export class Column {
 
     if (
       this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
-      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.DEPENDENCY_CYCLE_ERROR.valueOf()
       )
       return this.status.message ? this.status.message : 'ERROR';
 
@@ -65,7 +67,8 @@ export class Column {
 
     if (
       this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
-      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf()
+      this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.DEPENDENCY_CYCLE_ERROR.valueOf()
       )
       return this.status.description ? this.status.description : 'Errors have been found.';
 
