@@ -6,7 +6,7 @@
   </div>
   <div class="card-block">
     In <span class="dc">Data Commandr</span>, data is organized into many tables which are displayed in the TABLES panel as a list. 
-    Each table must have a unique name.
+    Each table must have a unique name. However, tables do not have their own defintions, that is, new tables do not result from operations with other tables like in the conventional (set-oriented) approaches.
   </div>
 </div>
 
@@ -15,9 +15,10 @@
     <h5 class="card-title text-xs-center"><b>WORKING WITH COLUMNS</b></h5>
   </div>
   <div class="card-block">
-    <span class="dc">Data Commandr</span> is a column-oriented system because all data is stored and processed in columns. 
-    All existing columns of the selected tables are displayed in the COLUMNS panel. Each column must have a unique name within its table. 
-    A column is characterized by its type which is type of data it is intended to store.
+    <p>All columns of the selected tables are displayed in the COLUMNS panel. Each column must have a unique name within its table. 
+    A column is characterized by its type. Column types is either a primitive type or another column.
+    Real data values that a column stores can be either uploaded or computed from other columns. 
+    </p>
   </div>
 </div>
 
@@ -26,23 +27,53 @@
     <h5 class="card-title text-xs-center"><b>COLUMN FORMULAS</b></h5>
   </div>
   <div class="card-block">
-    <p>Column formulas are the primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed. 
-    Data in columns can be either uploaded or computed from other columns. 
-    If the data has to be computed then the user has to provide a formula that will be used to derive its value from other columns.
-    Column formula is an arithmetic expression which is composed of other column name and operations.
+    <p><span class="dc">Data Commandr</span> uses a column-oriented approach to data representation and processing. 
+    This means that a new column can be defined in terms of other columns and hence data a column stores is derived from the data in other columns.
     </p>
-    <p>Column names used in formulas must be written in square brackets. 
+    <p>Column formulas are a primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed.
+    Column formulas in this sense are analogous to traditional data queries. 
+    There are three types of expressions that can be used to define columns:</p>
+    <ul> 
+    <li>calculated columns for primitive data types</li>
+    <li>complex (or tuple) columns if this column has a type of another column</li>
+    <li>accumulated (or aggregated) columns which are intended for data aggregation</li> 
+    </ul> 
+
+    <p class="card-title text-xs-center"><b>Calculated Columns</b></p>
+
+    <p>Primitive column formula is an expression which is composed of other column names and operations.  
+    Column names used in formulas must be written in square brackets. 
     For example, if we want to compute the sum of two existing columns then the (third) column formula has to be defined as follows: <code>[Column 1] + [Column 2]</code>
     </p>
+
     <p>Column formulas can use the following operators: 
     addition <code>2+2</code>, subtraction <code>2-2</code>, multiplication <code>2*2</code>, division <code>2/2</code>, 
     exponential <code>2^2</code>, unary minus or plus <code>+2-(-2)</code>, modulo <code>2%2</code>.
     </p>
+
     <p>Column formulas can use the following functions: 
     <code>abs</code>, <code>acos</code>, <code>asin</code>, <code>atan</code>, <code>cbrt</code>, <code>ceil</code>, 
     <code>cos</code>, <code>cosh</code>, <code>exp</code>, <code>floor</code>, <code>log</code>, <code>log2</code>, <code>log10</code>, 
     <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, <code>signum</code>. 
     </p>
+
+    <p class="card-title text-xs-center"><b>Complex Columns</b></p>
+
+    <p>Complex or tuple formulas are enclosed in curly brackets and store a comma separated list of assignments: <code>&#123; [Col1] = PRIMITIVE EXPRESSION 1, [Col1] = PRIMITIVE EXPRESSION 2, ... &#125;</code>.
+    Each element of this list consists of two parts. The left part is some column of the type table of this column.
+    The right part is an expression written using columns of this table.
+    </p>
+
+    <p class="card-title text-xs-center"><b>Accumulated Columns</b></p>
+
+    <p>Accumulated formulas use the main expression to initialize the values of this column precisely as it is done for primitive expressions.
+    If the main expression is empty then a default value will be used for initialization.
+    In addition, this initial value can updated by specifying three additional parameters.
+    First, it is necessary to specify another table the data of which will be accumulated. 
+    Second, a column path has to be specified that leads from this accumulation table to this column table. 
+    Third, a formula has to be provided written in terms of the accumulation table. This formula should use an additional parameter <code>output</code> which is equal to the current value of the column.   
+    </p>
+
   </div>
 </div>
 

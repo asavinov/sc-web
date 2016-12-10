@@ -23,7 +23,7 @@ The following steps have to be performed:
 # Change Log
 
 * v0.2.0 (2016-12-10)
- * Complex types and formulas.
- * Accumulating columns and formulas.
+  * Complex types and formulas.
+  * Accumulating columns and formulas.
 * v0.1.0 (2016-09-05)
- * First working version with simple arithmetic formulas.
+  * First working version with simple arithmetic formulas.
