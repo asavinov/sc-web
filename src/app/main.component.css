@@ -77,6 +77,20 @@ white-space: normal;
   background-color: lightgreen !important;
 }
 
+
+/* Shown on the left side of horisontal list (as the first item in the list and formatted similarly) */
+.dc-button-panel {
+  min-width: 1rem; 
+  max-width: 5rem; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+
+  /* We need border on the right side probably or around the whole panel */
+
+  padding: 0.1rem;
+  border-radius:0rem;
+}
+
 /* OLD
 -------------------------------------------------- */
 
@@ -150,4 +164,63 @@ button:hover {
 
 .ng-invalid {
   border-left: 5px solid #a94442; /* red */
+}
+
+
+/* 
+We can define explicitly size and absolute positions of header, body and footer with body having auto scrolling:
+http://stackoverflow.com/questions/29038596/bootstrap-fixed-header-and-footer-with-scrolling-body-content-area-in-fluid-cont
+Since the size of the body is smaller, the scroll bar will be added only to its height without footer.
+*/
+
+
+/* in the case we use <footer> 
+http://stackoverflow.com/questions/19330611/fixed-footer-in-bootstrap
+http://www.bootply.com/87811
+Note that the footer will be shown over the body by hiding lowerst part of it and hence:
+1.we need to add bottom margin to the main body equal to the height of the footer so that it does not hide it.
+2. Scroll bar will be added to the whole height of the body including the footer.
+*/
+/*
+footer {
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
+}
+*/
+
+/* in the case we use class like class="footer" 
+http://www.bootply.com/87811
+*/
+/*
+.footer {
+  background-color:#ffffff;
+  bottom:0;
+  position:fixed;
+  padding:10px;
+}
+*/
+
+/* in the case we use div id="my-footer" */
+/*
+#my-footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+*/
+
+
+/* Show button on hover
+http://stackoverflow.com/questions/26632713/show-delete-button-on-right-side-of-bootstrap-row-on-hover
+*/
+
+.hover-btn {
+  position: absolute;
+  right: 5px;
+  display: none;
+}
+
+.dc-horizontal-list-item:hover .hover-btn {
+  display: block;
 }

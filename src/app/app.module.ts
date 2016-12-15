@@ -8,6 +8,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { DropdownModule  } from 'ng2-bootstrap/ng2-bootstrap';
 
 //
 // App-specific
@@ -29,12 +30,12 @@ import { AppService }  from './app.service';
     HttpModule,
     ToastModule,
     TooltipModule,
-    ModalModule
+    ModalModule,
+    DropdownModule
     //routing
     ],
   providers: [
     AppService
-    //appRoutingProviders
     ],
   exports: [ AppComponent ],
   declarations: [

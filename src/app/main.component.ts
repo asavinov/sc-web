@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
+
+import {ComponentsHelper} from 'ng2-bootstrap/ng2-bootstrap' // It is needed for ng2-bootstrap modals in angular 2.2.* (hack/workaround, see constructor)
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -11,22 +13,14 @@ import { Column } from './column';
 @Component({
   selector: 'dc-main',
   templateUrl: 'main.component.html',
-  styleUrls:  ['main.component.css']
+  styleUrls:  ['main.component.css'],
+  providers: [{provide: ComponentsHelper, useClass: ComponentsHelper}],
 })
 export class MainComponent implements OnInit {
 
-/*
-  //@ViewChild(SchemaModal) schemaDialog: SchemaModal;
-  @ViewChild('schemaDialog') public schemaDialog:SchemaModal;
-  @ViewChild('schemaModal') public schemaModal: ModalDirective;
-  schshow(): any {
-    this.schemaDialog.show();
-    this.schemaModal.show();
-  }
-  isshown: boolean = true;
-*/
-  constructor(private _scService: AppService, public _toastr: ToastsManager) {
-    //this.filesToUpload = [];
+  constructor(private _scService: AppService, public _toastr: ToastsManager, componentsHelper:ComponentsHelper, vcRef:ViewContainerRef) {
+    componentsHelper.setRootViewContainerRef(vcRef); // Hack/workaround for angular 2.2.* to work ng2-bootstrap modals
+    this._toastr.setRootViewContainerRef(vcRef); // Hack/workaround for angular 2.2.* to work ng2-tastr
   }
 
   ngOnInit() {
