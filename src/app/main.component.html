@@ -44,9 +44,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" tooltip="Create new schema..." tooltipPlacement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" tooltip="Edit selected schema..." tooltipPlacement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" tooltip="Delete selected schema..." tooltipPlacement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" tooltip="Create new schema..." placement="right"><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" tooltip="Edit selected schema..." placement="right"><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" tooltip="Delete selected schema..." placement="right"><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -94,7 +94,7 @@
             <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.id" readonly placeholder="Schema identifier"/>
           </div>
           <div class="form-group">
-            <label for="name">Name</label> <i tooltip="Unique name of the schema" tooltipPlacement="right" class="fa fa-info-circle"></i>
+            <label for="name">Name</label> <i tooltip="Unique name of the schema" placement="right" class="fa fa-info-circle"></i>
             <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Schema name"/>
           </div>
       </div>
@@ -126,9 +126,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" tooltip="Create new table..." tooltipPlacement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" tooltip="Edit selected table..." tooltipPlacement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" tooltip="Delete selected table..." tooltipPlacement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" tooltip="Create new table..." placement="right"><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" tooltip="Edit selected table..." placement="right"><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" tooltip="Delete selected table..." placement="right"><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -185,11 +185,11 @@
           <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedTable && selectedTable.id" readonly placeholder="Table identifier" />
         </div>
         <div class="form-group">
-          <label for="name">Name</label> <i tooltip="Unique name of the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="name">Name</label> <i tooltip="Unique name of the table" placement="right" class="fa fa-info-circle"></i>
           <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable && selectedTable.name" required placeholder="Table name"/>
         </div>
         <div class="form-group">
-          <label for="maxLength">Maximum length</label> <i tooltip="Maximum number of rows in the table" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="maxLength">Maximum length</label> <i tooltip="Maximum number of rows in the table" placement="right" class="fa fa-info-circle"></i>
           <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable && selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
         </div>
       </div>
@@ -221,9 +221,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" tooltip="Create new Column..." tooltipPlacement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" tooltip="Edit selected column..." tooltipPlacement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" tooltip="Delete selected column..." tooltipPlacement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" tooltip="Create new Column..." placement="right"><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" tooltip="Edit selected column..." placement="right"><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" tooltip="Delete selected column..." placement="right"><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -233,14 +233,26 @@
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id === col.id" class="card dc-horizontal-list-item">
         <div>
-          <h5 class="card-title">{{col.name}}</h5>
-          <h6 class="card-subtitle text-muted">{{col.output.table.name}}</h6>
+          <h5 class="card-title">
+            {{col.name}}
+          </h5>
+          <h6 class="card-subtitle text-muted">
+
+            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right"></i>
+            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;"></i>
+            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;"></i>
+
+            {{col.output.table.name}}
+          </h6>
           <h5 class="card-text">
-            <i class="fa fa-circle-o pull-right" *ngIf="col.getStatusColor() == ''"></i>
-            <i class="fa fa-check-square dc-status-green-icon pull-right" *ngIf="col.getStatusColor() == 'green'"></i>
-            <i class="fa fa-warning dc-status-yellow-icon pull-right" *ngIf="col.getStatusColor() == 'yellow'"></i>
-            <i class="fa fa-exclamation-circle dc-status-red-icon pull-right" *ngIf="col.getStatusColor() == 'red'"></i>
+
+            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" ></i>
+            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" ></i>
+            <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" ></i>
+            <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" ></i>
+
             {{col.formula}}
+
           </h5>
         </div>
       </div>
@@ -322,17 +334,17 @@
           <input id="id" name="id" ngControl="id" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.id" readonly placeholder="Column identifier" />
         </div>
         <div class="form-group">
-          <label for="name">Name</label> <i tooltip="Unique name of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="name">Name</label> <i tooltip="Unique name of the column" placement="right" class="fa fa-info-circle"></i>
           <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.name" required placeholder="Column name" />
         </div>
         <div class="form-group">
-          <label for="type">Data type</label> <i tooltip="Data type of the column" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="type">Data type</label> <i tooltip="Data type of the column" placement="right" class="fa fa-info-circle"></i>
           <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.output && selectedColumn.output.id" required >
             <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || (tab.id == selectedTable.id)" [ngValue]="tab.id">{{tab.name}}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="formula">Formula</label> <i tooltip="Formula describes how values of this column are computed by using values in other columns and operations" placement="right" class="fa fa-info-circle"></i>
           <input id="formula" name="formula" ngControl="formula" type="text" class="form-control input-lg" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" />
         </div>
         <!--
@@ -364,11 +376,11 @@
   <div class="card-header">
     <h5 class="card-subtitle">
       <b>DATA</b>
-      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" tooltipPlacement="left"><i class="fa fa-trash"></i> Empty Table</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" placement="left"><i class="fa fa-trash"></i> Empty Table</button>
       <span class="pull-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" tooltipPlacement="left"><i class="fa fa-refresh"></i> Load Table</button>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" placement="left"><i class="fa fa-refresh"></i> Load Table</button>
       <span class="pull-right">&nbsp;</span>
-      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" tooltip="Evaluate formulas of all columns in the selected table" tooltipPlacement="left"><i class="fa fa-play"></i> Evalute Table</button>
+      <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" tooltip="Evaluate formulas of all columns in the selected table" placement="left"><i class="fa fa-play"></i> Evalute Table</button>
       <span class="pull-right">&nbsp;</span>
       <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" tooltip="Upload CSV data and append it to the selected table"><i class="fa fa-cloud-upload"></i> Upload Table...</button>
     </h5>
@@ -408,7 +420,7 @@
 
       <div class="modal-body">
         <div class="form-group">
-          <label for="uploadCsv">Write CSV to table</label> <i tooltip="The first row specifies column names and all other rows specify values for these columns" tooltipPlacement="right" class="fa fa-info-circle"></i>
+          <label for="uploadCsv">Write CSV to table</label> <i tooltip="The first row specifies column names and all other rows specify values for these columns" placement="right" class="fa fa-info-circle"></i>
           <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
         </div>
       </div>

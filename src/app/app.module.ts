@@ -4,17 +4,17 @@ import { FormsModule }        from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
 
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { DropdownModule  } from 'ng2-bootstrap/ng2-bootstrap';
+import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
+
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 //
 // App-specific
 //
-//import { routing, appRoutingProviders } from './app.routes';
-
 import { AppComponent }  from './app.component';
 
 import { MainComponent }  from './main.component';
@@ -28,14 +28,14 @@ import { AppService }  from './app.service';
     BrowserModule,
     FormsModule,
     HttpModule,
+    Ng2BootstrapModule,
     ToastModule,
-    TooltipModule,
-    ModalModule,
-    DropdownModule
-    //routing
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    DropdownModule,
     ],
   providers: [
-    AppService
+    AppService,
     ],
   exports: [ AppComponent ],
   declarations: [

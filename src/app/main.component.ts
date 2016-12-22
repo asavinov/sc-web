@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 
-import {ComponentsHelper} from 'ng2-bootstrap/ng2-bootstrap' // It is needed for ng2-bootstrap modals in angular 2.2.* (hack/workaround, see constructor)
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { Schema } from './schema';
@@ -13,14 +11,13 @@ import { Column } from './column';
 @Component({
   selector: 'dc-main',
   templateUrl: 'main.component.html',
-  styleUrls:  ['main.component.css'],
-  providers: [{provide: ComponentsHelper, useClass: ComponentsHelper}],
+  styleUrls:  ['main.component.css']
 })
 export class MainComponent implements OnInit {
 
-  constructor(private _scService: AppService, public _toastr: ToastsManager, componentsHelper:ComponentsHelper, vcRef:ViewContainerRef) {
-    componentsHelper.setRootViewContainerRef(vcRef); // Hack/workaround for angular 2.2.* to work ng2-bootstrap modals
-    this._toastr.setRootViewContainerRef(vcRef); // Hack/workaround for angular 2.2.* to work ng2-tastr
+  constructor(private _scService: AppService, public _toastr: ToastsManager, viewContainerRef:ViewContainerRef) {
+    // Hack/workaround for angular 2.2.* to work ng2-tastr. See also forRoot() in NgModule imports.
+    this._toastr.setRootViewContainerRef(viewContainerRef);
   }
 
   ngOnInit() {

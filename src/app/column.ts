@@ -24,6 +24,7 @@ export class Column {
 
   descriptor: string;
 
+  dirty: boolean;
   status: ServiceError;
 
   getStatusColor(): string {
@@ -101,6 +102,8 @@ export class Column {
     col.accupath = json.accupath;
 
     col.descriptor = json.descriptor;
+
+    col.dirty = json.dirty;
     col.status = ServiceError.fromJsonObject(json.status);
 
     return col;
