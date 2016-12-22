@@ -1,16 +1,15 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }        from '@angular/forms';
-
 import { HttpModule } from '@angular/http';
 
-import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { Ng2BootstrapModule } from 'ng2-bootstrap';
 
-import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap';
+import { DropdownModule } from 'ng2-bootstrap';
 
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastModule} from 'ng2-toastr';
 
 //
 // App-specific

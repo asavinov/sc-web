@@ -17,6 +17,9 @@
     <li class="nav-item" [class.active]="activeComponent == 'dc-about'">
       <a class="nav-link" href="#" (click)="activeComponent = 'dc-about'"><b>ABOUT</b></a>
     </li>
+    <li class="nav-item float-xs-right" >
+      <p class="nav-link">Version {{version}} ({{versionDate}})</p>
+    </li>
   </ul>
 
 </nav>

@@ -238,18 +238,18 @@
           </h5>
           <h6 class="card-subtitle text-muted">
 
-            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right"></i>
-            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;"></i>
-            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;"></i>
+            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right" ></i>
+            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;" tooltip="Column is up-to-date" placement="up" ></i>
+            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;" tooltip="Column needs to be evaluated" placement="up" ></i>
 
             {{col.output.table.name}}
           </h6>
           <h5 class="card-text">
 
-            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" ></i>
-            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" ></i>
-            <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" ></i>
-            <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" ></i>
+            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" tooltip="No formula" placement="up" ></i>
+            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" tooltip="Column formula is correct" placement="up" ></i>
+            <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" tooltip="Column formula depends on incorrect column(s)" placement="up" ></i>
+            <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" tooltip="Column formula has an error" placement="up" ></i>
 
             {{col.formula}}
 
