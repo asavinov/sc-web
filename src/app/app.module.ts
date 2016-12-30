@@ -7,7 +7,7 @@ import { Ng2BootstrapModule } from 'ng2-bootstrap';
 
 import { TooltipModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap';
-import { DropdownModule } from 'ng2-bootstrap';
+import { PopoverModule } from 'ng2-bootstrap';
 
 import {ToastModule} from 'ng2-toastr';
 
@@ -28,10 +28,10 @@ import { AppService }  from './app.service';
     FormsModule,
     HttpModule,
     Ng2BootstrapModule,
-    ToastModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    DropdownModule,
+    PopoverModule.forRoot(),
+    ToastModule,
     ],
   providers: [
     AppService,

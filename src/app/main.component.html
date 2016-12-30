@@ -10,6 +10,9 @@
 *ngIf="CONDITION-EXPRESSION" - removes element from DOM
 [style.visibility]="CONDITION-EXPRESSION ? 'inherit' : 'hidden'" - changes only visibility without removing from DOM
 [class.invisible]="CONDITION-EXPRESSION"
+<div class="invisible">...</div> - hides element which however still exists (display is not modified) 
+  .invisible { visibility: hidden; }
+  .element { @include invisible; } - usage of invisible as a mixin
 [hidden]="CONDITION-EXPRESSION" - acts like display: none
 
 [disabled]="CONDITION-EXPRESSION" - make inactive, e.g., button
@@ -44,9 +47,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" tooltip="Create new schema..." placement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" tooltip="Edit selected schema..." placement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" tooltip="Delete selected schema..." placement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" title="Create new schema..." ><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -126,9 +129,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" tooltip="Create new table..." placement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" tooltip="Edit selected table..." placement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" tooltip="Delete selected table..." placement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" title="Create new table..." ><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -221,9 +224,9 @@
 
     <a class="list-inline-item dc-button-panel">
     <div class="btn-group-vertical">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" tooltip="Create new Column..." placement="right"><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" tooltip="Edit selected column..." placement="right"><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" tooltip="Delete selected column..." placement="right"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" title="Create new Column..." ><i class="fa fa-plus"></i></button>
+      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -238,21 +241,25 @@
           </h5>
           <h6 class="card-subtitle text-muted">
 
-            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right" ></i>
-            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;" tooltip="Column is up-to-date" placement="up" ></i>
-            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;" tooltip="Column needs to be evaluated" placement="up" ></i>
+            <template #popDirtyNull></template>
+            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right" [popover]="popDirtyNull" triggers="hover" container="body" placement="right" ></i>
+            <template #popDirtyFalse>Column is up-to-date</template>
+            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;" [popover]="popDirtyFalse" triggers="hover" container="body" placement="right" ></i>
+            <template #popDirtyTrue>Column needs to be evaluated</template>
+            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;" [popover]="popDirtyTrue" triggers="hover" container="body" placement="right" ></i>
 
             {{col.output.table.name}}
           </h6>
           <h5 class="card-text">
-
-            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" tooltip="No formula" placement="up" ></i>
-            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" tooltip="Column formula is correct" placement="up" ></i>
-            <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" tooltip="Column formula depends on incorrect column(s)" placement="up" ></i>
-            <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" tooltip="Column formula has an error" placement="up" ></i>
-
+            <template #popStatusNull>No formula</template>
+            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
+            <template #popStatusGreen>Column formula is correct</template>
+            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" [popover]="popStatusGreen" triggers="hover" container="body" placement="right" ></i>
+            <template #popStatusYellow>Formula depends on an incorrect column(s): {{col.getStatusDescription()}}</template>
+            <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" [popover]="popStatusYellow" triggers="hover" container="body" placement="right" ></i>
+            <template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</template>
+            <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" [popover]="popStatusRed" triggers="hover" container="body" placement="right" ></i>
             {{col.formula}}
-
           </h5>
         </div>
       </div>
@@ -279,7 +286,15 @@
     <form *ngIf="selectedTable && selectedTable.id.length > 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
 
       <div class="input-group input-group-lg">
-        <span id="formula-addon" class="input-group-addon">Formula</span>
+        <template #popFormula>
+        <span class="form-text small">
+          Column names in formulas are written in square brackets like <code>[My Column]</code>. 
+          Arithmetic expressions can be used, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
+          Accumulate formulas use a reserived <code>output</code> variable storing the current output which has to be updated, for example, <code>output + [Column 1]</code>. 
+        </span>
+        </template>
+        <span id="formula-addon" class="input-group-addon">Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i></span>
         <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
         <span class="input-group-btn">
           <button type="submit" class="btn btn-success" [disabled]="!formulaForm.form.valid"><i class="fa fa-check"></i></button>
@@ -287,29 +302,23 @@
       </div>
 
       <div class="input-group">
-        <span id="accuformula-addon" class="input-group-addon">Accumulation Formula</span>
+
+        <template #popAccuFormula>Accumulation formula uses columns of the accumulation table and a special variable 'output' with the current value</template>
+        <span id="accuformula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
         <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: output + [Amount]">
-        <span id="accutable-addon" class="input-group-addon">FROM Table</span>
+
+        <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
+        <span id="accutable-addon" class="input-group-addon">Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i></span>
         <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
           <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
         </select>
-        <span id="accupath-addon" class="input-group-addon">VIA Accumulation Path</span>
+
+        <template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</template>
+        <span id="accupath-addon" class="input-group-addon">Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i></span>
         <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
-        <span class="input-group-addon">TO Table '{{selectedTable.name}}'</span>
+        <span class="input-group-addon">Main Table '{{selectedTable.name}}'</span>
       </div>
 
-      <div class="card-block">
-        <span class="form-text">STATUS: {{selectedColumn ? selectedColumn.getStatusDescription() : ''}}</span>
-      </div>
-
-      <div class="card">
-        <span class="alert alert-info form-text small">
-          Column names in formulas are written in square brackets like <code>[My Column]</code>. 
-          Arithmetic expressions can be used, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
-          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
-          Accumulate formulas use a reserived <code>output</code> variable storing the current output which has to be updated, for example, <code>output + [Column 1]</code>. 
-        </span>
-      </div>
     </form>
   </div>
 
