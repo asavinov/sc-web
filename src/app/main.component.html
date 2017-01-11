@@ -307,9 +307,9 @@
 
       <div *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="input-group">
 
-        <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>output</code> with the current value which has to be updated, for example, <code>output + [Column 1]</code></template>
+        <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></template>
         <span id="accuformula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
-        <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: output + [Amount]">
+        <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]">
 
         <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
         <span id="accutable-addon" class="input-group-addon">Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i></span>
