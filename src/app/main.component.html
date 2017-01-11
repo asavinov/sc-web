@@ -287,11 +287,15 @@
 
       <div class="input-group input-group-lg">
         <template #popFormula>
-        <span class="form-text small">
+        <span *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="form-text small">
+          A primitive formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
           Column names in formulas are written in square brackets like <code>[My Column]</code>. 
-          Arithmetic expressions can be used, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
-          Formulas for non-primitive columns are a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
-          Accumulate formulas use a reserived <code>output</code> variable storing the current output which has to be updated, for example, <code>output + [Column 1]</code>. 
+          In the case of aggregation, its purpose is to initialize the column values and it can be a constant.
+        </span>
+        <span *ngIf="selectedColumn && !selectedColumn.isPrimitve()" class="form-text small">
+          A non-primitive column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
+          Column names in formulas are written in square brackets like <code>[My Column]</code>. 
+          The tight hand side of the assignment can be an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
         </span>
         </template>
         <span id="formula-addon" class="input-group-addon">Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i></span>
@@ -301,9 +305,9 @@
         </span>
       </div>
 
-      <div class="input-group">
+      <div *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="input-group">
 
-        <template #popAccuFormula>Accumulation formula uses columns of the accumulation table and a special variable 'output' with the current value</template>
+        <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>output</code> with the current value which has to be updated, for example, <code>output + [Column 1]</code></template>
         <span id="accuformula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
         <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: output + [Amount]">
 
@@ -399,8 +403,8 @@
   <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
       <thead class="thead-inverse">
         <tr>
-            <th class="bg-primary"><h4>#</h4></th>
-            <th *ngFor="let col of columns" class="bg-primary"><h4>{{col.name}}</h4></th>
+            <th class="bg-primary"><h5>#</h5></th>
+            <th *ngFor="let col of columns" class="bg-primary"><h5>{{col.name}}</h5></th>
         </tr>
       </thead>
       <tbody>

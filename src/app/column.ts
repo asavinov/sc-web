@@ -16,6 +16,11 @@ export class Column {
   input: TableRef;
   output: TableRef;
 
+  isPrimitve(): boolean {
+    if(!this.output || !this.output.table) return false;
+    return this.output.table.isPrimitve();
+  }
+
   formula: string;
 
   accuformula: string;
