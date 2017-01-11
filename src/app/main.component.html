@@ -49,7 +49,7 @@
     <div class="btn-group-vertical">
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" title="Create new schema..." ><i class="fa fa-plus"></i></button>
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaDelete()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -114,6 +114,35 @@
   </div>
 </div>
 
+<!-- SCHEMA DELETE DIALOG -->
+<div bsModal #schemaDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="selectedSchema">
+      <form (ngSubmit)="onSchemaDelete(); schemaDeleteModal.hide();" #schemaForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="schemaDeleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Delete Schema</h4>
+      </div>
+
+      <div class="modal-body">
+        Delete the selected schema: {{selectedSchema.name}}?
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="schemaDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ---------- -->
@@ -131,7 +160,7 @@
     <div class="btn-group-vertical">
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" title="Create new table..." ><i class="fa fa-plus"></i></button>
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableDelete()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -170,7 +199,7 @@
 </div>
 
 <!-- TABLE DIALOG -->
-<div bsModal #tableModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Table" aria-hidden="true">
+<div bsModal #tableModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="selectedTable">
       <form (ngSubmit)="onTableSubmit(); tableModal.hide();" #tableForm="ngForm">
@@ -209,6 +238,35 @@
   </div>
 </div>
 
+<!-- TABLE DELETE DIALOG -->
+<div bsModal #tableDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableDelete(); tableDeleteModal.hide();" #tableForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="tableDeleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Delete Table</h4>
+      </div>
+
+      <div class="modal-body">
+        Delete the selected table: {{selectedTable.name}}?
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="tableDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ----------- -->
@@ -226,7 +284,7 @@
     <div class="btn-group-vertical">
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" title="Create new Column..." ><i class="fa fa-plus"></i></button>
       <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="onColumnDelete()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
     </div>
     </a>
 
@@ -329,7 +387,7 @@
 </div>
 
 <!-- COLUMN DIALOG -->
-<div bsModal #columnModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Column" aria-hidden="true">
+<div bsModal #columnModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="selectedColumn">
       <form (ngSubmit)="onColumnSubmit(); columnModal.hide();" #columnForm="ngForm">
@@ -380,6 +438,35 @@
   </div>
 </div>
 
+<!-- COLUMN DELETE DIALOG -->
+<div bsModal #columnDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="selectedColumn">
+      <form (ngSubmit)="onColumnDelete(); columnDeleteModal.hide();" #columnForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="columnDeleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Delete Column</h4>
+      </div>
+
+      <div class="modal-body">
+        Delete the selected column: {{selectedColumn.name}}?
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="columnDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ---------- -->
@@ -389,7 +476,7 @@
   <div class="card-header">
     <h5 class="card-subtitle">
       <b>DATA</b>
-      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEmpty()" tooltip="Remove all records from the selected tables" placement="left"><i class="fa fa-trash"></i> Empty Table</button>
+      <button type="button" class="btn btn-warning pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" tooltip="Remove all records from the selected tables" placement="left"><i class="fa fa-trash"></i> Empty Table</button>
       <span class="pull-right">&nbsp;</span>
       <button type="button" class="btn btn-success pull-right" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" tooltip="Load and display data in the selected table" placement="left"><i class="fa fa-refresh"></i> Load Table</button>
       <span class="pull-right">&nbsp;</span>
@@ -442,6 +529,35 @@
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
           <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE EMPTY DIALOG -->
+<div bsModal #tableEmptyModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableEmpty(); tableEmptyModal.hide();" #tableEmptyForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="tableEmptyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Empty Data</h4>
+      </div>
+
+      <div class="modal-body">
+        Remove all records from the selected table: {{selectedTable.name}}?
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="tableEmptyModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
         </div>
       </div>
 
