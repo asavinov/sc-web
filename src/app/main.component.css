@@ -78,7 +78,12 @@ white-space: normal;
 }
 
 
-/* Shown on the left side of horisontal list (as the first item in the list and formatted similarly) */
+/* 
+Vertical list of buttons shown on the left side of horisontal list (as the first item in the list and formatted similarly) 
+    <a class="list-inline-item dc-button-panel">
+    <div class="btn-group-vertical">
+    ... BUTTONS ...
+*/
 .dc-button-panel {
   min-width: 1rem; 
   max-width: 5rem; 
