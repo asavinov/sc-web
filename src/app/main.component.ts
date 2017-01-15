@@ -466,7 +466,7 @@ export class MainComponent implements OnInit {
           this.allRecords.set(this.selectedTable.id, records);
           this.records = records;
 
-          this._toastr.info('Successfully loaded.');
+          this._toastr.info('Data synchronized.');
         }
         else if(records instanceof Object) { // Error
             let msg: string = records['message'] || 'Error loading table data.';
@@ -488,7 +488,7 @@ export class MainComponent implements OnInit {
           this.allRecords.set(this.selectedTable.id, []);
           this.records = [];
 
-          this._toastr.info('Successfully evaluated.');
+          this._toastr.info('Data evaluated.');
         }
         else if(records instanceof Object) { // Error
             let msg: string = records['message'] || 'Error evaluating table.';
@@ -518,7 +518,12 @@ export class MainComponent implements OnInit {
 
   onTableUpload() {
     // Write data to the service
-    this._scService.write(this.selectedTable, this.uploadCsv);
+    this._scService.write(this.selectedTable, this.uploadCsv).then(
+      x => {
+        this._toastr.info('Data imported.');
+        this.onTableRead(); // Read data from the table
+      }
+    );
   }
 
 }

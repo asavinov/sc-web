@@ -22,8 +22,12 @@ The following steps have to be performed:
 
 # Change Log
 
+* v0.3.0 (2017-01-xx)
+  * Redesign UI (popovers, buttons, confirmation dialogs etc.)
+  * Dirty-clean status of columns
+  * New sample data
 * v0.2.0 (2016-12-10)
-  * Complex types and formulas.
-  * Accumulating columns and formulas.
+  * Complex types and formulas
+  * Accumulating columns and formulas
 * v0.1.0 (2016-09-05)
   * First working version with simple arithmetic formulas.

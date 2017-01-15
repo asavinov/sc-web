@@ -374,8 +374,8 @@
 
   <!-- EVALUATE AND UPDATE BUTTONS -->
   <div class="card text-xs-center">
-    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" title="Evaluate formulas of all columns in the selected table" ><i class="fa fa-play"></i> Evalute Table</button>
-    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load Table</button>
+    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" title="Evaluate formulas of all columns in the selected table" ><i class="fa fa-play"></i> Evaluate</button>
+    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load Table Data</button>
   </div>
 
 </div>
@@ -496,8 +496,15 @@
 
       <div class="modal-body">
         <div class="form-group">
-          <label for="uploadCsv">Write CSV to table</label> <i tooltip="The first row specifies column names and all other rows specify values for these columns" placement="right" class="fa fa-info-circle"></i>
-          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="5" maxlength="1024" placeholder="Table data as CSV. Copy and paste including column names in the first row." ></textarea>
+
+          <div class="alert alert-info" role="alert">
+            <i class="fa fa-info-circle"></i>
+            Data to be imported has to be in CSV format without quotes. 
+            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns are needed.
+            Each next row represents a data record, for example, <code>123.45, my string</code>. The data can be copied and pasted from a CSV file (maximum 8192 characters).
+          </div>
+
+          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" ></textarea>
         </div>
       </div>
 
