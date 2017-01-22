@@ -22,7 +22,13 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     //this.clean();
-    this.getAccount();
+
+    if(navigator.cookieEnabled) {
+      this.getAccount();
+    }
+    else {
+        this._toastr.error("Cookies are disabled. Enable cookies in the browser settings.");
+    }
   }
 
   ngOnDestroy() {
@@ -56,7 +62,7 @@ export class MainComponent implements OnInit {
     this._scService.getAccount().then(
       d => {
         if(d['code']) { // Error
-          let msg: string = d['message'] || 'Error creating schema.';
+          let msg: string = d['message'] || 'Error creating account.';
           msg += ' ' + (d['message2'] || '');
           this._toastr.error(msg);
         }
@@ -96,8 +102,8 @@ export class MainComponent implements OnInit {
         else if(schemas instanceof Object) { // Error
           let code: ServiceErrorCode = schemas['code'] || 0;
           if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.getAccount();
+            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+            //this.getAccount(); // Automatically create a new session. This produces cycle in some cases, e.g., no session can be created because of no cookies
           }
         }
       }).catch(
@@ -225,8 +231,8 @@ export class MainComponent implements OnInit {
         else if(tables instanceof Object) { // Error
           let code: ServiceErrorCode = tables['code'] || 0;
           if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.getAccount();
+            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+            // this.getAccount(); // Automatically create a new session.
           }
         }
       }).catch(
@@ -319,8 +325,8 @@ export class MainComponent implements OnInit {
         else if(columns instanceof Object) { // Error
           let code: ServiceErrorCode = columns['code'] || 0;
           if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired.', 'NOT_FOUND_IDENTITY');
-            this.getAccount();
+            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+            // this.getAccount(); // Automatically create a new session.
           }
         }
       }).catch(

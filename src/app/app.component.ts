@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'DATA COMMANDR';
   activeComponent = 'dc-main';
   version = '0.3.0'
-  versionDate = 'xx.12.2016'
+  versionDate = '22.01.2017'
 
   public constructor() {
   }
