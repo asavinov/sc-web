@@ -29,29 +29,36 @@ white-space: normal;
   overflow-x:auto; 
   overflow-y:hidden; 
   white-space:nowrap;
+
+  margin: 0.0rem;
+  padding: 0.5rem;
 }
 
 /* It is for items in the schema/table/column horizontal lists */
 .dc-horizontal-list-item {
-  min-width: 10rem; 
+  min-width: 1rem; 
   max-width: 20rem; 
   overflow: hidden; 
   text-overflow: ellipsis;
 
+  margin: 0.0rem;
   padding: 0.5rem;
-  border-radius:0.5rem;
+  border-radius:0.3rem;
 }
 
 .dc-horizontal-list-item:hover {
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.18);
 }
 
 /* It is a selected schema/table/column item */
 .dc-list-item-active {
-  border-width:0.2em; 
-  border-color:blue;
+  background-color: #eeeeee;
 
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  border-width:0.1em; 
+  border-color:lightblue;
+
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.18);
+  /*box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);*/
 }
 
 /* Style for showing absent status or no formula */
