@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ModalDirective } from 'ng2-bootstrap';
+
+import { ToastsManager } from 'ng2-toastr';
 
 import { Schema } from './schema';
 import { Table, TableRef } from './table';
@@ -87,6 +89,7 @@ export class MainComponent implements OnInit {
 
   schemas: Schema[];
   selectedSchema: Schema;
+  @ViewChild('schemaModal') public schemaModal: ModalDirective;
 
   getSchemas() {
     this._scService.getSchemas().then(
@@ -125,6 +128,8 @@ export class MainComponent implements OnInit {
       sch.name = 'New Schema';
 
       this.selectedSchema = sch;
+
+      this.schemaModal.show();
     }
 
     this.getTables();
@@ -201,6 +206,7 @@ export class MainComponent implements OnInit {
 
   tables: Table[];
   selectedTable: Table;
+  @ViewChild('tableModal') public tableModal: ModalDirective;
 
   primitiveTables(): Table[] {
     if(!this.tables) return undefined;
@@ -254,6 +260,8 @@ export class MainComponent implements OnInit {
       tab.name = 'New Table';
 
       this.selectedTable = tab;
+
+      this.tableModal.show();
     }
 
     this.getColumns(); //Show columns
@@ -311,6 +319,7 @@ export class MainComponent implements OnInit {
 
   columns: Column[];
   selectedColumn: Column;
+  @ViewChild('columnModal') public columnModal: ModalDirective;
 
   getColumns() {
     if(!this.selectedTable) return new Array<Column>();
@@ -393,6 +402,8 @@ export class MainComponent implements OnInit {
       col.output.table = type;
 
       this.selectedColumn = col;
+
+      this.columnModal.show();
     }
   }
 

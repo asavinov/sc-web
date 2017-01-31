@@ -25,12 +25,10 @@
 
 -->
 
-<!-- 
-  <div class="card-group"> stretches to have full width and ignore card max-width
-  [ngModel]="hero && hero.name" DONE
-  <div class="invisible">...</div>
+<!--
+How to implement modal dialog as a separate component (so that we factor all dialogs out to separate files):
+http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-angular-2
 -->
-
 
 <!-- TEST: how to use list-group-item and a -->
 
@@ -42,9 +40,8 @@
 
   <div class="card-header list-inline">
     <div class="list-inline-item">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedSchema && selectedSchema.id.length === 0)" (click)="schemaModal.show()" title="Create new schema..." ><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
     </div>
 
     <h6 class="card-subtitle list-inline-item"><b>SCHEMAS</b></h6>
@@ -70,7 +67,7 @@
       <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
         <div title="Create new schema..." >
           <h6 class="card-text">
-            <i class="fa fa-plus-circle"></i>
+            <i class="fa fa-plus"></i>
           </h6>
         </div>
       </div>
@@ -149,9 +146,8 @@
 
   <div class="card-header list-inline">
     <div class="list-inline-item">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()" title="Create new table..." ><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
     </div>
 
     <h6 class="card-subtitle list-inline-item"><b>TABLES</b></h6>
@@ -179,7 +175,7 @@
       <div [class.dc-list-item-active]="selectedTable && selectedTable.id.length == 0" class="card dc-horizontal-list-item">
         <div title="Create new table..." >
           <h6 class="card-text">
-            <i class="fa fa-plus-circle"></i>
+            <i class="fa fa-plus"></i>
           </h6>
         </div>
         <!--
@@ -269,9 +265,8 @@
 
   <div class="card-header list-inline">
     <div class="list-inline-item">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedColumn && selectedColumn.id.length === 0)" (click)="columnModal.show()" title="Create new Column..." ><i class="fa fa-plus"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
     </div>
 
     <h6 class="card-subtitle list-inline-item"><b>COLUMNS</b></h6>
@@ -322,7 +317,7 @@
         <div title="Create new Column..." >
           <h6 class="card-text">&nbsp;</h6>
           <h6 class="card-subtitle text-muted">
-            <i class="fa fa-plus-circle"></i>            
+            <i class="fa fa-plus"></i>            
           </h6>
           <h6 class="card-text">&nbsp;</h6>
         </div>
