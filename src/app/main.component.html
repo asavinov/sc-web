@@ -16,12 +16,13 @@
 [hidden]="CONDITION-EXPRESSION" - acts like display: none
 
 [disabled]="CONDITION-EXPRESSION" - make inactive, e.g., button
+<input readonly /> - make input passive
+[readonly]="CONDITION-EXPRESSION"
+[required]="isRequired ? 'true'' : null"
 
 [style.some-style]="CONDITION-EXPRESSION ? 'value1' : 'value2'" - use style value1 or value2
 [class.my-class]="CONDITION-EXPRESSION" - use class (or not use at all)
 [class.active]="CONDITION-EXPRESSION" - make item active, e.g., list item
-
-<input readonly /> - make input passive
 
 -->
 
@@ -38,7 +39,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- SCHEMA LIST -->
 <div class="card">
 
-  <div class="card-header list-inline">
+  <div class="card-header list-inline" style="padding: 0.2rem;">
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
@@ -80,7 +81,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- SCHEMA EDIT DIALOG -->
 <div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" *ngIf="selectedSchema">
+    <div *ngIf="selectedSchema" class="modal-content">
       <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
 
       <div class="modal-header">
@@ -144,7 +145,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- TABLE LIST -->
 <div class="card">
 
-  <div class="card-header list-inline">
+  <div class="card-header list-inline" style="padding: 0.2rem;">
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
@@ -195,7 +196,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- TABLE EDIT DIALOG -->
 <div bsModal #tableModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
-    <div class="modal-content" *ngIf="selectedTable">
+    <div *ngIf="selectedTable" class="modal-content">
       <form (ngSubmit)="onTableSubmit(); tableModal.hide();" #tableForm="ngForm">
 
       <div class="modal-header">
@@ -263,7 +264,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- COLUMN LIST -->
 <div class="card">
 
-  <div class="card-header list-inline">
+  <div class="card-header list-inline" style="padding: 0.2rem;">
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
@@ -327,6 +328,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
   </div>
 
   <!-- FORMULA BAR -->
+  <!--
   <div class="card card-outline-info">
     <form *ngIf="selectedTable && selectedTable.id.length > 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
 
@@ -370,11 +372,12 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
     </form>
   </div>
+  -->
 
   <!-- EVALUATE AND UPDATE BUTTONS -->
   <div class="card text-xs-center">
-    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" title="Evaluate formulas of all columns in the selected table" ><i class="fa fa-play"></i> Evaluate</button>
-    <button type="button" class="btn btn-lg btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load Table Data</button>
+    <button type="button" class="btn btn-sm btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" title="Evaluate formulas of all columns in the selected table" ><i class="fa fa-play"></i> Evaluate</button>
+    <button type="button" class="btn btn-sm btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load Table Data</button>
   </div>
 
 </div>
@@ -382,7 +385,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- COLUMN EDIT DIALOG -->
 <div bsModal #columnModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
-    <div class="modal-content" *ngIf="selectedColumn">
+    <div *ngIf="selectedColumn" class="modal-content">
       <form (ngSubmit)="onColumnSubmit(); columnModal.hide();" #columnForm="ngForm">
 
       <div class="modal-header">
@@ -393,16 +396,48 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       </div>
 
       <div class="modal-body">
+
         <div class="form-group">
           <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the column" triggers="hover" container="body" placement="right" ></i>
           <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.name" required placeholder="Column name" />
         </div>
+
         <div class="form-group">
           <label for="type">Data type</label> <i class="fa fa-info-circle" popover="Data type of the column" triggers="hover" container="body" placement="right" ></i>
           <select id="type" name="type" ngControl="type" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.output && selectedColumn.output.id" required >
             <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || (tab.id == selectedTable.id)" [ngValue]="tab.id">{{tab.name}}</option>
           </select>
         </div>
+
+        <template #popFormula>
+          <span *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="form-text small">
+            A primitive formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+            Column names in formulas are written in square brackets like <code>[My Column]</code>. 
+            In the case of aggregation, its purpose is to initialize the column values and it can be a constant.
+          </span>
+          <span *ngIf="selectedColumn && !selectedColumn.isPrimitve()" class="form-text small">
+            A non-primitive column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
+            Column names in formulas are written in square brackets like <code>[My Column]</code>. 
+            The tight hand side of the assignment can be an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+          </span>
+        </template>
+        <label for="formula">Formula</label> <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
+        <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
+
+        <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></template>
+        <label for="accuformula">Accu Formula</label> <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
+        <input [readonly]="!(selectedColumn && selectedColumn.isPrimitve())" id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]">
+
+        <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
+        <label for="accutable">Accu Table</label> <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
+        <select [disabled]="!(selectedColumn && selectedColumn.isPrimitve())" id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
+          <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
+        </select>
+
+        <template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</template>
+        <label for="accupath">Accu Path</label> <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>
+        <input [readonly]="!(selectedColumn && selectedColumn.isPrimitve())" id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
+
       </div>
 
       <div class="modal-footer">
@@ -452,10 +487,10 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- DATA PANEL -->
 <div class="card">
 
-  <div class="card-header list-inline">
+  <div class="card-header list-inline" style="padding: 0.2rem;">
     <div class="list-inline-item">
-      <button type="button" class="btn btn-success btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
-      <button type="button" class="btn btn-warning btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all data from the selected table..." placement="left"><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all data from the selected table..." placement="left"><i class="fa fa-trash"></i></button>
     </div>
 
     <h6 class="card-subtitle list-inline-item"><b>DATA</b></h6>
