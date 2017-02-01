@@ -21,6 +21,8 @@ export class Column {
     return this.output.table.isPrimitve();
   }
 
+  kind: ColumnKind;
+
   formula: string;
 
   accuformula: string;
@@ -100,6 +102,8 @@ export class Column {
     col.output.id = json.output.id;
     col.output.table = undefined;
 
+    col.kind = json.kind;
+
     col.formula = json.formula;
 
     col.accuformula = json.accuformula;
@@ -126,4 +130,16 @@ export class Column {
     return cols;
   }
 
+}
+
+export enum ColumnKind {
+    NONE = 10,
+    UNKNOWN = 20,
+
+    AUTO = 0,
+
+    USER = 50,
+    CALC = 60,
+    LINK = 70,
+    ACCU = 80,
 }
