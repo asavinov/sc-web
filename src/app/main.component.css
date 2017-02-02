@@ -48,6 +48,7 @@ white-space: normal;
 
 .dc-horizontal-list-item:hover {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
 }
 
 /* It is a selected schema/table/column item */

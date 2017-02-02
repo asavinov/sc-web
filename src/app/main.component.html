@@ -41,11 +41,11 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected schema..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected schema..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected base..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected base..." ><i class="fa fa-trash"></i></button>
     </div>
 
-    <h6 class="card-subtitle list-inline-item"><b>SCHEMAS</b></h6>
+    <h6 class="card-subtitle list-inline-item"><b>BASES</b></h6>
   </div>
 
   <div class="card dc-horizontal-list">
@@ -53,7 +53,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
     <a *ngFor="let spa of schemas"
       class="list-inline-item"
-      (click)="onSelectSchema(spa)"
+      (click)="onSchemaSelect(spa)"
       >
       <div [class.dc-list-item-active]="selectedSchema && spa.id === selectedSchema.id" class="card dc-horizontal-list-item">
         <div>
@@ -63,10 +63,10 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
     </a>
     <a
       class="list-inline-item"
-      (click)="onSelectSchema(null)"
+      (click)="onSchemaSelect(null)"
       >
       <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
-        <div title="Create new schema..." >
+        <div title="Create new base..." >
           <h6 class="card-text">
             <i class="fa fa-plus"></i>
           </h6>
@@ -79,7 +79,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- SCHEMA EDIT DIALOG -->
-<div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Schema" aria-hidden="true">
+<div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Base" aria-hidden="true">
   <div class="modal-dialog">
     <div *ngIf="selectedSchema" class="modal-content">
       <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
@@ -88,13 +88,13 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <button type="button" class="close" (click)="schemaModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Schema</h4>
+        <h4 class="modal-title">Edit Base</h4>
       </div>
 
       <div class="modal-body">
           <div class="form-group">
-            <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the schema" triggers="hover" container="body" placement="right" ></i>
-            <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Schema name"/>
+            <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the base" triggers="hover" container="body" placement="right" ></i>
+            <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Base name"/>
           </div>
       </div>
 
@@ -120,11 +120,11 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <button type="button" class="close" (click)="schemaDeleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Delete Schema</h4>
+        <h4 class="modal-title">Delete Base</h4>
       </div>
 
       <div class="modal-body">
-        Delete the selected schema: {{selectedSchema.name}}?
+        Delete the selected base: {{selectedSchema.name}}?
       </div>
 
       <div class="modal-footer">
@@ -159,7 +159,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
     <a *ngFor="let tab of nonprimitiveTables()"
       class="list-inline-item"
-      (click)="onSelectTable(tab)"
+      (click)="onTableSelect(tab)"
       >
       <div [class.dc-list-item-active]="selectedTable && selectedTable.id === tab.id" class="card dc-horizontal-list-item">
         <div>
@@ -171,7 +171,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
     </a>
     <a
       class="list-inline-item"
-      (click)="onSelectTable(null)"
+      (click)="onTableSelect(null)"
       >
       <div [class.dc-list-item-active]="selectedTable && selectedTable.id.length == 0" class="card dc-horizontal-list-item">
         <div title="Create new table..." >
@@ -278,7 +278,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
     <a *ngFor="let col of columns"
       class="list-inline-item"
-      (click)="onSelectColumn(col)"
+      (click)="onColumnSelect(col)"
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id === col.id" class="card dc-horizontal-list-item">
         <div>
@@ -312,7 +312,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
     </a>
     <a
       class="list-inline-item"
-      (click)="onSelectColumn(null)"
+      (click)="onColumnSelect(null)"
       >
       <div [class.dc-list-item-active]="selectedColumn && selectedColumn.id.length == 0" class="card dc-horizontal-list-item">
         <div title="Create new Column..." >
@@ -397,7 +397,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
       <div class="modal-body">
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <label for="name" class="control-label col-md-4 text-xs-right">
             Name <i class="fa fa-info-circle" popover="Unique name of the column" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -406,7 +406,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <label for="type" class="control-label col-md-4 text-xs-right">
             Data type <i class="fa fa-info-circle" popover="Data type of the column" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -417,7 +417,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <template #popColumnKind>The way column values are obtained</template>
           <label for="columnkind" class="control-label col-md-4 text-xs-right">
             Values Origin <i class="fa fa-info-circle" [popover]="popColumnKind" triggers="hover" container="body" placement="right" ></i>
@@ -432,7 +432,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <template #popFormula>
             <span *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="form-text small">
               A primitive formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
@@ -453,7 +453,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></template>
           <label for="accuformula" class="control-label col-md-4 text-xs-right">
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
@@ -463,7 +463,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
           <label for="accutable" class="control-label col-md-4 text-xs-right">
             Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
@@ -475,7 +475,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group clearfix">
           <template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</template>
           <label for="accupath" class="control-label col-md-4 text-xs-right">
             Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>

@@ -116,7 +116,7 @@ export class MainComponent implements OnInit {
       );
   }
 
-  onSelectSchema(sch: Schema) {
+  onSchemaSelect(sch: Schema) {
     if(sch) { // Edit existing
       this.selectedSchema = sch.clone(); // Copy object for editing
     }
@@ -248,7 +248,7 @@ export class MainComponent implements OnInit {
       );
   }
 
-  onSelectTable(tab: Table) {
+  onTableSelect(tab: Table) {
     if(tab) { // Edit existing 
       this.selectedTable = tab.clone(); // Copy object for editing
     }
@@ -264,7 +264,7 @@ export class MainComponent implements OnInit {
       this.tableModal.show();
     }
 
-    this.getColumns(); //Show columns
+    this.getColumns(); // Show columns
     this.getRecords(); // Show records
   }
 
@@ -281,7 +281,7 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.onSelectSchema(this.selectedSchema);
+          this.onSchemaSelect(this.selectedSchema);
         }
       );
     }
@@ -293,7 +293,7 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.onSelectSchema(this.selectedSchema);
+          this.onSchemaSelect(this.selectedSchema);
         }
       );
     }
@@ -307,7 +307,7 @@ export class MainComponent implements OnInit {
       this._scService.deleteTable(this.selectedTable).then(
         x => {
           this.allRecords.delete(this.selectedTable.id);
-          this.onSelectSchema(this.selectedSchema);
+          this.onSchemaSelect(this.selectedSchema);
         }
       );
     }
@@ -385,7 +385,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  onSelectColumn(col: Column) {
+  onColumnSelect(col: Column) {
     if(col) { // Edit existing
       this.selectedColumn = col.clone(); // Copy object for editing
     }
@@ -420,7 +420,7 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.onSelectTable(this.selectedTable);
+          this.onTableSelect(this.selectedTable);
         }
       );
     }
@@ -432,7 +432,7 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.onSelectTable(this.selectedTable);
+          this.onTableSelect(this.selectedTable);
         }
       );
     }
@@ -445,7 +445,7 @@ export class MainComponent implements OnInit {
     else { // Delete existing
       this._scService.deleteColumn(this.selectedColumn).then(
         x => {
-          this.onSelectTable(this.selectedTable);
+          this.onTableSelect(this.selectedTable);
         }
       );
     }
@@ -516,6 +516,8 @@ export class MainComponent implements OnInit {
       error => {
         this._toastr.error('ERROR: ' + error.message);
       }
+    ).then(
+      x => this.getColumns()
     );
   }
 
