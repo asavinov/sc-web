@@ -1,6 +1,6 @@
 {
   "name": "dc-app",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "Data Commandr: Integrate. Transform. Analyze.",
   "keywords": ["Data Commandr"],
   "author": "Alexandr Savinov",
@@ -25,23 +25,23 @@
     "postinstall": "npm run webdriver-update && typings install"
   },
   "dependencies": {
-    "@angular/common": "~2.4.5",
-    "@angular/compiler": "~2.4.5",
-    "@angular/core": "~2.4.5",
-    "@angular/forms": "~2.4.5",
-    "@angular/http": "~2.4.5",
-    "@angular/platform-browser": "~2.4.5",
-    "@angular/platform-browser-dynamic": "~2.4.5",
+    "@angular/common": "~2.4.6",
+    "@angular/compiler": "~2.4.6",
+    "@angular/core": "~2.4.6",
+    "@angular/forms": "~2.4.6",
+    "@angular/http": "~2.4.6",
+    "@angular/platform-browser": "~2.4.6",
+    "@angular/platform-browser-dynamic": "~2.4.6",
 
-    "@angular/router": "~3.4.5",
+    "@angular/router": "~3.4.6",
 
     "es6-shim": "^0.35.3",
     "reflect-metadata": "^0.1.9",
-    "rxjs": "5.0.3",
+    "rxjs": "5.1.0",
 
     "zone.js": "^0.7.6",
 
-    "ng2-bootstrap": "1.3.2",
+    "ng2-bootstrap": "1.3.3",
     "bootstrap": "4.0.0-alpha.5",
     "font-awesome": "4.7.0",
     "ng2-toastr": "^1.4.1"
@@ -52,14 +52,14 @@
     "ts-helpers": "^1.1.2",
     "tslint": "^4.4.2",
 
-    "node-sass": "^4.4.0",
+    "node-sass": "^4.5.0",
     "phantomjs-prebuilt": "^2.1.14",
     "rimraf": "^2.5.4",
     "shelljs": "^0.7.6",
     "less": "^2.7.2",
     "typedoc": "^0.5.5",
 
-    "autoprefixer": "^6.7.0",
+    "autoprefixer": "^6.7.2",
     "codelyzer": "2.0.0-beta.4",
 
     "typings": "^2.1.0",
@@ -71,11 +71,11 @@
 
     "copy-webpack-plugin": "^4.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^2.26.0",
+    "html-webpack-plugin": "^2.28.0",
 
     "angular2-template-loader": "^0.6.0",
     "css-loader": "^0.26.1",
-    "file-loader": "^0.9.0",
+    "file-loader": "^0.10.0",
     "html-loader": "^0.4.4",
     "istanbul-instrumenter-loader": "^1.2.0",
     "json-loader": "^0.5.4",
@@ -86,10 +86,10 @@
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "less-loader": "2.2.3",
-    "ts-loader": "^1.3.3",
+    "ts-loader": "^2.0.0",
     "tslint-loader": "^3.3.0",
     "url-loader": "^0.5.7",
 
-    "protractor": "^5.0.0"
+    "protractor": "^5.1.0"
   }
 }
