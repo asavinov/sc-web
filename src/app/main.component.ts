@@ -136,10 +136,6 @@ export class MainComponent implements OnInit {
     this.getTables();
   }
 
-  //
-  // Schema details
-  //
-
   onSchemaSubmit() {
     if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Add new
       this._scService.createSchema(this.selectedSchema).then(
@@ -178,6 +174,37 @@ export class MainComponent implements OnInit {
         }
       );
     }
+  }
+
+  //
+  // Schema data
+  //
+
+  allRecords = new Map<string,any[]>(); // For each table is, we store its records in this cache
+  records: any = []; // Records of the selected table only (displayed in the table view)
+
+  onSchemaEvaluate() {
+    // Evaluate data from the service
+    this._scService.evaluate(this.selectedSchema).then(
+      records => {
+        if(records instanceof Array) { // Success
+          this.allRecords.set(this.selectedTable.id, []);
+          this.records = [];
+
+          this._toastr.info('Formulas evaluated.');
+        }
+        else if(records instanceof Object) { // Error
+            let msg: string = records['message'] || 'Error evaluating table.';
+            msg += ' ' + (records['message2'] || '');
+            this._toastr.error(msg);
+        }
+      },
+      error => {
+        this._toastr.error('ERROR: ' + error.message);
+      }
+    ).then(
+      x => this.getColumns()
+    );
   }
 
   //
@@ -327,6 +354,67 @@ export class MainComponent implements OnInit {
     }
   }
 
+  getRecords() {
+    if(this.selectedTable) {
+      let recs = this.allRecords.get(this.selectedTable.id);
+      if(recs) {
+        this.records = recs;
+      }
+      else { // No records found
+        this.records = [];
+      }
+    }
+    else { // No selection - empty list of records
+      this.records = [];
+    }
+  }
+
+  onTableRead() {
+    // Read data from the service
+    this._scService.read(this.selectedTable).then(
+      records => {
+        if(records instanceof Array) { // Success
+          this.allRecords.set(this.selectedTable.id, records);
+          this.records = records;
+
+          this._toastr.info('Data synchronized.');
+        }
+        else if(records instanceof Object) { // Error
+            let msg: string = records['message'] || 'Error loading table data.';
+            msg += ' ' + (records['message2'] || '');
+            this._toastr.error(msg);
+        }
+      },
+      error => {
+        this._toastr.error('ERROR: ' + error.message);
+      }
+    );
+  }
+
+  onTableEmpty() {
+    // Empty data in one table
+    this._scService.empty(this.selectedTable).then(
+      x => {
+        this._toastr.info('Data removed.');
+        this.onTableRead(); // Read data from the table (should be empty)
+      }
+    );
+  }
+
+  // Write
+
+  uploadCsv: string;
+
+  onTableUpload() {
+    // Write data to the service
+    this._scService.write(this.selectedTable, this.uploadCsv).then(
+      x => {
+        this._toastr.info('Data imported.');
+        this.onTableRead(); // Read data from the table
+      }
+    );
+  }
+
   //
   // Column list
   //
@@ -467,100 +555,6 @@ export class MainComponent implements OnInit {
         }
       );
     }
-  }
-
-  //
-  // Data
-  //
-
-  // Read
-
-  allRecords = new Map<string,any[]>(); // For each table is, we store its records in this cache
-  records: any = []; // Records of the selected table only (displayed in the table view)
-
-  getRecords() {
-    if(this.selectedTable) {
-      let recs = this.allRecords.get(this.selectedTable.id);
-      if(recs) {
-        this.records = recs;
-      }
-      else { // No records found
-        this.records = [];
-      }
-    }
-    else { // No selection - empty list of records
-      this.records = [];
-    }
-  }
-
-  onTableRead() {
-    // Read data from the service
-    this._scService.read(this.selectedTable).then(
-      records => {
-        if(records instanceof Array) { // Success
-          this.allRecords.set(this.selectedTable.id, records);
-          this.records = records;
-
-          this._toastr.info('Data synchronized.');
-        }
-        else if(records instanceof Object) { // Error
-            let msg: string = records['message'] || 'Error loading table data.';
-            msg += ' ' + (records['message2'] || '');
-            this._toastr.error(msg);
-        }
-      },
-      error => {
-        this._toastr.error('ERROR: ' + error.message);
-      }
-    );
-  }
-
-  onTableEvaluate() {
-    // Evaluate data from the service
-    this._scService.evaluate(this.selectedSchema).then(
-      records => {
-        if(records instanceof Array) { // Success
-          this.allRecords.set(this.selectedTable.id, []);
-          this.records = [];
-
-          this._toastr.info('Data evaluated.');
-        }
-        else if(records instanceof Object) { // Error
-            let msg: string = records['message'] || 'Error evaluating table.';
-            msg += ' ' + (records['message2'] || '');
-            this._toastr.error(msg);
-        }
-      },
-      error => {
-        this._toastr.error('ERROR: ' + error.message);
-      }
-    ).then(
-      x => this.getColumns()
-    );
-  }
-
-  onTableEmpty() {
-    // Empty data in one table
-    this._scService.empty(this.selectedTable).then(
-      x => {
-        this._toastr.info('Data removed.');
-        this.onTableRead(); // Read data from the table (should be empty)
-      }
-    );
-  }
-
-  // Write
-
-  uploadCsv: string;
-
-  onTableUpload() {
-    // Write data to the service
-    this._scService.write(this.selectedTable, this.uploadCsv).then(
-      x => {
-        this._toastr.info('Data imported.');
-        this.onTableRead(); // Read data from the table
-      }
-    );
   }
 
 }

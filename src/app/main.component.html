@@ -40,12 +40,18 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <div class="card">
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
+
+    <i class="fa fa-info-circle" popover="Here you can manage your databases by adding, editing or removing them" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>BASES:</b></h6>
+
+    <div class="list-inline-item">
+      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-play"></i> Evaluate</button>
+    </div>
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected base..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected base..." ><i class="fa fa-trash"></i></button>
     </div>
 
-    <h6 class="card-subtitle list-inline-item"><b>BASES</b></h6>
   </div>
 
   <div class="card dc-horizontal-list">
@@ -79,7 +85,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- SCHEMA EDIT DIALOG -->
-<div bsModal #schemaModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Base" aria-hidden="true">
+<div bsModal #schemaModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Base" aria-hidden="true">
   <div class="modal-dialog">
     <div *ngIf="selectedSchema" class="modal-content">
       <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
@@ -111,7 +117,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- SCHEMA DELETE DIALOG -->
-<div bsModal #schemaDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #schemaDeleteModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog modal-sm">
     <div class="modal-content" *ngIf="selectedSchema">
       <form (ngSubmit)="onSchemaDelete(); schemaDeleteModal.hide();" #schemaForm="ngForm">
@@ -146,12 +152,22 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <div class="card">
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
+
+    <i class="fa fa-info-circle" popover="Here you can manage tables of one databases by adding, editing or removing them as well as working with data" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>TABLES:</b></h6>
+
+    <div class="list-inline-item">
+      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load</button>
+    </div>
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
     </div>
+    <div class="list-inline-item">
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all records from the selected table..." placement="left"><i class="fa fa-times"></i></button>
+    </div>
 
-    <h6 class="card-subtitle list-inline-item"><b>TABLES</b></h6>
   </div>
 
   <div class="card dc-horizontal-list">
@@ -194,7 +210,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- TABLE EDIT DIALOG -->
-<div bsModal #tableModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #tableModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
     <div *ngIf="selectedTable" class="modal-content">
       <form (ngSubmit)="onTableSubmit(); tableModal.hide();" #tableForm="ngForm">
@@ -230,7 +246,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- TABLE DELETE DIALOG -->
-<div bsModal #tableDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #tableDeleteModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog modal-sm">
     <div class="modal-content" *ngIf="selectedTable">
       <form (ngSubmit)="onTableDelete(); tableDeleteModal.hide();" #tableForm="ngForm">
@@ -258,6 +274,74 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
   </div>
 </div>
 
+<!-- UPLOAD DIALOG -->
+<div bsModal #uploadModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Upload Table" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableUpload(); uploadModal.hide();" #uploadForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="uploadModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Upload Table</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+
+          <div class="alert alert-info" role="alert">
+            <i class="fa fa-info-circle"></i>
+            Data to be imported has to be in CSV format without quotes. 
+            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns are needed.
+            Each next row represents a data record, for example, <code>123.45, my string</code>. The data can be copied and pasted from a CSV file (maximum 8192 characters).
+          </div>
+
+          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" ></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE EMPTY DIALOG -->
+<div bsModal #tableEmptyModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="onTableEmpty(); tableEmptyModal.hide();" #tableEmptyForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="tableEmptyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Empty Data</h4>
+      </div>
+
+      <div class="modal-body">
+        Remove all records from the selected table: {{selectedTable.name}}?
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-default" (click)="tableEmptyModal.hide()"><i class="fa fa-close"></i> Cancel</button>
+          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ----------- -->
@@ -265,12 +349,15 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <div class="card">
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
+
+    <i class="fa fa-info-circle" popover="Here you can manage columns of one table by adding, editing or removing them as well as defining formulas" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>COLUMNS</b></h6>
+
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
     </div>
 
-    <h6 class="card-subtitle list-inline-item"><b>COLUMNS</b></h6>
   </div>
 
   <div class="card dc-horizontal-list">
@@ -375,17 +462,10 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
     </form>
   </div>
   -->
-
-  <!-- EVALUATE AND UPDATE BUTTONS -->
-  <div class="card text-xs-center">
-    <button type="button" class="btn btn-sm btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableEvaluate()" title="Evaluate formulas of all columns in the selected table" ><i class="fa fa-play"></i> Evaluate</button>
-    <button type="button" class="btn btn-sm btn-success" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load Table Data</button>
-  </div>
-
 </div>
 
 <!-- COLUMN EDIT DIALOG -->
-<div bsModal #columnModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #columnModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog">
     <div *ngIf="selectedColumn" class="modal-content">
       <form (ngSubmit)="onColumnSubmit(); columnModal.hide();" #columnForm="ngForm" class="form-horizontal">
@@ -506,7 +586,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- COLUMN DELETE DIALOG -->
-<div bsModal #columnDeleteModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+<div bsModal #columnDeleteModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" >
   <div class="modal-dialog modal-sm">
     <div class="modal-content" *ngIf="selectedColumn">
       <form (ngSubmit)="onColumnDelete(); columnDeleteModal.hide();" #columnForm="ngForm">
@@ -540,98 +620,23 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- DATA PANEL -->
 <div class="card">
 
-  <div class="card-header list-inline" style="padding: 0.2rem;">
-    <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all data from the selected table..." placement="left"><i class="fa fa-trash"></i></button>
-    </div>
-
-    <h6 class="card-subtitle list-inline-item"><b>DATA</b></h6>
-  </div>
-
   <div class="card" style="overflow: auto; max-height: 300px !important;">
   <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
       <thead class="thead-inverse">
         <tr>
-            <th class="bg-primary"><h5>#</h5></th>
-            <th *ngFor="let col of columns" class="bg-primary"><h6>{{col.name}}</h6></th>
+            <th style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h5>#</h5></th>
+            <th *ngFor="let col of columns" style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h6>{{col.name}}</h6></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of records">
           <td>{{row['_id']}}</td>
-          <td *ngFor="let col of columns">{{row[col.name]}}</td>
+          <td *ngFor="let col of columns" [style.background-color]="(selectedColumn && selectedColumn.id == col.id) ? '#eeeeee' : ''">
+            {{row[col.name]}}
+          </td>
         </tr>
       </tbody>
   </table>
   </div>
 
-</div>
-
-<!-- UPLOAD DIALOG -->
-<div bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Upload Table" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" *ngIf="selectedTable">
-      <form (ngSubmit)="onTableUpload(); uploadModal.hide();" #uploadForm="ngForm">
-
-      <div class="modal-header">
-        <button type="button" class="close" (click)="uploadModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Upload Table</h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="form-group">
-
-          <div class="alert alert-info" role="alert">
-            <i class="fa fa-info-circle"></i>
-            Data to be imported has to be in CSV format without quotes. 
-            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns are needed.
-            Each next row represents a data record, for example, <code>123.45, my string</code>. The data can be copied and pasted from a CSV file (maximum 8192 characters).
-          </div>
-
-          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" ></textarea>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <div class="text-xs-right">
-          <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
-        </div>
-      </div>
-
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- TABLE EMPTY DIALOG -->
-<div bsModal #tableEmptyModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content" *ngIf="selectedTable">
-      <form (ngSubmit)="onTableEmpty(); tableEmptyModal.hide();" #tableEmptyForm="ngForm">
-
-      <div class="modal-header">
-        <button type="button" class="close" (click)="tableEmptyModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Empty Data</h4>
-      </div>
-
-      <div class="modal-body">
-        Remove all records from the selected table: {{selectedTable.name}}?
-      </div>
-
-      <div class="modal-footer">
-        <div class="text-xs-right">
-          <button type="button" class="btn btn-default" (click)="tableEmptyModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
-        </div>
-      </div>
-
-      </form>
-    </div>
-  </div>
 </div>

@@ -22,6 +22,9 @@ The following steps have to be performed:
 
 # Change Log
 
+* v0.4.0 (2017-02-xx)
+  * Column type property introduced (user, calculated, accumulated, link).
+  * UI enhancements (button locations, table styling, dialogs etc.) 
 * v0.3.0 (2017-01-xx)
   * Redesign UI (popovers, buttons, confirmation dialogs etc.)
   * Dirty-clean status of columns
