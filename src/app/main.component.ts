@@ -9,6 +9,7 @@ import { ToastsManager } from 'ng2-toastr';
 import { Schema } from './schema';
 import { Table, TableRef } from './table';
 import { Column } from './column';
+import { ColumnKind } from './column';
 
 @Component({
   selector: 'dc-main',
@@ -208,6 +209,19 @@ export class MainComponent implements OnInit {
   selectedTable: Table;
   @ViewChild('tableModal') public tableModal: ModalDirective;
 
+  getTableById(id: string): Table {
+    if(!id) return undefined;
+    let tabs: Table[] = this.tables.filter(t => t.id == id);
+    if(tabs.length == 0) return undefined;
+    return tabs[0];
+  }
+
+  isPrimitiveTable(id: string): boolean {
+    let t: Table = this.getTableById(id);
+    if(!t) return true;
+    return t.isPrimitve();
+  }
+
   primitiveTables(): Table[] {
     if(!this.tables) return undefined;
     return this.tables.filter(t => t.isPrimitve());
@@ -320,6 +334,10 @@ export class MainComponent implements OnInit {
   columns: Column[];
   selectedColumn: Column;
   @ViewChild('columnModal') public columnModal: ModalDirective;
+
+  // We cannot directly use elements of enum in templates like ColumnKind.LINK, hence we create a variable which stores all the elements
+  columnKinds: typeof ColumnKind = ColumnKind; // Note the use of typeof
+  // columnKinds = ColumnKind; // Alternative. Even simpler
 
   getColumns() {
     if(!this.selectedTable) return new Array<Column>();

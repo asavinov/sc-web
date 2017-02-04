@@ -305,7 +305,9 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" [popover]="popStatusYellow" triggers="hover" container="body" placement="right" ></i>
             <template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</template>
             <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" [popover]="popStatusRed" triggers="hover" container="body" placement="right" ></i>
+
             {{col.formula}}
+
           </h6>
         </div>
       </div>
@@ -420,14 +422,14 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <div class="form-group clearfix">
           <template #popColumnKind>The way column values are obtained</template>
           <label for="columnkind" class="control-label col-md-4 text-xs-right">
-            Values Origin <i class="fa fa-info-circle" [popover]="popColumnKind" triggers="hover" container="body" placement="right" ></i>
+            Column Type <i class="fa fa-info-circle" [popover]="popColumnKind" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <select id="columnkind" name="columnkind" ngControl="columnkind" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.kind" >
-              <option value="50">User or external data source</option>
-              <option value="60">Calculated from this table</option>
-              <option value="70">Link to another table</option>
-              <option value="80">Accumulatd from another table</option>
+            <select id="columnkind" name="columnkind" ngControl="columnkind" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.kind" required >
+              <option value="{{columnKinds.USER}}">User: From external source</option>
+              <option value="{{columnKinds.CALC}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Calculated: from this table</option>
+              <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulatd: from another table</option>
+              <option value="{{columnKinds.LINK}}" [disabled]="!selectedColumn || isPrimitiveTable(selectedColumn.output.id)">Link: to another table</option>
             </select>
           </div>
         </div>
@@ -449,7 +451,8 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
+            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]"
+            [readonly]="!selectedColumn || selectedColumn.kind == columnKinds.USER" >
           </div>
         </div>
 
@@ -459,7 +462,8 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input [readonly]="!(selectedColumn && selectedColumn.isPrimitve())" id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]">
+            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]"
+            [readonly]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
           </div>
         </div>
 
@@ -469,7 +473,8 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <select [disabled]="!(selectedColumn && selectedColumn.isPrimitve())" id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
+            <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" 
+            [disabled]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
               <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
             </select>
           </div>
@@ -481,7 +486,8 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input [readonly]="!(selectedColumn && selectedColumn.isPrimitve())" id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
+            <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]"
+            [readonly]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
           </div>
         </div>
 

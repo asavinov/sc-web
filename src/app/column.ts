@@ -8,6 +8,8 @@ export class Column {
     this.name = '';
     this.input = new TableRef('');
     this.output = new TableRef('');
+
+    this.kind = ColumnKind.USER;
   }
 
   id: string;
@@ -140,6 +142,6 @@ export enum ColumnKind {
 
     USER = 50,
     CALC = 60,
-    LINK = 70,
-    ACCU = 80,
+    ACCU = 70,
+    LINK = 80,
 }
