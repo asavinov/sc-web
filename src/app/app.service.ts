@@ -50,7 +50,9 @@ export class AppService {
   // Schemas
   //
 
-  getSchemas(): Promise<Schema[] | Object> {
+  getSchemas(acc: Object): Promise<Schema[] | Object> {
+    if(!acc || !acc['id']) return Promise.resolve([]);
+    let id: string  = acc['id'];
 
     let options = new RequestOptions({withCredentials: true});
 
@@ -61,8 +63,7 @@ export class AppService {
   }
 
   createSchema(sch: Schema): Promise<Schema> {
-    if(sch == null || sch.id == null) return Promise.resolve({});
-    let id: string  = sch.id;
+    if(!sch)  return Promise.resolve({});
 
     let body = sch.toJson();
 
@@ -80,6 +81,7 @@ export class AppService {
   }
 
   updateSchema(sch: Schema) {
+    if(!sch || !sch.id) return;
 
     let body = sch.toJson();
 
@@ -93,6 +95,7 @@ export class AppService {
   }
 
   deleteSchema(sch: Schema) {
+    if(!sch || !sch.id) return;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
@@ -109,7 +112,7 @@ export class AppService {
   //
 
   getTables(sch: Schema): Promise<Table[] | Object> {
-    if(sch === null || sch.id === null|| sch.id.length === 0) return Promise.resolve([]);
+    if(!sch || !sch.id) return Promise.resolve([]);
     let id: string  = sch.id;
 
     let options = new RequestOptions({withCredentials: true});
@@ -124,7 +127,7 @@ export class AppService {
   }
 
   createTable(sch: Schema, tab: Table): Promise<Table> {
-    if(sch == null || sch.id == null) return Promise.resolve({});
+    if(!sch || !sch.id || !tab) return Promise.resolve({});
     let id: string  = sch.id;
 
     let body = tab.toJson();
@@ -143,6 +146,7 @@ export class AppService {
   }
 
   updateTable(tab: Table) {
+    if(!tab || !tab.id) return;
 
     let body = tab.toJson();
 
@@ -156,6 +160,7 @@ export class AppService {
   }
 
   deleteTable(tab: Table) {
+    if(!tab || !tab.id) return;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
@@ -172,7 +177,7 @@ export class AppService {
   //
 
   getColumns(sch: Schema): Promise<Column[] | Object> {
-    if(sch === null || sch.id === null || sch.id.length === 0) return Promise.resolve([]);
+    if(!sch || !sch.id) return Promise.resolve([]);
     let id: string  = sch.id;
 
     let options = new RequestOptions({withCredentials: true});
@@ -183,15 +188,15 @@ export class AppService {
         .catch(this.handleError);
   }
 
-  getInputColumns(sch: Schema, input_id: string): Promise<Column[] | Object> {
-    if(!input_id || input_id.length === 0) return Promise.resolve([]);
+  getInputColumns(sch: Schema, tab: Table): Promise<Column[] | Object> {
+    if(!sch || !sch.id || !tab || !tab.id ) return Promise.resolve([]);
 
     // WORKAROUND: Here we retrieve ALL column and then filter them. 
     // REDO: Retrieve ALL columns of the selected schema and then select input or other columns on the client (in controller)
     return this.getColumns(sch).then(
       cols => {
         if(cols instanceof Array) {
-          return Promise.resolve( cols.filter(col => col.input.id === input_id) );
+          return Promise.resolve( cols.filter(col => col.input.id === tab.id) );
         }
         else {
           return Promise.resolve(cols);
@@ -203,7 +208,7 @@ export class AppService {
   }
 
   createColumn(sch: Schema, col: Column): Promise<Column> {
-    if(sch == null || sch.id == null) return Promise.resolve({});
+    if(!sch || !sch.id || !col) return Promise.resolve({});
     let id: string  = sch.id;
 
     let body = col.toJson();
@@ -222,6 +227,7 @@ export class AppService {
   }
 
   updateColumn(col: Column) {
+    if(!col || !col.id) return;
 
     let body = col.toJson();
 
@@ -236,6 +242,7 @@ export class AppService {
   }
 
   deleteColumn(col: Column) {
+    if(!col || !col.id) return;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
@@ -251,27 +258,30 @@ export class AppService {
   // Data (write, read)
   //
 
-  read(table: Table) {
+  read(tab: Table) {
+    if(!tab || !tab.id) return;
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.url + '/tables/' + table.id + '/data/json', options)
+    return this.http.get(this.url + '/tables/' + tab.id + '/data/json', options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
   }
 
-  evaluate(schema: Schema) {
+  evaluate(sch: Schema) {
+    if(!sch || !sch.id) return;
 
     let options = new RequestOptions({ withCredentials: true });
 
-    return this.http.get(this.url + '/schemas/' + schema.id + '/evaluate', options)
+    return this.http.get(this.url + '/schemas/' + sch.id + '/evaluate', options)
         .toPromise()
         .then(res => this.extractData(res))
         .catch(this.handleError);
   }
 
-  write(table: Table, data: string) {
+  write(tab: Table, data: string) {
+    if(!tab || !tab.id) return;
 
     let body = data;
 
@@ -282,19 +292,20 @@ export class AppService {
 
     let options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(this.url + '/tables/' + table.id + '/data/csv', body, options)
+    return this.http.post(this.url + '/tables/' + tab.id + '/data/csv', body, options)
         .toPromise()
         .then(this.extractData)
         .catch(this.handleError);
   }
 
-  empty(table: Table) {
+  empty(tab: Table) {
+    if(!tab || !tab.id) return;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
 
     let options = new RequestOptions({headers: headers, body: '', withCredentials: true});
 
-    return this.http.delete(this.url + '/tables/' + table.id + '/data', options)
+    return this.http.delete(this.url + '/tables/' + tab.id + '/data', options)
         .toPromise()
         .then()
         .catch(this.handleError);

@@ -31,7 +31,7 @@ white-space: normal;
   white-space:nowrap;
 
   margin: 0.0rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
 }
 
 /* It is for items in the schema/table/column horizontal lists */
@@ -42,8 +42,8 @@ white-space: normal;
   text-overflow: ellipsis;
 
   margin: 0.0rem;
-  padding: 0.5rem;
-  border-radius:0.3rem;
+  padding: 0.2rem;
+  border-radius:0.2rem;
 }
 
 .dc-horizontal-list-item:hover {
@@ -106,7 +106,6 @@ Vertical list of buttons shown on the left side of horisontal list (as the first
 
 /* OLD
 -------------------------------------------------- */
-
 
 .selected {
   background-color: #CFD8DC !important;

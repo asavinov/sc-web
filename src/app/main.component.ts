@@ -23,20 +23,42 @@ export class MainComponent implements OnInit {
     this._toastr.setRootViewContainerRef(viewContainerRef);
   }
 
+// !!! New schema is inserted as first element - not last
+
+// TODO: onColumnsRevceived(): resolveColumns before they are assigned to the model because otherwise we might not show them correctly (what has not been resolved yet)
+// TODO: onAccount or onInit: We need to identify whether it is a completely new account (for a new session) or we reload an existing account with an already existing session
+
+// TODO: We should never get catch from service methods - only our own error object instead of elements (or always only error code with our error object)
+//  Introduce clear rules for error processing and then refactor all service calls accordingly so that only one error processing path is used
+
+// TODO: Check behavior after create, delete and update of an element. We need uniform behavior, e.g., reload the whole list with the selection of the previous element.
+//   Same for loading record after evaluation or sync. Repeat this logic for getting records: after evaluate, after table sync. Like onRecordsReceived(records: any)
+
+// Check what table data is loaded after evaluation if no table is selected.
+
   ngOnInit() {
-    //this.clean();
 
     if(navigator.cookieEnabled) {
-      this.getAccount();
+      // Make session and trigger loading a new account object (or empty it in the case of no session)
+      this._scService.getAccount()
+        .then(x => this.onAccountReceived(x))
+        .catch(e => this._toastr.error('ERROR: ' + e.message) );
     }
     else {
         this._toastr.error("Cookies are disabled. Enable cookies in the browser settings.");
     }
+
   }
 
   ngOnDestroy() {
     ; // Notify server
   }
+
+  //
+  // Account, user, session, authentication
+  //
+
+  selectedAccount: Object;
 
   clean() {
     this.selectedAccount = undefined;
@@ -54,34 +76,28 @@ export class MainComponent implements OnInit {
     this.records = [];
   }
 
-  //
-  // Account, user, session, authentication
-  //
+  onAccountReceived(acc: any) { // Whenever a new account object is received. Update the model. We can also receive an error object.
 
-  selectedAccount: Object;
+    //this.clean();
 
-  getAccount() {
-    this.clean();
-    this._scService.getAccount().then(
-      d => {
-        if(d['code']) { // Error
-          let msg: string = d['message'] || 'Error creating account.';
-          msg += ' ' + (d['message2'] || '');
-          this._toastr.error(msg);
-        }
-        else { // Success
-          if(!this.selectedAccount || this.selectedAccount['id'] !== d['id']) {
-            this._toastr.info('New session created.');
-          }
-          this.selectedAccount = d;
-
-          this.getSchemas();
-        }
-      },
-      e => {
-        this._toastr.error('ERROR: ' + e.message);
+    if(!acc['code']) { // Success
+      if(!this.selectedAccount || this.selectedAccount['id'] !== acc['id']) {
+        this._toastr.info('New session created.');
       }
-    );
+      this.selectedAccount = acc;
+    }
+    else { // Error
+      let msg: string = acc['message'] || 'Error creating account.';
+      msg += ' ' + (acc['message2'] || '');
+      this._toastr.error(msg);
+
+      this.selectedAccount = null;
+    }
+
+    // Trigger loading schema and (recursively) other model elements for the selected account
+    this._scService.getSchemas(this.selectedAccount)
+      .then( x => this.onSchemasReceived(x) )
+      .catch( e => this._toastr.error(e.message) );
   }
 
   //
@@ -92,29 +108,29 @@ export class MainComponent implements OnInit {
   selectedSchema: Schema;
   @ViewChild('schemaModal') public schemaModal: ModalDirective;
 
-  getSchemas() {
-    this._scService.getSchemas().then(
-      schemas => {
-        this.schemas = [];
-        this.selectedSchema = undefined;
+  onSchemasReceived(schemas: Schema[] | Object) { // Whenever a new list of columns is received. Update the model. We can also receive an error object.
+    if(schemas instanceof Array) { // Success
+      this.schemas = schemas;
+    }
+    else if(schemas instanceof Object) { // Error
+      this.schemas = [];
+      let code: ServiceErrorCode = schemas['code'] || 0;
+      if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
+        this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+      }
+    }
 
-        if(schemas instanceof Array) { // Success
-          this.schemas = schemas;
-          if(schemas.length > 0) this.selectedSchema = schemas[0];
-          this.getTables();
-        }
-        else if(schemas instanceof Object) { // Error
-          let code: ServiceErrorCode = schemas['code'] || 0;
-          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
-            //this.getAccount(); // Automatically create a new session. This produces cycle in some cases, e.g., no session can be created because of no cookies
-          }
-        }
-      }).catch(
-        error => {
-          this._toastr.error(error.message);
-        }
-      );
+    // Make default selection in the recevied list which can trigger loading a lower list or emptying it
+    let list = this.schemas;
+    if(list.length == 0) { // Nothing to select from
+      this.onSchemaSelect(undefined);
+    }
+    else if(this.selectedSchema && this.selectedSchema.id && list.filter(x => x.id == this.selectedSchema.id).length > 0) { // Previous selection exists. Use it
+      this.onSchemaSelect(this.selectedSchema);
+    }
+    else { // No previous selection. Use default one
+      this.onSchemaSelect(list[0]);
+    } 
   }
 
   onSchemaSelect(sch: Schema) {
@@ -133,7 +149,9 @@ export class MainComponent implements OnInit {
       this.schemaModal.show();
     }
 
-    this.getTables();
+    this._scService.getTables(this.selectedSchema)
+      .then( x => this.onTablesReceived(x) )
+      .catch( e => this._toastr.error(e.message) );
   }
 
   onSchemaSubmit() {
@@ -145,7 +163,14 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.getSchemas();
+
+          // The newly created element will be selected
+          this.selectedSchema.id = x.id || "";
+
+          // Load all schemas
+          this._scService.getSchemas(this.selectedAccount)
+            .then( x => this.onSchemasReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
         }
       );
     }
@@ -157,7 +182,11 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
-          this.getSchemas();
+
+          // Load all schemas
+          this._scService.getSchemas(this.selectedAccount)
+            .then( x => this.onSchemasReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
         }
       );
     }
@@ -170,7 +199,9 @@ export class MainComponent implements OnInit {
     else { // Delete existing
       this._scService.deleteSchema(this.selectedSchema).then(
         x => {
-          this.getSchemas();
+          this._scService.getSchemas(this.selectedAccount) // Load all schemas
+            .then( x => this.onSchemasReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
         }
       );
     }
@@ -203,7 +234,10 @@ export class MainComponent implements OnInit {
         this._toastr.error('ERROR: ' + error.message);
       }
     ).then(
-      x => this.getColumns()
+      x =>
+      this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+        .then( x => this.onColumnsReceived(x) )
+        .catch( e => this._toastr.error(e.message) )
     );
   }
 
@@ -221,11 +255,8 @@ export class MainComponent implements OnInit {
 
   onUploadClick() {
     this._scService.uploadFile(this.fileToUpload)
-      .then((result) => {
-        console.log(result);
-      }, (error) => {
-        console.error(error);
-      });
+      .then( (result) => { console.log(result); })
+      .catch( (error) => { console.error(error); });
   }
 
   //
@@ -265,28 +296,29 @@ export class MainComponent implements OnInit {
     return this.tables.filter(t => !t.isPrimitve());
   }
 
-  getTables() {
-    this._scService.getTables(this.selectedSchema).then(
-      tables => {
-        this.tables = [];
-        this.selectedTable = undefined;
+  onTablesReceived(tables: Table[] | Object) { // Whenever a new list of tables is received. Update the model. We can also receive an error object.
+    if(tables instanceof Array) { // Success
+      this.tables = tables;
+    }
+    else if(tables instanceof Object) { // Error
+      this.tables = [];
+      let code: ServiceErrorCode = tables['code'] || 0;
+      if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
+        this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+      }
+    }
 
-        if(tables instanceof Array) { // Success
-          this.tables = tables;
-          this.getColumns();
-        }
-        else if(tables instanceof Object) { // Error
-          let code: ServiceErrorCode = tables['code'] || 0;
-          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
-            // this.getAccount(); // Automatically create a new session.
-          }
-        }
-      }).catch(
-        error => {
-          this._toastr.error(error.message);
-        }
-      );
+    // Make default selection in the recevied list which can trigger loading a lower list or emptying it
+    let list = this.nonprimitiveTables();
+    if(list.length == 0) { // Nothing to select from
+      this.onTableSelect(undefined);
+    }
+    else if(this.selectedTable && this.selectedTable.id && list.filter(x => x.id == this.selectedTable.id).length > 0) { // Previous selection exists. Use it
+      this.onTableSelect(this.selectedTable);
+    }
+    else { // No previous selection. Use default one
+      this.onTableSelect(list[0]);
+    } 
   }
 
   onTableSelect(tab: Table) {
@@ -305,7 +337,10 @@ export class MainComponent implements OnInit {
       this.tableModal.show();
     }
 
-    this.getColumns(); // Show columns
+    this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+      .then( x => this.onColumnsReceived(x) )
+      .catch( e => this._toastr.error(e.message) );
+
     this.getRecords(); // Show records
   }
 
@@ -322,6 +357,11 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
+
+          // The newly created element will be selected
+          this.selectedTable.id = x.id || "";
+
+          // Load all table
           this.onSchemaSelect(this.selectedSchema);
         }
       );
@@ -427,28 +467,30 @@ export class MainComponent implements OnInit {
   columnKinds: typeof ColumnKind = ColumnKind; // Note the use of typeof
   // columnKinds = ColumnKind; // Alternative. Even simpler
 
-  getColumns() {
-    if(!this.selectedTable) return new Array<Column>();
-    this._scService.getInputColumns(this.selectedSchema, this.selectedTable.id).then(
-      columns => {
-        this.columns = [];
-        this.selectedColumn = undefined;
-        if(columns instanceof Array) { // Success
-          this.columns = columns;
-          this.resolveColumns();
-        }
-        else if(columns instanceof Object) { // Error
-          let code: ServiceErrorCode = columns['code'] || 0;
-          if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
-            this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
-            // this.getAccount(); // Automatically create a new session.
-          }
-        }
-      }).catch(
-        error => {
-          this._toastr.error(error.message);
-        }
-      );
+  onColumnsReceived(columns: Column[] | Object) {
+    if(columns instanceof Array) { // Success
+      this.columns = columns;
+      this.resolveColumns();
+    }
+    else if(columns instanceof Object) { // Error
+      this.columns = [];
+      let code: ServiceErrorCode = columns['code'] || 0;
+      if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
+        this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
+      }
+    }
+
+    // Make default selection in the recevied list which can trigger loading a lower list or emptying it
+    let list = this.columns;
+    if(list.length == 0) { // Nothing to select from
+      this.onColumnSelect(undefined);
+    }
+    else if(this.selectedColumn && this.selectedColumn.id && list.filter(x => x.id == this.selectedColumn.id).length > 0) { // Previous selection exists. Use it
+      this.onColumnSelect(this.selectedColumn);
+    }
+    else { // No previous selection. Use default one
+      this.onColumnSelect(list[0]);
+    } 
   }
 
   resolveColumn(column: Column) { // Resolve all reference from the specified column
@@ -526,6 +568,11 @@ export class MainComponent implements OnInit {
             msg += ' ' + (x['message2'] || '');
             this._toastr.error(msg);
           }
+
+          // The newly created element will be selected
+          this.selectedColumn.id = x.id || "";
+
+          // Load all columns
           this.onTableSelect(this.selectedTable);
         }
       );
@@ -549,11 +596,8 @@ export class MainComponent implements OnInit {
       return;
     }
     else { // Delete existing
-      this._scService.deleteColumn(this.selectedColumn).then(
-        x => {
-          this.onTableSelect(this.selectedTable);
-        }
-      );
+      this._scService.deleteColumn(this.selectedColumn)
+        .then( x => this.onTableSelect(this.selectedTable) );
     }
   }
 
