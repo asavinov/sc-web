@@ -24,8 +24,9 @@ The following steps have to be performed:
 
 * v0.4.0 (2017-02-xx)
   * Column type property introduced (user, calculated, accumulated, link).
+  * Move formula editor from the main screen to the column editor dialog
   * UI enhancements (button locations, table styling, dialogs etc.) 
-* v0.3.0 (2017-01-xx)
+* v0.3.0 (2017-01-22)
   * Redesign UI (popovers, buttons, confirmation dialogs etc.)
   * Dirty-clean status of columns
   * New sample data
