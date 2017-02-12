@@ -11,6 +11,12 @@ import { Table, TableRef } from './table';
 import { Column } from './column';
 import { ColumnKind } from './column';
 
+/*
+How to determine if variable is 'undefined' or 'null'?
+http://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-undefined-or-null
+if (variable == null) - It catches both null and undefined (but not false). Important: two signs (not three)
+*/
+
 @Component({
   selector: 'dc-main',
   templateUrl: 'main.component.html',
@@ -22,19 +28,6 @@ export class MainComponent implements OnInit {
     // Hack/workaround for angular 2.2.* to work ng2-tastr. See also forRoot() in NgModule imports.
     this._toastr.setRootViewContainerRef(viewContainerRef);
   }
-
-// !!! New schema is inserted as first element - not last
-
-// TODO: onColumnsRevceived(): resolveColumns before they are assigned to the model because otherwise we might not show them correctly (what has not been resolved yet)
-// TODO: onAccount or onInit: We need to identify whether it is a completely new account (for a new session) or we reload an existing account with an already existing session
-
-// TODO: We should never get catch from service methods - only our own error object instead of elements (or always only error code with our error object)
-//  Introduce clear rules for error processing and then refactor all service calls accordingly so that only one error processing path is used
-
-// TODO: Check behavior after create, delete and update of an element. We need uniform behavior, e.g., reload the whole list with the selection of the previous element.
-//   Same for loading record after evaluation or sync. Repeat this logic for getting records: after evaluate, after table sync. Like onRecordsReceived(records: any)
-
-// Check what table data is loaded after evaluation if no table is selected.
 
   ngOnInit() {
 
@@ -156,8 +149,8 @@ export class MainComponent implements OnInit {
 
   onSchemaSubmit() {
     if(!this.selectedSchema.id || this.selectedSchema.id.length === 0) { // Add new
-      this._scService.createSchema(this.selectedSchema).then(
-        x => {
+      this._scService.createSchema(this.selectedSchema)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating schema.';
             msg += ' ' + (x['message2'] || '');
@@ -175,8 +168,8 @@ export class MainComponent implements OnInit {
       );
     }
     else { // Update existing
-      this._scService.updateSchema(this.selectedSchema).then(
-        x => {
+      this._scService.updateSchema(this.selectedSchema)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating schema.';
             msg += ' ' + (x['message2'] || '');
@@ -197,13 +190,12 @@ export class MainComponent implements OnInit {
       return;
     }
     else { // Delete existing
-      this._scService.deleteSchema(this.selectedSchema).then(
-        x => {
-          this._scService.getSchemas(this.selectedAccount) // Load all schemas
+      this._scService.deleteSchema(this.selectedSchema)
+        .then( x => { this._scService.getSchemas(this.selectedAccount) // Load all schemas
             .then( x => this.onSchemasReceived(x) )
             .catch( e => this._toastr.error(e.message) );
-        }
-      );
+          }
+        );
     }
   }
 
@@ -216,8 +208,8 @@ export class MainComponent implements OnInit {
 
   onSchemaEvaluate() {
     // Evaluate data from the service
-    this._scService.evaluate(this.selectedSchema).then(
-      records => {
+    this._scService.evaluate(this.selectedSchema)
+      .then( records => {
         if(records instanceof Array) { // Success
           this.allRecords.set(this.selectedTable.id, []);
           this.records = [];
@@ -229,16 +221,14 @@ export class MainComponent implements OnInit {
             msg += ' ' + (records['message2'] || '');
             this._toastr.error(msg);
         }
-      },
-      error => {
-        this._toastr.error('ERROR: ' + error.message);
-      }
-    ).then(
-      x =>
-      this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
-        .then( x => this.onColumnsReceived(x) )
-        .catch( e => this._toastr.error(e.message) )
-    );
+      })
+      .then( x => this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+          .then( x => this.onColumnsReceived(x) )
+          .catch( e => this._toastr.error(e.message) )
+          )
+      .catch(
+        error => this._toastr.error('ERROR: ' + error.message)
+      );
   }
 
   //
@@ -350,8 +340,8 @@ export class MainComponent implements OnInit {
 
   onTableSubmit() {
     if(!this.selectedTable.id || this.selectedTable.id.length === 0) { // Add new
-      this._scService.createTable(this.selectedSchema, this.selectedTable).then(
-        x => {
+      this._scService.createTable(this.selectedSchema, this.selectedTable)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating table.';
             msg += ' ' + (x['message2'] || '');
@@ -367,8 +357,8 @@ export class MainComponent implements OnInit {
       );
     }
     else { // Update existing
-      this._scService.updateTable(this.selectedTable).then(
-        x => {
+      this._scService.updateTable(this.selectedTable)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating table.';
             msg += ' ' + (x['message2'] || '');
@@ -385,8 +375,8 @@ export class MainComponent implements OnInit {
       return;
     }
     else { // Delete existing
-      this._scService.deleteTable(this.selectedTable).then(
-        x => {
+      this._scService.deleteTable(this.selectedTable)
+        .then( x => {
           this.allRecords.delete(this.selectedTable.id);
           this.onSchemaSelect(this.selectedSchema);
         }
@@ -411,8 +401,8 @@ export class MainComponent implements OnInit {
 
   onTableRead() {
     // Read data from the service
-    this._scService.read(this.selectedTable).then(
-      records => {
+    this._scService.read(this.selectedTable)
+      .then( records => {
         if(records instanceof Array) { // Success
           this.allRecords.set(this.selectedTable.id, records);
           this.records = records;
@@ -424,17 +414,16 @@ export class MainComponent implements OnInit {
             msg += ' ' + (records['message2'] || '');
             this._toastr.error(msg);
         }
-      },
-      error => {
-        this._toastr.error('ERROR: ' + error.message);
-      }
-    );
+      })
+      .catch(
+        error => this._toastr.error('ERROR: ' + error.message)
+      );
   }
 
   onTableEmpty() {
     // Empty data in one table
-    this._scService.empty(this.selectedTable).then(
-      x => {
+    this._scService.empty(this.selectedTable)
+      .then( x => {
         this._toastr.info('Data removed.');
         this.onTableRead(); // Read data from the table (should be empty)
       }
@@ -447,11 +436,15 @@ export class MainComponent implements OnInit {
 
   onTableUpload() {
     // Write data to the service
-    this._scService.write(this.selectedTable, this.uploadCsv).then(
-      x => {
-        this._toastr.info('Data imported.');
+    this._scService.write(this.selectedTable, this.uploadCsv)
+      .then(x => {
+        this._toastr.info('Data uploaded.');
         this.onTableRead(); // Read data from the table
-      }
+      })
+      .then(x =>
+        this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+          .then( x => this.onColumnsReceived(x) )
+          .catch( e => this._toastr.error(e.message) )
     );
   }
 
@@ -474,10 +467,17 @@ export class MainComponent implements OnInit {
     }
     else if(columns instanceof Object) { // Error
       this.columns = [];
-      let code: ServiceErrorCode = columns['code'] || 0;
-      if(code === ServiceErrorCode.NOT_FOUND_IDENTITY) {
+
+      if(columns['code'] && columns['code'] === ServiceErrorCode.NOT_FOUND_IDENTITY) {
         this._toastr.error('Session expired. Create a new session by reloading page in the browser.', 'NOT_FOUND_IDENTITY');
       }
+      else if(columns['code']) { // Error
+        let msg: string = columns['message'] || 'Error retrieving columns from server.';
+        msg += ' ' + (columns['message2'] || '');
+        this._toastr.error(msg);
+      }
+
+      this._toastr.error('Error retrieving columns from server.');
     }
 
     // Make default selection in the recevied list which can trigger loading a lower list or emptying it
@@ -561,8 +561,8 @@ export class MainComponent implements OnInit {
 
   onColumnSubmit() {
     if(!this.selectedColumn.id || this.selectedColumn.id.length === 0) { // Add new
-      this._scService.createColumn(this.selectedSchema, this.selectedColumn).then(
-        x => {
+      this._scService.createColumn(this.selectedSchema, this.selectedColumn)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating column.';
             msg += ' ' + (x['message2'] || '');
@@ -578,8 +578,8 @@ export class MainComponent implements OnInit {
       );
     }
     else { // Update existing
-      this._scService.updateColumn(this.selectedColumn).then(
-        x => {
+      this._scService.updateColumn(this.selectedColumn)
+        .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating column.';
             msg += ' ' + (x['message2'] || '');

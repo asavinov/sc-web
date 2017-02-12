@@ -27,9 +27,13 @@ export class AppService {
   //
   // URL to web API
   //
-  private serviceHost = 'http://localhost:8000';
-  //private serviceHost = 'http://dc.conceptoriented.com:8000';
+  // Development:
+  private serviceHost = 'http://192.168.66.35:8000';
+  //private serviceHost = 'http://localhost:8000';
+
+  // Production:
   //private serviceHost = 'http://datacommandr.eastus2.cloudapp.azure.com:8000';
+  //private serviceHost = 'http://dc.conceptoriented.com:8000';
 
   private url = this.serviceHost + '/api';
 
@@ -353,15 +357,23 @@ export class AppService {
       return res.text();
     }
 
-    // let body = JSON.parse(res.text()); // Parse json string
-    let body = res.json(); // Parse json string
+    let body:any = null;
+    try { // Try to parse json
+      // let body = JSON.parse(res.text());
+      body = res.json();
+    }
+    catch(e) {
+      let err = new ServiceError(ServiceErrorCode.GENERAL, "Server error", "Wrong server response");
+      throw err;
+      //return Promise.resolve(err);
+      //return err.toJson();
+    }
 
     //
     // First, we process possible errors
     //
     if(body && body.error) {
       // Create and return new error object
-
       return body.error || { };
     }
 
@@ -377,9 +389,17 @@ export class AppService {
   }
 
   private handleError (error: any): any {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let body = error.json(); // Parse json string
+    // Error can be: JSON, our error object, object with 'message', object with 'code'.
+
+    let body: any = null;
+    try { // Try to parse json
+      body = error.json();
+    }
+    catch(e) {
+      let msg: string = (error.message) ? error.message : null;
+      let err = new ServiceError(ServiceErrorCode.GENERAL, "General error", msg ? msg : "");
+      return Promise.resolve(err);
+    }
 
     //
     // First, we process our own domain-specific error information
@@ -411,6 +431,10 @@ export class ServiceError {
   code: ServiceErrorCode;
   message: string;
   description: string;
+
+  toJson(): String {
+    return JSON.stringify(this);
+  }
 
   static fromJsonObject(json: any): ServiceError {
     let er: ServiceError = new ServiceError(ServiceErrorCode.NONE, '', '');

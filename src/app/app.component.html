@@ -7,6 +7,8 @@
       <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
   </a>
 
+<div id="navbar" class="collapse navbar-collapse" [collapse]="isCollapsed">
+
   <ul class="nav navbar-nav">
     <li class="nav-item" [class.active]="activeComponent == 'dc-main'">
       <a class="nav-link" href="#" (click)="activeComponent = 'dc-main'"><b>APPLICATION</b></a>
@@ -21,6 +23,8 @@
       <p class="nav-link">Version {{version}} ({{versionDate}})</p>
     </li>
   </ul>
+
+</div>
 
 </nav>
 

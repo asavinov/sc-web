@@ -25,6 +25,14 @@ export class Column {
 
   kind: ColumnKind;
 
+  isDerived(): boolean {
+    let k: ColumnKind = this.kind;
+		if(k == ColumnKind.CALC || k == ColumnKind.ACCU || k == ColumnKind.LINK || k == ColumnKind.CLASS) {
+			return true;
+		}
+    return false;
+  }
+
   formula: string;
 
   accuformula: string;
@@ -35,6 +43,11 @@ export class Column {
 
   dirty: boolean;
   status: ServiceError;
+
+  getFormulaForColumnCard(): string {
+    if(this.kind == ColumnKind.ACCU) return this.accuformula;
+    else return this.formula;
+  }
 
   getStatusColor(): string {
     if (!this.formula || this.formula.trim().length === 0) return '';
@@ -144,4 +157,6 @@ export enum ColumnKind {
     CALC = 60,
     ACCU = 70,
     LINK = 80,
+
+    CLASS = 100,
 }

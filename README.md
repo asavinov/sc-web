@@ -22,10 +22,10 @@ The following steps have to be performed:
 
 # Change Log
 
-* v0.4.0 (2017-02-xx)
+* v0.4.0 (2017-02-12)
   * Column type property introduced (user, calculated, accumulated, link).
-  * Move formula editor from the main screen to the column editor dialog
-  * UI enhancements (button locations, table styling, dialogs etc.) 
+  * Formula bar moved from the main screen to the column edit dialog.
+  * UI enhancements (button locations, table styling, dialogs etc.)
 * v0.3.0 (2017-01-22)
   * Redesign UI (popovers, buttons, confirmation dialogs etc.)
   * Dirty-clean status of columns

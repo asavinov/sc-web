@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { Ng2BootstrapModule } from 'ng2-bootstrap';
 
+import { CollapseModule } from 'ng2-bootstrap';
 import { TooltipModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap';
 import { PopoverModule } from 'ng2-bootstrap';
@@ -28,6 +29,7 @@ import { AppService }  from './app.service';
     FormsModule,
     HttpModule,
     Ng2BootstrapModule,
+    CollapseModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     PopoverModule.forRoot(),

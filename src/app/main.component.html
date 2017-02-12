@@ -3,13 +3,14 @@
 
 <!-- NOTE: The use of ngIf along with bsModal raises the exception: "Cannot set property stack of [object Object] which has only a getter" -->
 <!-- NOTE: We could try to use ngIf to hide/show modal -->
-<!-- NOTE: We cannot show/hide dialog from code - only from html -->
+
+<!-- [text]="company?.name" to eaily check for null before accessing an attribute -->
 
 <!-- Visibility Options and Conditional Styling
 
 *ngIf="CONDITION-EXPRESSION" - removes element from DOM
 [style.visibility]="CONDITION-EXPRESSION ? 'inherit' : 'hidden'" - changes only visibility without removing from DOM
-[class.invisible]="CONDITION-EXPRESSION"
+[class.invisible]**="CONDITION-EXPRESSION"
 <div class="invisible">...</div> - hides element which however still exists (display is not modified) 
   .invisible { visibility: hidden; }
   .element { @include invisible; } - usage of invisible as a mixin
@@ -374,26 +375,27 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
           </h6>
           <h6 class="card-subtitle text-muted">
 
-            <template #popDirtyNull></template>
-            <i *ngIf="col.dirty == undefined || col.dirty == null" class="fa fa-refresh pull-right" [popover]="popDirtyNull" triggers="hover" container="body" placement="right" ></i>
-            <template #popDirtyFalse>Column is up-to-date</template>
-            <i *ngIf="!col.dirty" class="fa fa-refresh pull-right" style="color :#4F8A10;" [popover]="popDirtyFalse" triggers="hover" container="body" placement="right" ></i>
-            <template #popDirtyTrue>Column needs to be evaluated</template>
-            <i *ngIf="col.dirty" class="fa fa-refresh pull-right" style="color :#D8000C;" [popover]="popDirtyTrue" triggers="hover" container="body" placement="right" ></i>
+            <template #popDirtyNull>It is not a derived column and it cannot be evaluated</template>
+            <i *ngIf="false && !col.isDerived()" class="fa fa-circle-o pull-right" [popover]="popDirtyNull" triggers="hover" container="body" placement="right" ></i>
+            <template #popDirtyFalse>Column data is up-to-date</template>
+            <i *ngIf="col.isDerived() && !col.dirty" class="fa fa-check-circle-o pull-right" style="color :#4F8A10;" [popover]="popDirtyFalse" triggers="hover" container="body" placement="right" ></i>
+            <template #popDirtyTrue>Column needs to be evaluated. Click Evaluate button.</template>
+            <i *ngIf="col.isDerived() && col.dirty" class="fa fa-play-circle-o pull-right" style="color :#D8000C;" [popover]="popDirtyTrue" triggers="hover" container="body" placement="right" ></i>
 
             {{col.output.table.name}}
           </h6>
           <h6 class="card-text">
+
             <template #popStatusNull>No formula</template>
-            <i *ngIf="col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
+            <i *ngIf="false && col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
             <template #popStatusGreen>Column formula is correct</template>
-            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-square dc-status-green-icon pull-right" [popover]="popStatusGreen" triggers="hover" container="body" placement="right" ></i>
-            <template #popStatusYellow>Formula depends on an incorrect column(s): {{col.getStatusDescription()}}</template>
+            <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-circle dc-status-green-icon pull-right" [popover]="popStatusGreen" triggers="hover" container="body" placement="right" ></i>
+            <template #popStatusYellow>Column depends on an incorrect column(s) or itself: {{col.getStatusDescription()}}</template>
             <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" [popover]="popStatusYellow" triggers="hover" container="body" placement="right" ></i>
             <template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</template>
             <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" [popover]="popStatusRed" triggers="hover" container="body" placement="right" ></i>
 
-            {{col.formula}}
+            {{col.getFormulaForColumnCard()}}&nbsp;
 
           </h6>
         </div>
@@ -510,65 +512,90 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
               <option value="{{columnKinds.CALC}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Calculated: from this table</option>
               <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulatd: from another table</option>
               <option value="{{columnKinds.LINK}}" [disabled]="!selectedColumn || isPrimitiveTable(selectedColumn.output.id)">Link: to another table</option>
+              <option value="{{columnKinds.CLASS}}" [disabled]="!selectedColumn">Custom: computed by a plugin</option>
             </select>
           </div>
         </div>
 
+        <div *ngIf="selectedColumn && (selectedColumn.kind == columnKinds.CALC || selectedColumn.kind == columnKinds.ACCU || selectedColumn.kind == columnKinds.LINK)">
         <div class="form-group clearfix">
           <template #popFormula>
-            <span *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="form-text small">
-              A primitive formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
-              Column names in formulas are written in square brackets like <code>[My Column]</code>. 
-              In the case of aggregation, its purpose is to initialize the column values and it can be a constant.
+            <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CALC" class="form-text small">
+              Calculated formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+              Column names belong to the selected table and are written in square brackets like <code>[My Column]</code>.
+              Formulas can use column paths as dot separated column names, for example, <code>[My Column 1].[My Column 2]</code>.
             </span>
-            <span *ngIf="selectedColumn && !selectedColumn.isPrimitve()" class="form-text small">
-              A non-primitive column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
-              Column names in formulas are written in square brackets like <code>[My Column]</code>. 
-              The tight hand side of the assignment can be an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+            <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU" class="form-text small">
+              This formula initializes all column values before aggregation. 
+              It can be a constant or an arbitrary expression as used in calculated columns 
+              by using column names of the selected table in sequare brackets, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+            </span>
+            <span *ngIf="selectedColumn && selectedColumn == columnKinds.LINK" class="form-text small">
+              Link column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
+              The tight hand side of the assignment is an arbitrary formula as used in calculated columns by using colums of the selected table, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
+              The left hand side of an assignment is a column from the output table (type of this column).
             </span>
           </template>
           <label for="formula" class="control-label col-md-4 text-xs-right">
             Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]"
-            [readonly]="!selectedColumn || selectedColumn.kind == columnKinds.USER" >
+            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" >
           </div>
         </div>
+        </div>
 
+        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU && isPrimitiveTable(selectedColumn.output.id)" >
         <div class="form-group clearfix">
-          <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></template>
+          <template #popAccuFormula>An accumulate formula uses columns of the accumulation table 
+            and a special variable <code>out</code> which stores the current value to be updated by the formula, 
+            for example, <code>out + [Column From Accu Table]</code></template>
           <label for="accuformula" class="control-label col-md-4 text-xs-right">
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]"
-            [readonly]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
+            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]" >
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
+          <template #popAccuTable>Accumulation table provides records to be aggregated. 
+            The accumulate formula will be evaluated for each record of this table. 
+            Its columns are used in the accumulate formula.</template>
           <label for="accutable" class="control-label col-md-4 text-xs-right">
             Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" 
-            [disabled]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
-              <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
+            <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
+              <option *ngFor="let tab of nonprimitiveTables()" [disabled]="!selectedTable || !tab" [ngValue]="tab.name">{{tab.name}}</option>
             </select>
           </div>
         </div>
 
         <div class="form-group clearfix">
-          <template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</template>
+          <template #popAccuPath>Accumulation path is a column path from the accumulate table to the main (selected) table.
+            This path groups all elements of the accumulate table.</template>
           <label for="accupath" class="control-label col-md-4 text-xs-right">
             Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-md-8">
-            <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]"
-            [readonly]="!selectedColumn || selectedColumn.kind != columnKinds.ACCU || !selectedColumn.isPrimitve()" >
+            <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]" >
           </div>
+        </div>
+        </div>
+
+        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CLASS">
+        <div class="form-group clearfix">
+          <template #popDescriptor>This feature allows for uploading a custom plugin which will compute the values of this column using custom implementation.</template>
+          <label for="descriptor" class="control-label col-md-4 text-xs-right">
+            Descriptor <i class="fa fa-info-circle" [popover]="popDescriptor" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-md-8">
+            <div class="alert alert-warning" role="alert">
+              Feature not implemented.
+            </div>
+          </div>
+        </div>
         </div>
 
       </div>
@@ -620,21 +647,26 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <!-- DATA PANEL -->
 <div class="card" style="overflow: auto; max-height: 4000px !important;">
 
-  <table id="records" name="records" class="table table-fixed header-fixed table-sm table-striped table-bordered table-hover" >
-      <thead class="thead-inverse">
-        <tr>
-            <th style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h5>#</h5></th>
-            <th *ngFor="let col of columns" style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h6>{{col.name}}</h6></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of records">
-          <td>{{row['_id']}}</td>
-          <td *ngFor="let col of columns" [style.background-color]="(selectedColumn && selectedColumn.id == col.id) ? '#eeeeee' : ''">
-            {{row[col.name]}}
-          </td>
-        </tr>
-      </tbody>
+  <table id="records" name="records"
+    class="table table-sm table-fixed header-fixed table-striped table-bordered table-hover" >
+
+    <thead class="thead-inverse">
+      <tr>
+          <th style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h5>#</h5></th>
+          <th *ngFor="let col of columns" style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h6>{{col.name}}</h6></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of records">
+        <td>#{{row['_id']}}</td>
+        <td *ngFor="let col of columns" [style.background-color]="(selectedColumn && selectedColumn.id == col.id) ? '#eeeeee' : ''">
+          <div *ngIf="col.kind == columnKinds.LINK">#{{row[col.name]}}</div>
+          <div *ngIf="col.kind != columnKinds.LINK">{{row[col.name]}}</div>
+        </td>
+      </tr>
+    </tbody>
+
   </table>
 
 </div>
