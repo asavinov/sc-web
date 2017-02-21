@@ -22,7 +22,7 @@ export class Table {
     return tab;
   }
 
-  toJson(): String {
+  toJson(): string {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Table {
@@ -58,7 +58,7 @@ export class TableRef {
   id: string;
   table: Table;
 
-  toJson(): String {
+  toJson(): string {
     return JSON.stringify(this);
   }
 }

@@ -104,6 +104,10 @@ Vertical list of buttons shown on the left side of horisontal list (as the first
   border-radius:0rem;
 }
 
+button:disabled {
+  cursor: default; /* Use default cursor instead of red not-allowed icon */
+}
+
 /* OLD
 -------------------------------------------------- */
 

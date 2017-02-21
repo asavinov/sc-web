@@ -16,7 +16,7 @@ export class Schema {
     return sch;
   }
 
-  toJson(): String {
+  toJson(): string {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Schema {

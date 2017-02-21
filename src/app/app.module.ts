@@ -33,7 +33,7 @@ import { AppService }  from './app.service';
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     PopoverModule.forRoot(),
-    ToastModule.forRoot(),
+    ToastModule.forRoot()
     ],
   providers: [
     AppService,

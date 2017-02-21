@@ -432,7 +432,7 @@ export class ServiceError {
   message: string;
   description: string;
 
-  toJson(): String {
+  toJson(): string {
     return JSON.stringify(this);
   }
 

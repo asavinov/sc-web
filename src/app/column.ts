@@ -104,7 +104,7 @@ export class Column {
     return col;
   }
 
-  toJson(): String {
+  toJson(): string {
     return JSON.stringify(this);
   }
   static fromJsonObject(json: any): Column {

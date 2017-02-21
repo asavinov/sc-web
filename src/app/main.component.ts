@@ -81,7 +81,7 @@ export class MainComponent implements OnInit {
     }
     else { // Error
       let msg: string = acc['message'] || 'Error creating account.';
-      msg += ' ' + (acc['message2'] || '');
+      msg += ' ' + (acc['description'] || '');
       this._toastr.error(msg);
 
       this.selectedAccount = null;
@@ -135,7 +135,7 @@ export class MainComponent implements OnInit {
     }
     else { // null. Create new
       sch = new Schema('');
-      sch.name = 'New Schema';
+      sch.name = this.getUniqueName(this.schemas, 'New Schema');
 
       this.selectedSchema = sch;
 
@@ -153,7 +153,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating schema.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
 
@@ -172,7 +172,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating schema.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
 
@@ -218,7 +218,7 @@ export class MainComponent implements OnInit {
         }
         else if(records instanceof Object) { // Error
             let msg: string = records['message'] || 'Error evaluating table.';
-            msg += ' ' + (records['message2'] || '');
+            msg += ' ' + (records['description'] || '');
             this._toastr.error(msg);
         }
       })
@@ -320,7 +320,7 @@ export class MainComponent implements OnInit {
     }
     else { // null. Create new
       tab = new Table('');
-      tab.name = 'New Table';
+      tab.name = this.getUniqueName(this.tables, 'New Table');
 
       this.selectedTable = tab;
 
@@ -344,7 +344,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating table.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
 
@@ -361,7 +361,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating table.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
           this.onSchemaSelect(this.selectedSchema);
@@ -411,7 +411,7 @@ export class MainComponent implements OnInit {
         }
         else if(records instanceof Object) { // Error
             let msg: string = records['message'] || 'Error loading table data.';
-            msg += ' ' + (records['message2'] || '');
+            msg += ' ' + (records['description'] || '');
             this._toastr.error(msg);
         }
       })
@@ -460,6 +460,16 @@ export class MainComponent implements OnInit {
   columnKinds: typeof ColumnKind = ColumnKind; // Note the use of typeof
   // columnKinds = ColumnKind; // Alternative. Even simpler
 
+  getUniqueName(elems: any[], prefix: string): string {
+    if(elems == null || elems.length == 0) return prefix;
+    let prefixUpper: string = prefix.toLocaleUpperCase();
+     for (let i = 1; i <= 100; i++) {
+       let el: any = elems.find(x => x.name.toLocaleUpperCase() === prefixUpper + ' ' + i)
+       if(el == null) return prefix + ' ' + i;
+     }
+     return prefix;
+  }
+
   onColumnsReceived(columns: Column[] | Object) {
     if(columns instanceof Array) { // Success
       this.columns = columns;
@@ -473,7 +483,7 @@ export class MainComponent implements OnInit {
       }
       else if(columns['code']) { // Error
         let msg: string = columns['message'] || 'Error retrieving columns from server.';
-        msg += ' ' + (columns['message2'] || '');
+        msg += ' ' + (columns['description'] || '');
         this._toastr.error(msg);
       }
 
@@ -542,7 +552,7 @@ export class MainComponent implements OnInit {
     }
     else { // Create new
       col = new Column('');
-      col.name = 'New Column';
+      col.name = this.getUniqueName(this.columns, 'New Column');
       col.input.id = this.selectedTable.id;
       col.input.table = this.selectedTable;
       let type = this.tables.find(t => t.name === 'Double');
@@ -565,7 +575,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error creating column.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
 
@@ -582,7 +592,7 @@ export class MainComponent implements OnInit {
         .then( x => {
           if(x['code']) { // Error
             let msg: string = x['message'] || 'Error updating column.';
-            msg += ' ' + (x['message2'] || '');
+            msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
           this.onTableSelect(this.selectedTable);
