@@ -236,11 +236,48 @@ export class MainComponent implements OnInit {
   //
 
   fileToUpload: File;
-  // filesToUpload: Array<File>; // For multiple files
+  maxCsvFileSize = 8192;
 
-  fileChangeEvent2(fileInput: any) {
-    this.fileToUpload = <File> fileInput.target.files[0];
-    // this.filesToUpload = <Array<File>> fileInput.target.files; // For multiple files
+  // Store file in the model as soon as something is selected (manual binding)
+  fileChangeEvent(fileInput: any) {
+    let target: HTMLInputElement = <HTMLInputElement> fileInput.target;
+    let files: FileList = target.files; // Array<File>
+    let file  = <File> files[0];
+
+    this.fileToUpload = file;
+  }
+
+  // Really read the previously selected file and paste the records to the text area maybe with some processing and validation
+  loadFileToTextArea() {
+    if(!this.fileToUpload) return;
+
+    let reader = new FileReader();
+    let this_model = this;
+    reader.onload = function(event) {
+      let file_text = reader.result;
+      let lines = file_text.split('\n');
+      let currentSize = 0;
+      let text = '';
+      for(let i=0; i<lines.length; i++) {
+        if(currentSize + lines[i].length + 1 > this_model.maxCsvFileSize) {
+          this_model._toastr.info('Currently the size is limited by ' + this_model.maxCsvFileSize + ' bytes. ' + i + ' lines have been loaded.');
+          break;
+        }
+        text += lines[i] + '\n';
+        currentSize += lines[i].length + 1;
+      }
+      this_model.uploadCsv = text;
+    };
+    reader.onerror = function(event) {
+      console.error("File could not be read! Code " + event.error);
+    };
+    reader.readAsText(this.fileToUpload);
+
+    // Alternative (node.js)
+    //import * as fs from "fs";
+    // let fileName = 'myfile.csv';
+    //let fileContents = fs.readFileSync(fileName, 'utf8');
+    //fileContents.split(','); // Or whatever
   }
 
   onUploadClick() {

@@ -28,8 +28,8 @@ export class AppService {
   // URL to web API
   //
   // Development:
-  private serviceHost = 'http://192.168.66.35:8000';
-  //private serviceHost = 'http://localhost:8000';
+  private serviceHost = 'http://localhost:8000';
+  //private serviceHost = 'http://192.168.66.35:8000';
 
   // Production:
   //private serviceHost = 'http://datacommandr.eastus2.cloudapp.azure.com:8000';

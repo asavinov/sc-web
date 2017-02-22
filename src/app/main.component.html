@@ -292,13 +292,20 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <div class="form-group">
 
           <div class="alert alert-info" role="alert">
-            <i class="fa fa-info-circle"></i>
             Data to be imported has to be in CSV format without quotes. 
-            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns are needed.
-            Each next row represents a data record, for example, <code>123.45, my string</code>. The data can be copied and pasted from a CSV file (maximum 8192 characters).
+            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns in the table are needed.
+            Each next row represents a data record, for example, <code>123.45, my string</code>. Maximum 8192 characters can be uploaded for one time.
           </div>
 
-          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" ></textarea>
+          <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" style="overflow-x: auto; white-space: nowrap;" ></textarea>
+
+        </div>
+
+        <div class="input-group">
+          <input type="file" id="fileToUpload" name="fileToUpload" class="form-control" (change)="fileChangeEvent($event)" accept=".csv" />
+          <span class="input-group-btn">
+            <button type="button" class="btn" [disabled]="!fileToUpload" (click)="loadFileToTextArea()" title="Read and paste records into the text area" ><i class="fa fa-file-text-o"></i> Load and Paste</button>
+          </span>
         </div>
       </div>
 
