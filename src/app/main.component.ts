@@ -470,10 +470,13 @@ export class MainComponent implements OnInit {
   // Write
 
   uploadCsv: string;
+  createColumns: boolean;
 
   onTableUpload() {
+    // Collect parameters
+    let params = { createColumns: this.createColumns }
     // Write data to the service
-    this._scService.write(this.selectedTable, this.uploadCsv)
+    this._scService.write(this.selectedTable, this.uploadCsv, params)
       .then(x => {
         this._toastr.info('Data uploaded.');
         this.onTableRead(); // Read data from the table
@@ -498,7 +501,7 @@ export class MainComponent implements OnInit {
   // columnKinds = ColumnKind; // Alternative. Even simpler
 
   getUniqueName(elems: any[], prefix: string): string {
-    if(elems == null || elems.length == 0) return prefix;
+    if(elems == null) return prefix;
     let prefixUpper: string = prefix.toLocaleUpperCase();
      for (let i = 1; i <= 100; i++) {
        let el: any = elems.find(x => x.name.toLocaleUpperCase() === prefixUpper + ' ' + i)

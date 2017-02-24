@@ -158,7 +158,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
     <h6 class="card-subtitle list-inline-item"><b>TABLES:</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Load and display data in the selected table" ><i class="fa fa-refresh"></i> Load</button>
+      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Read and display data in the selected table" ><i class="fa fa-refresh"></i> Load</button>
     </div>
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
@@ -276,7 +276,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 </div>
 
 <!-- UPLOAD DIALOG -->
-<div bsModal #uploadModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Upload Table" aria-hidden="true">
+<div bsModal #uploadModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Upload Data" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" *ngIf="selectedTable">
       <form (ngSubmit)="onTableUpload(); uploadModal.hide();" #uploadForm="ngForm">
@@ -285,26 +285,34 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <button type="button" class="close" (click)="uploadModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Upload Table</h4>
+        <h4 class="modal-title">Upload Data</h4>
       </div>
 
       <div class="modal-body">
-        <div class="form-group">
 
-          <div class="alert alert-info" role="alert">
-            Data to be imported has to be in CSV format without quotes. 
-            The first row provides column names as specified in the selected table, for example, <code>My Column 1, My Column 1</code>. Not all columns in the table are needed.
-            Each next row represents a data record, for example, <code>123.45, my string</code>. Maximum 8192 characters can be uploaded for one time.
+        <div class="alert alert-info" role="alert">
+          First row provides column names, for example, <code>My Column 1, My Column 1</code>. Not all columns in the table are needed.
+          Each next row represents a data record, for example, <code>123.45, my string</code>. Maximum 8192 characters can be uploaded for one time.
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="createColumns" name="createColumns" ngControl="createColumns" [(ngModel)]="createColumns" class="form-check-input" type="checkbox" > Create columns which do not exist in the table
+              </label>
+            </div>
           </div>
+        </div>
 
+        <div class="form-group">
           <textarea id="uploadCsv" name="uploadCsv" ngControl="uploadCsv" [(ngModel)]="uploadCsv" class="form-control" rows="10" maxlength="8192" style="overflow-x: auto; white-space: nowrap;" ></textarea>
-
         </div>
 
         <div class="input-group">
           <input type="file" id="fileToUpload" name="fileToUpload" class="form-control" (change)="fileChangeEvent($event)" accept=".csv" />
           <span class="input-group-btn">
-            <button type="button" class="btn" [disabled]="!fileToUpload" (click)="loadFileToTextArea()" title="Read and paste records into the text area" ><i class="fa fa-file-text-o"></i> Load and Paste</button>
+            <button type="button" class="btn" [disabled]="!fileToUpload" (click)="loadFileToTextArea()" title="Read and paste records into the text area" ><i class="fa fa-file-text-o"></i> Read and Paste</button>
           </span>
         </div>
       </div>
@@ -655,7 +663,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 <div class="card" style="overflow: auto; max-height: 4000px !important;">
 
   <table id="records" name="records"
-    class="table table-sm table-fixed header-fixed table-striped table-bordered table-hover" >
+    class="table table-sm table-fixed header-fixed table-bordered table-hover" >
 
     <thead class="thead-inverse">
       <tr>

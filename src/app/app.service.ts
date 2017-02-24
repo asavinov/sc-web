@@ -284,10 +284,12 @@ export class AppService {
         .catch(this.handleError);
   }
 
-  write(tab: Table, data: string) {
+  write(tab: Table, data: string, params: Object) {
     if(!tab || !tab.id) return;
 
-    let body = data;
+    if(params == null) params = { createColumns: true }; // Params must be always provided even if empty
+
+    let body = JSON.stringify(params) + '\n' + data; // First line is a json object with parameters
 
     // Header might be needed for authorization etc.
     let headers = new Headers();
