@@ -10,7 +10,7 @@ import { TooltipModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap';
 import { PopoverModule } from 'ng2-bootstrap';
 
-import {ToastModule} from 'ng2-toastr';
+import { ToastModule } from 'ng2-toastr';
 
 //
 // App-specific

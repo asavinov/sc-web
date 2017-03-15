@@ -1,6 +1,6 @@
 {
   "name": "dc-app",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Data Commandr: Integrate. Transform. Analyze.",
   "keywords": ["Data Commandr"],
   "author": "Alexandr Savinov",
@@ -44,7 +44,11 @@
     "ng2-bootstrap": "1.4.0",
     "bootstrap": "4.0.0-alpha.6",
     "font-awesome": "4.7.0",
-    "ng2-toastr": "^1.6.0"
+    "ng2-toastr": "^1.6.0",
+
+    "scroll-into-view-if-needed": "1.0.7",
+    "angular2-hotkeys": "1.0.3",
+    "ng2-tour": "0.1.5"
 	},
   "devDependencies": {
 

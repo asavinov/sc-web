@@ -108,7 +108,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="schemaModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Ok</button>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="schemaDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Delete</button>
         </div>
       </div>
 
@@ -199,7 +199,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
         <!--
         <div class="card-footer" [style.visibility]="selectedTable && selectedTable.id.length === 0 ? 'inherit' : 'hidden'">
           <div class="text-xs-right">
-            <button type="button" class="btn btn-success" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-primary" [disabled]="!(selectedTable && selectedTable.id.length === 0)" (click)="tableModal.show()"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         -->
@@ -237,7 +237,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="tableModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Ok</button>
         </div>
       </div>
 
@@ -266,7 +266,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="tableDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Delete</button>
         </div>
       </div>
 
@@ -320,7 +320,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Ok</button>
         </div>
       </div>
 
@@ -349,7 +349,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="tableEmptyModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Delete</button>
         </div>
       </div>
 
@@ -525,7 +525,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
             <select id="columnkind" name="columnkind" ngControl="columnkind" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.kind" required >
               <option value="{{columnKinds.USER}}">User: From external source</option>
               <option value="{{columnKinds.CALC}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Calculated: from this table</option>
-              <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulatd: from another table</option>
+              <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulated: from another table</option>
               <option value="{{columnKinds.LINK}}" [disabled]="!selectedColumn || isPrimitiveTable(selectedColumn.output.id)">Link: to another table</option>
               <option value="{{columnKinds.CLASS}}" [disabled]="!selectedColumn">Custom: computed by a plugin</option>
             </select>
@@ -618,7 +618,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="columnModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Ok</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Ok</button>
         </div>
       </div>
 
@@ -647,7 +647,7 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="columnDeleteModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i> Delete</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Delete</button>
         </div>
       </div>
 
@@ -684,4 +684,34 @@ http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-
 
   </table>
 
+</div>
+
+
+
+<!-- TIPS DIALOG -->
+<div bsModal id="tipsModal" #tipsModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="tipsModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Getting Started: {{tipNumber+1}} / {{tipCount}}</h4>
+      </div>
+
+      <div class="modal-body">
+        <div [innerHTML]="tipText[tipNumber]"></div>
+      </div>
+
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-primary" [disabled]="firstTip()" (click)="previousTip()"><i class="fa fa-arrow-left"></i> Previous</button>
+          <button type="button" class="btn btn-primary" [disabled]="lastTip()" (click)="nextTip()"><i class="fa fa-arrow-right"></i> Next</button>
+          <button type="button" class="btn btn-default" (click)="tipsModal.hide()"><i class="fa fa-close"></i> Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

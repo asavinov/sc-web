@@ -108,6 +108,10 @@ button:disabled {
   cursor: default; /* Use default cursor instead of red not-allowed icon */
 }
 
+#tipsModal {
+  top:5%;
+}
+
 /* OLD
 -------------------------------------------------- */
 

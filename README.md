@@ -22,6 +22,10 @@ The following steps have to be performed:
 
 # Change Log
 
+* v0.5.0 (2017-03-xx)
+  * Getting started tips
+  * Import from a CSV file
+  * Automatic column creation while importing from CSV
 * v0.4.0 (2017-02-12)
   * Column type property introduced (user, calculated, accumulated, link).
   * Formula bar moved from the main screen to the column edit dialog.
