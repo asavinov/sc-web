@@ -22,7 +22,7 @@ The following steps have to be performed:
 
 # Change Log
 
-* v0.5.0 (2017-03-xx)
+* v0.5.0 (2017-03-19)
   * Getting started tips
   * Import from a CSV file
   * Automatic column creation while importing from CSV
