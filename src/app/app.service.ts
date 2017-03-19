@@ -34,6 +34,7 @@ export class AppService {
   // Production:
   //private serviceHost = 'http://datacommandr.eastus2.cloudapp.azure.com:8000';
   //private serviceHost = 'http://dc.conceptoriented.com:8000';
+  //private serviceHost = 'http://dc.conceptoriented.com:8000';
 
   private url = this.serviceHost + '/api';
 

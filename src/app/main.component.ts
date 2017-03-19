@@ -59,11 +59,11 @@ export class MainComponent implements OnInit, AfterViewInit {
   public tipNumber = 0;
   public tipText: string[] = [
     "Start working by creating a new <b>database</b> (called base in Data Commandr) or selecting an existing (example) base from the list of bases. ",
-    "Create a new <b>table</b> in the list of tables or select an existing table. A table is intented for storing a number of rows with data structured by the table columns.",
+    "Create a new <b>table</b> in the list of tables or select an existing table. A table is intended for storing a number of rows with data structured by the table columns.",
     "Load data into the selected table from a CSV file by clicking <b>Upload</b> button. The columns will be created automatically from the file header if the corresponding option is selected.",
     "Create new or additional columns for the selected table. <b>Data type</b> specifies what kind of data this column will store. <b>Column type</b> specifies how data in this column are produced.",
-    "Choose <b>calculated</b> column type if this column values will be computed from other column values using a formula that has to be specified in another field.",
-    "Choose <b>accumulated</b> column type if this column values will be computed from a group of <em>many</em> rows of another table.",
+    "Choose <b>calculated</b> column type if this column values will be computed from other column values using a <b>formula</b> that has to be specified in another field.",
+    "Choose <b>accumulated</b> column type if this column values will be computed from a group of <em>many</em> rows of another table that has to be specified in addition to other parameters.",
     "Choose <b>link</b> column type if this column values will reference rows of another table which is this column data type."
     ];
   @ViewChild('tipsModal') public tipsModal: ModalDirective;
@@ -175,7 +175,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
     else { // null. Create new
       sch = new Schema('');
-      sch.name = this.getUniqueName(this.schemas, 'New Schema');
+      sch.name = this.getUniqueName(this.schemas, 'New Base');
 
       this.selectedSchema = sch;
 
