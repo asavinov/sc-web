@@ -16,7 +16,9 @@
     "rootDir": ".",
     "inlineSources": true,
     "removeComments": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+
+    "skipLibCheck": true
 	},
   "compileOnSave": false,
   "buildOnSave": false

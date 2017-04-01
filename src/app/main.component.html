@@ -415,7 +415,7 @@ Use col-form-label class for labels
             <template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</template>
             <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" [popover]="popStatusRed" triggers="hover" container="body" placement="right" ></i>
 
-            {{col.getFormulaForColumnCard()}}&nbsp;
+            <b>{{col.getFormulaForColumnCard()}}&nbsp;</b>
 
           </h6>
         </div>

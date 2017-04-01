@@ -20,6 +20,12 @@ The following steps have to be performed:
 * Open browser
 * Open a web page at URL served by the web server, e.g., http://dc.conceptoriented.com 
 
+# Workarounds and temporary changes
+
+* @types/loadash (4.14.61) module will cause this error: TS2428: All declarations of 'WeakMap' must have identical type parameters. As a workaround, it is disabled by adding the "skipLibCheck": true into tsconfig.json. 
+Remove this line when @types\loadash is fixed.
+* <script>window.__theme = 'bs4';</script> is added to index.html to ensure compatibility of ng2-bootstrap with bootstrap 4. Remove it when not needed.
+
 # Change Log
 
 * v0.5.0 (2017-03-19)

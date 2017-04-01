@@ -10,6 +10,7 @@ import { TooltipModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap';
 import { PopoverModule } from 'ng2-bootstrap';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr';
 
 //
@@ -33,6 +34,7 @@ import { AppService }  from './app.service';
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     PopoverModule.forRoot(),
+    BrowserAnimationsModule,
     ToastModule.forRoot()
     ],
   providers: [

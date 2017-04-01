@@ -183,13 +183,19 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.schemaModal.show();
     }
 
+    // Load a list of tables and then a list of all schema columns
     this._scService.getTables(this.selectedSchema)
-      .then( x => this.onTablesReceived(x) )
+      .then( x => { 
+        this.onTablesReceived(x); 
+
+        this._scService.getColumns(this.selectedSchema)
+          .then( x => this.onColumnsReceived(x) )
+          .catch( e => this._toastr.error(e.message) );
+
+        } 
+      )
       .catch( e => this._toastr.error(e.message) );
 
-    this._scService.getColumns(this.selectedSchema)
-      .then( x => this.onColumnsReceived(x) )
-      .catch( e => this._toastr.error(e.message) );
   }
 
   onSchemaSubmit() {
@@ -450,7 +456,19 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.tableModal.show();
     }
 
-    this.selectedTableColumns = this.getInputColumns(this.selectedTable.id);
+    this.selectedTableColumns = this.selectedTable == null ? [] : this.getInputColumns(this.selectedTable.id);
+
+    // Try to select the previous selected column or defualt (first). This can trigger loading a lower list or emptying it
+    let list = (this.selectedTableColumns == null ? [] : this.selectedTableColumns);
+    if(list.length == 0) { // Nothing to select from
+      this.onColumnSelect(undefined);
+    }
+    else if(this.selectedColumn && this.selectedColumn.id && list.filter(x => x.id == this.selectedColumn.id).length > 0) { // Previous selection exists. Use it
+      this.onColumnSelect(this.selectedColumn);
+    }
+    else { // No previous selection. Use default one
+      this.onColumnSelect(list[0]);
+    } 
 
     this.getRecords(); // Show records
   }
