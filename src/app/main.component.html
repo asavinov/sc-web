@@ -384,7 +384,7 @@ Use col-form-label class for labels
   <div class="card dc-horizontal-list">
   <ul *ngIf="selectedTable && selectedTable.id.length > 0" class="list-inline" style="margin: 0px;" >
 
-    <a *ngFor="let col of columns"
+    <a *ngFor="let col of selectedTableColumns"
       class="list-inline-item"
       (click)="onColumnSelect(col)"
       >
@@ -551,7 +551,7 @@ Use col-form-label class for labels
               It can be a constant or an arbitrary expression as used in calculated columns 
               by using column names of the selected table in sequare brackets, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
             </span>
-            <span *ngIf="selectedColumn && selectedColumn == columnKinds.LINK" class="form-text small">
+            <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.LINK" class="form-text small">
               Link column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
               The tight hand side of the assignment is an arbitrary formula as used in calculated columns by using colums of the selected table, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
               The left hand side of an assignment is a column from the output table (type of this column).
@@ -561,7 +561,7 @@ Use col-form-label class for labels
             Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-8">
-            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]" >
+            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="" >
           </div>
         </div>
         </div>
@@ -674,16 +674,34 @@ Use col-form-label class for labels
     <thead class="thead-inverse">
       <tr>
           <th style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h5>#</h5></th>
-          <th *ngFor="let col of columns" style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h6>{{col.name}}</h6></th>
+          <th *ngFor="let col of selectedTableColumns" style="background-color: #eeeeee; color: black; border-width:0.1em; border-color:lightblue;"><h6>{{col.name}}</h6></th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let row of records">
         <td>#{{row['_id']}}</td>
-        <td *ngFor="let col of columns" [style.background-color]="(selectedColumn && selectedColumn.id == col.id) ? '#eeeeee' : ''">
-          <div *ngIf="col.kind == columnKinds.LINK">#{{row[col.name]}}</div>
+        <td *ngFor="let col of selectedTableColumns" [style.background-color]="(selectedColumn && selectedColumn.id == col.id) ? '#eeeeee' : ''">
+
+
           <div *ngIf="col.kind != columnKinds.LINK">{{row[col.name]}}</div>
+          <div *ngIf="col.kind == columnKinds.LINK">
+
+            <template #popRecord>
+              <table *ngIf="dataLoaded(col.output.table.id)" id="records" name="records" class="table table-sm" ><tbody>
+                <tr *ngFor="let field of getRecordAsList(col.output.table.id, row[col.name])">
+                  <td>{{field[0]}}</td>
+                  <td>{{field[1]}}</td>
+                </tr>
+              </tbody></table>
+              <div *ngIf="!dataLoaded(col.output.table.id)">
+                DATA NOT LOADED
+              </div>
+            </template>
+
+            #{{row[col.name]}} 
+            <i class="fa  fa-angle-double-right" [popover]="popRecord" triggers="hover" container="body" placement="right"></i>
+          </div>
         </td>
       </tr>
     </tbody>

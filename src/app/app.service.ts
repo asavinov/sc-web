@@ -193,22 +193,6 @@ export class AppService {
         .catch(this.handleError);
   }
 
-  getInputColumns(sch: Schema, tab: Table): Promise<Column[] | Object> {
-    if(!sch || !sch.id || !tab || !tab.id ) return Promise.resolve([]);
-
-    // WORKAROUND: Here we retrieve ALL column and then filter them. 
-    // REDO: Retrieve ALL columns of the selected schema and then select input or other columns on the client (in controller)
-    return this.getColumns(sch).then(
-      cols => {
-        if(cols instanceof Array) {
-          return Promise.resolve( cols.filter(col => col.input.id === tab.id) );
-        }
-        else {
-          return Promise.resolve(cols);
-        }
-      });
-  }
-
   getColumn(id: string) {
   }
 

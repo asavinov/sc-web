@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'DATA COMMANDR';
   activeComponent = 'dc-main';
-  version = '0.5.0'
-  versionDate = '19.03.2017'
+  version = '0.6.0'
+  versionDate = 'xx.04.2017'
 
   public isCollapsed:boolean = false;
 

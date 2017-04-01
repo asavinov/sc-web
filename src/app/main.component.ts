@@ -103,6 +103,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.selectedTable = undefined;
 
     this.columns = [];
+    this.selectedTableColumns = [];
     this.selectedColumn = undefined;
 
     this.allRecords = new Map<string,any[]>();
@@ -137,7 +138,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   // Schema list
   //
 
-  schemas: Schema[];
+  schemas: Schema[] = [];
   selectedSchema: Schema;
   @ViewChild('schemaModal') public schemaModal: ModalDirective;
 
@@ -154,7 +155,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     // Make default selection in the recevied list which can trigger loading a lower list or emptying it
-    let list = this.schemas;
+    let list = (this.schemas == null ? [] : this.schemas);
     if(list.length == 0) { // Nothing to select from
       this.onSchemaSelect(undefined);
     }
@@ -184,6 +185,10 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this._scService.getTables(this.selectedSchema)
       .then( x => this.onTablesReceived(x) )
+      .catch( e => this._toastr.error(e.message) );
+
+    this._scService.getColumns(this.selectedSchema)
+      .then( x => this.onColumnsReceived(x) )
       .catch( e => this._toastr.error(e.message) );
   }
 
@@ -243,8 +248,49 @@ export class MainComponent implements OnInit, AfterViewInit {
   // Schema data
   //
 
-  allRecords = new Map<string,any[]>(); // For each table is, we store its records in this cache
+  allRecords = new Map<string,any[]>(); // Table guid is a key, and value is a list of record objects
   records: any = []; // Records of the selected table only (displayed in the table view)
+
+  dataLoaded(tableId: string): boolean {
+    if(tableId == null) {
+      return false;
+    }
+
+    // Find table by id
+    let recs = this.allRecords.get(tableId);
+    if(recs == null) {
+      return false;
+    }
+
+    return true;
+  }
+
+  getRecordAsList(tableId: string, recordId: string):any[] { // Get one record as a list of [col_name,col_value] pairs (in their original column order)
+    if(tableId == null || recordId == null) {
+      return undefined;
+    }
+
+    // Find table by id
+    let recs = this.allRecords.get(tableId);
+    if(recs == null) {
+      return undefined;
+    }
+
+    // Find record by id
+    let rec: Object = recs.find(x => x['_id'] === recordId)
+    if(rec == null) {
+      return [undefined];
+    }
+
+    // Transform to a list of pairs
+    let cols = this.getInputColumns(tableId);
+    let fields = [];
+    for (let col of cols) {
+      fields.push([col.name, rec[col.name]]);
+    }
+
+    return fields;
+  }
 
   onSchemaEvaluate() {
     // Evaluate data from the service
@@ -262,7 +308,7 @@ export class MainComponent implements OnInit, AfterViewInit {
             this._toastr.error(msg);
         }
       })
-      .then( x => this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+      .then( x => this._scService.getColumns(this.selectedSchema)
           .then( x => this.onColumnsReceived(x) )
           .catch( e => this._toastr.error(e.message) )
           )
@@ -330,7 +376,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   // Table list
   //
 
-  tables: Table[];
+  tables: Table[] = [];
   selectedTable: Table;
   @ViewChild('tableModal') public tableModal: ModalDirective;
 
@@ -404,9 +450,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.tableModal.show();
     }
 
-    this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
-      .then( x => this.onColumnsReceived(x) )
-      .catch( e => this._toastr.error(e.message) );
+    this.selectedTableColumns = this.getInputColumns(this.selectedTable.id);
 
     this.getRecords(); // Show records
   }
@@ -510,7 +554,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   // Write
 
   uploadCsv: string;
-  createColumns: boolean;
+  createColumns: boolean = true;
 
   onTableUpload() {
     // Collect parameters
@@ -522,7 +566,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         this.onTableRead(); // Read data from the table
       })
       .then(x =>
-        this._scService.getInputColumns(this.selectedSchema, this.selectedTable)
+        this._scService.getColumns(this.selectedSchema)
           .then( x => this.onColumnsReceived(x) )
           .catch( e => this._toastr.error(e.message) )
     );
@@ -532,7 +576,9 @@ export class MainComponent implements OnInit, AfterViewInit {
   // Column list
   //
 
-  columns: Column[];
+  columns: Column[] = [];
+
+  selectedTableColumns: Column[] = [];
   selectedColumn: Column;
   @ViewChild('columnModal') public columnModal: ModalDirective;
 
@@ -550,7 +596,11 @@ export class MainComponent implements OnInit, AfterViewInit {
      return prefix;
   }
 
-  onColumnsReceived(columns: Column[] | Object) {
+  getInputColumns(table_id: string): Column[] {
+    return this.columns.filter(col => col.input.id === table_id);
+  }
+
+  onColumnsReceived(columns: Column[] | Object) { // Called when a list of ALL schema columns arrived
     if(columns instanceof Array) { // Success
       this.columns = columns;
       this.resolveColumns();
@@ -570,8 +620,16 @@ export class MainComponent implements OnInit, AfterViewInit {
       this._toastr.error('Error retrieving columns from server.');
     }
 
-    // Make default selection in the recevied list which can trigger loading a lower list or emptying it
-    let list = this.columns;
+    // Update the list of columns of the currently selected table
+    if(this.selectedTable == null) {
+      this.selectedTableColumns = [];
+    }
+    else {
+      this.selectedTableColumns = this.getInputColumns(this.selectedTable.id);
+    }
+
+    // Try to select the previous selected column or defualt (first). This can trigger loading a lower list or emptying it
+    let list = (this.selectedTableColumns == null ? [] : this.selectedTableColumns);
     if(list.length == 0) { // Nothing to select from
       this.onColumnSelect(undefined);
     }
@@ -632,7 +690,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
     else { // Create new
       col = new Column('');
-      col.name = this.getUniqueName(this.columns, 'New Column');
+      col.name = this.getUniqueName(this.selectedTableColumns, 'New Column');
       col.input.id = this.selectedTable.id;
       col.input.table = this.selectedTable;
       let type = this.tables.find(t => t.name === 'Double');
@@ -663,9 +721,11 @@ export class MainComponent implements OnInit, AfterViewInit {
           this.selectedColumn.id = x.id || "";
 
           // Load all columns
-          this.onTableSelect(this.selectedTable);
-        }
-      );
+          this._scService.getColumns(this.selectedSchema)
+            .then( x => this.onColumnsReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
+          }
+        );
     }
     else { // Update existing
       this._scService.updateColumn(this.selectedColumn)
@@ -675,9 +735,13 @@ export class MainComponent implements OnInit, AfterViewInit {
             msg += ' ' + (x['description'] || '');
             this._toastr.error(msg);
           }
-          this.onTableSelect(this.selectedTable);
-        }
-      );
+
+          // Load all columns
+          this._scService.getColumns(this.selectedSchema)
+            .then( x => this.onColumnsReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
+          }
+        );
     }
   }
 
@@ -687,7 +751,19 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
     else { // Delete existing
       this._scService.deleteColumn(this.selectedColumn)
-        .then( x => this.onTableSelect(this.selectedTable) );
+        .then( x => {
+          if(x['code']) { // Error
+            let msg: string = x['message'] || 'Error deleting column.';
+            msg += ' ' + (x['description'] || '');
+            this._toastr.error(msg);
+          }
+
+          // Load all columns
+          this._scService.getColumns(this.selectedSchema)
+            .then( x => this.onColumnsReceived(x) )
+            .catch( e => this._toastr.error(e.message) );
+          }
+        );
     }
   }
 
