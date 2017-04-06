@@ -3,12 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }        from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { Ng2BootstrapModule } from 'ng2-bootstrap';
-
-import { CollapseModule } from 'ng2-bootstrap';
-import { TooltipModule } from 'ng2-bootstrap';
-import { ModalModule } from 'ng2-bootstrap';
-import { PopoverModule } from 'ng2-bootstrap';
+import { CollapseModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap';
+import { PopoverModule } from 'ngx-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr';
@@ -29,7 +27,6 @@ import { AppService }  from './app.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    Ng2BootstrapModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

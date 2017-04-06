@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef } from '@
 
 import { AppService, ServiceError, ServiceErrorCode } from './app.service';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 
 import { ToastsManager } from 'ng2-toastr';
 
