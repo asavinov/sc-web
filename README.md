@@ -1,6 +1,9 @@
-# DataCommandr Web Application
+# Data Commandr Web Application
 
 # Build
+
+The building process is using webpack and is based on the following sample projects: 
+https://github.com/preboot/angular-webpack
 
 The following steps have to be performed:
 * Set the necessary address of REST service in app.service.ts
@@ -13,12 +16,12 @@ The following steps have to be performed:
 
 * Copy the content of the dist folder to web server, e.g., htdocs of Apache httpd
 * Start the web server 
-* Start DataCommandr REST server
+* Start Data Commandr REST server
 
 # Run
 
 * Open browser
-* Open a web page at URL served by the web server, e.g., http://dc.conceptoriented.com 
+* Open a web page at URL served by the web server, e.g., http://conceptoriented.com 
 
 # Workarounds and temporary changes
 

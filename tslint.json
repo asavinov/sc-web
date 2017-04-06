@@ -47,7 +47,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
@@ -89,7 +88,18 @@
       "check-separator",
       "check-type"
     ],
-
+    "directive-selector": [
+      true,
+      "attribute",
+      "my",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "my",
+      "kebab-case"
+    ],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -99,6 +109,16 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "pipe-naming": [true, "camelCase", "my"]
+    "pipe-naming": [
+      true,
+      "camelCase",
+      "my"
+    ],
+    "no-attribute-parameter-decorator": true,
+    "no-forward-ref": true,
+    "import-destructuring-spacing": true,
+    "no-access-missing-member": true,
+    "templates-use-public": true,
+    "invoke-injectable": true
   }
 }

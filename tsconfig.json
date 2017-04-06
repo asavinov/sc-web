@@ -2,24 +2,18 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "sourceMap": true,
     "noEmitHelpers": true,
-
-    "declaration": false,
-    "mapRoot": "/",
-    "noEmitOnError": true,
-    "noImplicitAny": false,
-    "outDir": "../dist/",
-    "rootDir": ".",
-    "inlineSources": true,
-    "removeComments": false,
-    "suppressImplicitAnyIndexErrors": true,
-
-    "skipLibCheck": true
-	},
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "lib": ["es2015", "dom"]
+  },
   "compileOnSave": false,
-  "buildOnSave": false
+  "buildOnSave": false,
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  }
 }
