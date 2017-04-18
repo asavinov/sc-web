@@ -63,6 +63,13 @@ module.exports = function makeWebpackConfig() {
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
     chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
   };
+  config.externals = [
+//    /^core-js\//, 
+//    /^reflect-metadata\//, 
+//    /^rxjs\//, /^zone.js\//, 
+//    /^ngx-bootstrap\//, 
+//    /^@angular\//,
+  ];
 
   /**
    * Resolve
