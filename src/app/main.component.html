@@ -28,17 +28,13 @@
 -->
 
 <!--
-How to implement modal dialog as a separate component (so that we factor all dialogs out to separate files):
+How to implement modal dialog as a separate angular component (so that we factor all dialogs out to separate files):
 http://stackoverflow.com/questions/35400811/how-to-use-codes-to-open-a-modal-in-angular-2
 
 From here http://www.quackit.com/bootstrap/bootstrap_4/tutorial/bootstrap_forms.cfm
 Use row class for horizontal form (form-horizontal is optional)
 Use col-form-label class for labels
-
 -->
-
-<!-- TEST: how to use list-group-item and a -->
-
 
 
 <!-- ----------- -->
@@ -666,6 +662,11 @@ Use col-form-label class for labels
 
 <!-- ---------- -->
 <!-- DATA PANEL -->
+<!-- 
+How to implement scrolling in browser pages:
+http://blog.stevensanderson.com/2011/10/05/full-height-app-layouts-a-css-trick-to-make-it-easier/
+https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
+-->
 <div class="card" style="overflow: auto; max-height: 4000px !important;">
 
   <table id="records" name="records"
@@ -699,7 +700,7 @@ Use col-form-label class for labels
               </tbody></table>
             </template>
 
-            #{{row[col.name]}} 
+            #{{row[col.name]}}
             <i class="fa  fa-angle-double-right" [popover]="popRecord" triggers="hover" container="body" placement="right"></i>
           </div>
         </td>
@@ -724,8 +725,10 @@ Use col-form-label class for labels
         <h4 class="modal-title">Getting Started: {{tipNumber+1}} / {{tipCount}}</h4>
       </div>
 
-      <div class="modal-body">
-        <div [innerHTML]="tipText[tipNumber]"></div>
+      <div class="modal-body" style="background-color: #EEE;">
+        <div class="card-block">
+          <div [innerHTML]="tipText[tipNumber]"></div>
+        </div>
       </div>
 
       <div class="modal-footer">
