@@ -285,7 +285,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     // Find record by id
     let rec: Object = recs.find(x => x['_id'] === recordId)
     if(rec == null) {
-      return [undefined];
+      return undefined;
     }
 
     // Transform to a list of pairs

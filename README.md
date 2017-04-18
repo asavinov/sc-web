@@ -31,6 +31,8 @@ Remove this line when @types\loadash is fixed.
 
 # Change Log
 
+* v0.6.0 (2017-04-xx)
+  * Show popovers with the linked records
 * v0.5.0 (2017-03-19)
   * Getting started tips
   * Import from a CSV file

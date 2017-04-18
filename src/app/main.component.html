@@ -688,15 +688,15 @@ Use col-form-label class for labels
           <div *ngIf="col.kind == columnKinds.LINK">
 
             <template #popRecord>
+              <div *ngIf="!dataLoaded(col.output.table.id)">
+                LINKED DATA NOT LOADED
+              </div>
               <table *ngIf="dataLoaded(col.output.table.id)" id="records" name="records" class="table table-sm" ><tbody>
                 <tr *ngFor="let field of getRecordAsList(col.output.table.id, row[col.name])">
                   <td>{{field[0]}}</td>
                   <td>{{field[1]}}</td>
                 </tr>
               </tbody></table>
-              <div *ngIf="!dataLoaded(col.output.table.id)">
-                DATA NOT LOADED
-              </div>
             </template>
 
             #{{row[col.name]}} 
