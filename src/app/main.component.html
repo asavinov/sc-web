@@ -690,7 +690,7 @@ https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
 
             <template #popRecord>
               <div *ngIf="!dataLoaded(col.output.table.id)">
-                LINKED DATA NOT LOADED
+                LINKED TABLE NOT LOADED
               </div>
               <table *ngIf="dataLoaded(col.output.table.id)" id="records" name="records" class="table table-sm" ><tbody>
                 <tr *ngFor="let field of getRecordAsList(col.output.table.id, row[col.name])">
