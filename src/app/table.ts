@@ -7,6 +7,7 @@ export class Table {
 
   id: string;
   name: string;
+
   maxLength: number;
 
   isPrimitve(): boolean {
@@ -30,6 +31,7 @@ export class Table {
 
     tab.id = json.id;
     tab.name = json.name;
+
     tab.maxLength = json.maxLength;
 
     return tab;

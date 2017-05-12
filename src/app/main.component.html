@@ -100,10 +100,14 @@ Use col-form-label class for labels
       </div>
 
       <div class="modal-body">
-          <div class="form-group">
-            <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the base" triggers="hover" container="body" placement="right" ></i>
-            <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Base name"/>
-          </div>
+        <div class="form-group">
+          <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the base" triggers="hover" container="body" placement="right" ></i>
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Base name"/>
+        </div>
+        <div class="form-group">
+          <label for="afterAppend">Auto evaluation time</label> <i class="fa fa-info-circle" popover="Time in milliseconds for automatic evaluation. 0 means immediately after update and -1 means no automatic evaluation." triggers="hover" container="body" placement="right" ></i>
+          <input id="afterAppend" name="afterAppend" ngControl="afterAppend" type="number" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.afterAppend" required min="-1" placeholder="Time in seconds for automatic evaluation" />
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -230,7 +234,7 @@ Use col-form-label class for labels
           <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedTable && selectedTable.name" required placeholder="Table name"/>
         </div>
         <div class="form-group">
-          <label for="maxLength">Maximum length</label> <i class="fa fa-info-circle" popover="Maximum number of rows in the table" triggers="hover" container="body" placement="right" ></i>
+          <label for="maxLength">Maximum length</label> <i class="fa fa-info-circle" popover="Maximum number of rows in the table. -1 means no limit." triggers="hover" container="body" placement="right" ></i>
           <input id="maxLength" name="maxLength" ngControl="maxLength" type="number" class="form-control" [(ngModel)]="selectedTable && selectedTable.maxLength" required min="-1" placeholder="Maximum length of the table (-1 for unlimited)" />
         </div>
       </div>
@@ -526,9 +530,9 @@ Use col-form-label class for labels
           <div class="col-8">
             <select id="columnkind" name="columnkind" ngControl="columnkind" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.kind" required >
               <option value="{{columnKinds.USER}}">User: From external source</option>
-              <option value="{{columnKinds.CALC}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Calculated: from this table</option>
-              <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulated: from another table</option>
-              <option value="{{columnKinds.LINK}}" [disabled]="!selectedColumn || isPrimitiveTable(selectedColumn.output.id)">Link: to another table</option>
+              <option value="{{columnKinds.CALC}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Calculated: from this and linked tables</option>
+              <option value="{{columnKinds.ACCU}}" [disabled]="!selectedColumn || !isPrimitiveTable(selectedColumn.output.id)">Accumulated: from rows in another table</option>
+              <option value="{{columnKinds.LINK}}" [disabled]="!selectedColumn || isPrimitiveTable(selectedColumn.output.id)">Link: reference to a row in another table</option>
               <option value="{{columnKinds.CLASS}}" [disabled]="!selectedColumn">Custom: computed by a plugin</option>
             </select>
           </div>
@@ -557,7 +561,7 @@ Use col-form-label class for labels
             Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-8">
-            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="" >
+            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Quantity] * [Price]" >
           </div>
         </div>
         </div>
@@ -571,7 +575,7 @@ Use col-form-label class for labels
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-8">
-            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]" >
+            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]" >
           </div>
         </div>
 

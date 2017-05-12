@@ -10,6 +10,8 @@ export class Schema {
   id: string;
   name: string;
 
+  afterAppend: number;
+
   clone(): Schema {
     let sch: Schema = new Schema(this.id);
     Object.assign(sch, this);
@@ -24,6 +26,8 @@ export class Schema {
 
     sch.id = json.id;
     sch.name = json.name;
+
+    sch.afterAppend = json.afterAppend;
 
     return sch;
   }
