@@ -5,6 +5,7 @@ export class Schema {
   constructor(id: string) {
     this.id = id;
     this.name = '';
+    this.afterAppend = -1;
   }
 
   id: string;

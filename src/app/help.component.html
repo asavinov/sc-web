@@ -32,11 +32,12 @@
     </p>
     <p>Column formulas are a primary element of <span class="dc">Data Commandr</span> because they determine how the data will be processed.
     Column formulas in this sense are analogous to traditional data queries. 
-    There are three types of expressions that can be used to define columns:</p>
+    Column type determines how column values are computed. Currently there exist four column types:</p>
     <ul> 
-    <li>calculated columns for primitive data types</li>
-    <li>complex (or tuple) columns if this column has a type of another column</li>
-    <li>accumulated (or aggregated) columns which are intended for data aggregation</li> 
+    <li>User columns get their data values from outside, for example, using import from CSV</li>
+    <li>Calculated columns compute a primitive value from other values in the current row or values in linked row using an expression.</li>
+    <li>Accumulated (or aggregated) columns are intended for data aggregation and they compute their value from many rows of another table using an accumulate expression.</li> 
+    <li>Link columns has a value which references a row in another table (which is its data type).</li>
     </ul> 
 
     <p class="card-title text-xs-center"><b>Calculated Columns</b></p>
@@ -57,21 +58,27 @@
     <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, <code>signum</code>. 
     </p>
 
-    <p class="card-title text-xs-center"><b>Complex Columns</b></p>
-
-    <p>Complex or tuple formulas are enclosed in curly brackets and store a comma separated list of assignments: <code>&#123; [Col1] = PRIMITIVE EXPRESSION 1, [Col1] = PRIMITIVE EXPRESSION 2, ... &#125;</code>.
-    Each element of this list consists of two parts. The left part is some column of the type table of this column.
-    The right part is an expression written using columns of this table.
-    </p>
-
     <p class="card-title text-xs-center"><b>Accumulated Columns</b></p>
 
-    <p>Accumulated formulas use the main expression to initialize the values of this column precisely as it is done for primitive expressions.
-    If the main expression is empty then a default value will be used for initialization.
-    In addition, this initial value can updated by specifying three additional parameters.
-    First, it is necessary to specify another table the data of which will be accumulated. 
-    Second, a column path has to be specified that leads from this accumulation table to this column table. 
-    Third, a formula has to be provided written in terms of the accumulation table. This formula should use an additional parameter <code>output</code> which is equal to the current value of the column.   
+    <p>Accumulated formulas use the main expression to initialize its values precisely as it is done for primitive expressions.
+    If the main expression is empty then a default value will be used for initialization.</p>
+
+    <p>In addition, this initial value is updated by specifying three additional parameters.</p>
+    <ul> 
+    <li><b>Accumulate table</b> It is necessary to specify another table the rows of which will be accumulated.</li>
+    <li><b>Accumulate path</b> A column path has to be specified that leads from the chosen accumulate table to this table.</li>
+    <li><b>Accumulate formula</b> This formula is written in terms of the accumulate table. Its purpose is to update this column using values from the accumulate table. 
+      This formula has to use an additional parameter <code>out</code> which is equal to the current value of the column.
+      </li> 
+    </ul> 
+
+    <p class="card-title text-xs-center"><b>Link Columns</b></p>
+
+    <p>Link formulas have special syntax. They are enclosed in curly brackets and store a comma separated list of assignments: 
+      <code>&#123; [Col1] = PRIMITIVE EXPRESSION 1, [Col1] = PRIMITIVE EXPRESSION 2, ... &#125;</code>.
+      Each element of this list is an assignment consisting of two expressions. 
+      The left hand part is some column of the type table of this column.
+      The right hand part is an expression written using columns of this table.
     </p>
 
   </div>
@@ -83,8 +90,8 @@
   </div>
   <div class="card-block">
     When a formula is defined or modified then it is not immediately evaluated and the column data is not updated. 
-    The result of all column of one table can be visualized by explicitly evaluating the currently selected table.
-    The result is then visualized as a number of rows where values have been either uploaded or computed from column formulas. 
+    To evaluate formulas it is necessary to press the Evaluate button and then the (up-to-date) data of the currently selected table has to be loaded by pressing the Load button.
+    The result is then shown as a number of rows where values have been either previously uploaded or computed from other columns. 
   </div>
 </div>
 

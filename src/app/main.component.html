@@ -395,24 +395,24 @@ Use col-form-label class for labels
           </h6>
           <h6 class="card-subtitle text-muted">
 
-            <template #popDirtyNull>It is not a derived column and it cannot be evaluated</template>
+            <ng-template #popDirtyNull>It is not a derived column and it cannot be evaluated</ng-template>
             <i *ngIf="false && !col.isDerived()" class="fa fa-circle-o pull-right" [popover]="popDirtyNull" triggers="hover" container="body" placement="right" ></i>
-            <template #popDirtyFalse>Column data is up-to-date</template>
+            <ng-template #popDirtyFalse>Column data is up-to-date</ng-template>
             <i *ngIf="col.isDerived() && !col.dirty" class="fa fa-check-circle-o pull-right" style="color :#4F8A10;" [popover]="popDirtyFalse" triggers="hover" container="body" placement="right" ></i>
-            <template #popDirtyTrue>Column needs to be evaluated. Click Evaluate button.</template>
+            <ng-template #popDirtyTrue>Column needs to be evaluated. Click Evaluate button.</ng-template>
             <i *ngIf="col.isDerived() && col.dirty" class="fa fa-play-circle-o pull-right" style="color :#D8000C;" [popover]="popDirtyTrue" triggers="hover" container="body" placement="right" ></i>
 
             {{col.output.table.name}}
           </h6>
           <h6 class="card-text">
 
-            <template #popStatusNull>No formula</template>
+            <ng-template #popStatusNull>No formula</ng-template>
             <i *ngIf="false && col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
-            <template #popStatusGreen>Column formula is correct</template>
+            <ng-template #popStatusGreen>Column formula is correct</ng-template>
             <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-circle dc-status-green-icon pull-right" [popover]="popStatusGreen" triggers="hover" container="body" placement="right" ></i>
-            <template #popStatusYellow>Column depends on an incorrect column(s) or itself: {{col.getStatusDescription()}}</template>
+            <ng-template #popStatusYellow>Column depends on an incorrect column(s) or itself: {{col.getStatusDescription()}}</ng-template>
             <i *ngIf="col.getStatusColor() == 'yellow'" class="fa fa-warning dc-status-yellow-icon pull-right" [popover]="popStatusYellow" triggers="hover" container="body" placement="right" ></i>
-            <template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</template>
+            <ng-template #popStatusRed>Formula has an error: {{col.getStatusDescription()}}</ng-template>
             <i *ngIf="col.getStatusColor() == 'red'" class="fa fa-exclamation-circle dc-status-red-icon pull-right" [popover]="popStatusRed" triggers="hover" container="body" placement="right" ></i>
 
             <b>{{col.getFormulaForColumnCard()}}&nbsp;</b>
@@ -444,7 +444,7 @@ Use col-form-label class for labels
     <form *ngIf="selectedTable && selectedTable.id.length > 0" [class.invisible]="!(selectedColumn && selectedColumn.id.length > 0)" class="form-horizontal" (ngSubmit)="onColumnSubmit()" #formulaForm="ngForm">
 
       <div class="input-group input-group-lg">
-        <template #popFormula>
+        <ng-template #popFormula>
         <span *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="form-text small">
           A primitive formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
           Column names in formulas are written in square brackets like <code>[My Column]</code>. 
@@ -455,7 +455,7 @@ Use col-form-label class for labels
           Column names in formulas are written in square brackets like <code>[My Column]</code>. 
           The tight hand side of the assignment can be an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
         </span>
-        </template>
+        </ng-template>
         <span id="formula-addon" class="input-group-addon">Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i></span>
         <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Column 1] + [Column 2]">
         <span class="input-group-btn">
@@ -465,17 +465,17 @@ Use col-form-label class for labels
 
       <div *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="input-group">
 
-        <template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></template>
+        <ng-template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></ng-template>
         <span id="accuformula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
         <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]">
 
-        <template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</template>
+        <ng-template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</ng-template>
         <span id="accutable-addon" class="input-group-addon">Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i></span>
         <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
           <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
         </select>
 
-        <template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</template>
+        <ng-template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</ng-template>
         <span id="accupath-addon" class="input-group-addon">Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i></span>
         <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
         <span class="input-group-addon">Main Table '{{selectedTable.name}}'</span>
@@ -523,7 +523,7 @@ Use col-form-label class for labels
         </div>
 
         <div class="form-group row">
-          <template #popColumnKind>The way column values are obtained</template>
+          <ng-template #popColumnKind>The way column values are obtained</ng-template>
           <label for="columnkind" class="col-form-label col-4">
             Column Type <i class="fa fa-info-circle" [popover]="popColumnKind" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -540,7 +540,7 @@ Use col-form-label class for labels
 
         <div *ngIf="selectedColumn && (selectedColumn.kind == columnKinds.CALC || selectedColumn.kind == columnKinds.ACCU || selectedColumn.kind == columnKinds.LINK)">
         <div class="form-group row">
-          <template #popFormula>
+          <ng-template #popFormula>
             <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CALC" class="form-text small">
               Calculated formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
               Column names belong to the selected table and are written in square brackets like <code>[My Column]</code>.
@@ -556,7 +556,7 @@ Use col-form-label class for labels
               The tight hand side of the assignment is an arbitrary formula as used in calculated columns by using colums of the selected table, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
               The left hand side of an assignment is a column from the output table (type of this column).
             </span>
-          </template>
+          </ng-template>
           <label for="formula" class="col-form-label col-4">
             Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -568,9 +568,9 @@ Use col-form-label class for labels
 
         <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU && isPrimitiveTable(selectedColumn.output.id)" >
         <div class="form-group row">
-          <template #popAccuFormula>An accumulate formula uses columns of the accumulation table 
+          <ng-template #popAccuFormula>An accumulate formula uses columns of the accumulation table 
             and a special variable <code>out</code> which stores the current value to be updated by the formula, 
-            for example, <code>out + [Column From Accu Table]</code></template>
+            for example, <code>out + [Column From Accu Table]</code></ng-template>
           <label for="accuformula" class="col-form-label col-4">
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -580,9 +580,9 @@ Use col-form-label class for labels
         </div>
 
         <div class="form-group row">
-          <template #popAccuTable>Accumulation table provides records to be aggregated. 
+          <ng-template #popAccuTable>Accumulation table provides records to be aggregated. 
             The accumulate formula will be evaluated for each record of this table. 
-            Its columns are used in the accumulate formula.</template>
+            Its columns are used in the accumulate formula.</ng-template>
           <label for="accutable" class="col-form-label col-4">
             Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -594,8 +594,8 @@ Use col-form-label class for labels
         </div>
 
         <div class="form-group row">
-          <template #popAccuPath>Accumulation path is a column path from the accumulate table to the main (selected) table.
-            This path groups all elements of the accumulate table.</template>
+          <ng-template #popAccuPath>Accumulation path is a column path from the accumulate table to the main (selected) table.
+            This path groups all elements of the accumulate table.</ng-template>
           <label for="accupath" class="col-form-label col-4">
             Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -607,7 +607,7 @@ Use col-form-label class for labels
 
         <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CLASS">
         <div class="form-group row">
-          <template #popDescriptor>This feature allows for uploading a custom plugin which will compute the values of this column using custom implementation.</template>
+          <ng-template #popDescriptor>This feature allows for uploading a custom plugin which will compute the values of this column using custom implementation.</ng-template>
           <label for="descriptor" class="col-form-label col-4">
             Descriptor <i class="fa fa-info-circle" [popover]="popDescriptor" triggers="hover" container="body" placement="right" ></i>
           </label>
@@ -692,7 +692,7 @@ https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
           <div *ngIf="col.kind != columnKinds.LINK">{{row[col.name]}}</div>
           <div *ngIf="col.kind == columnKinds.LINK">
 
-            <template #popRecord>
+            <ng-template #popRecord>
               <div *ngIf="!dataLoaded(col.output.table.id)">
                 LINKED TABLE NOT LOADED
               </div>
@@ -702,7 +702,7 @@ https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
                   <td>{{field[1]}}</td>
                 </tr>
               </tbody></table>
-            </template>
+            </ng-template>
 
             #{{row[col.name]}}
             <i class="fa  fa-angle-double-right" [popover]="popRecord" triggers="hover" container="body" placement="right"></i>
