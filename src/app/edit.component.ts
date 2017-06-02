@@ -18,11 +18,11 @@ if (variable == null) - It catches both null and undefined (but not false). Impo
 */
 
 @Component({
-  selector: 'dc-main',
-  templateUrl: 'main.component.html',
-  styleUrls:  ['main.component.css']
+  selector: 'dc-edit',
+  templateUrl: 'edit.component.html',
+  styleUrls:  ['edit.component.css']
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class EditComponent implements OnInit, AfterViewInit {
 
   constructor(private _scService: AppService, public _toastr: ToastsManager, viewContainerRef:ViewContainerRef) {
     // Hack/workaround for angular 2.2.* to work ng2-tastr. See also forRoot() in NgModule imports.

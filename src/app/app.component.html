@@ -12,18 +12,21 @@ float-*-right
 
 <nav class="navbar navbar-toggleable-md navbar-light navbar-static-top bg-faded">
 
-  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-main'">
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-edit'">
       <img class="logo-header" src="img/dc-logo.png" alt="Data Commandr">
   </a>
-  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-main'">
+  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-edit'">
       <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
   </a>
 
 <div id="navbar" class="collapse navbar-collapse" [collapse]="isCollapsed">
 
   <ul class="nav navbar-nav">
-    <li class="nav-item" [class.active]="activeComponent == 'dc-main'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-main'"><b>APPLICATION</b></a>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-edit'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-edit'"><b>EDIT</b></a>
+    </li>
+    <li class="nav-item" [class.active]="activeComponent == 'dc-sim'">
+      <a class="nav-link" href="#" (click)="activeComponent = 'dc-sim'"><b>STREAM SIMULATOR</b></a>
     </li>
     <li class="nav-item" [class.active]="activeComponent == 'dc-help'">
       <a class="nav-link" href="#" (click)="activeComponent = 'dc-help'"><b>HELP</b></a>
@@ -40,43 +43,10 @@ float-*-right
 
 </nav>
 
-<dc-main [hidden]="activeComponent != 'dc-main'"></dc-main>
+<dc-edit [hidden]="activeComponent != 'dc-edit'"></dc-edit>
+<dc-sim [hidden]="activeComponent != 'dc-sim'"></dc-sim>
 <dc-help [hidden]="activeComponent != 'dc-help'"></dc-help>
 <dc-about [hidden]="activeComponent != 'dc-about'"></dc-about>
 <!--
 <router-outlet></router-outlet>
--->
-
-<!-- OLD - bootstrap 3 
-<nav class="navbar navbar-default "></nav> 
-
-<div class="navbar navbar-fixed-top navbar-default" role="navigation">
-<div class="navbar-inner">
-<div class="container">
-
-<div class="navbar-header">
-  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-  <a class="brand" (click)="activeComponent = 'dc'">
-    <img class="logo-header" src="img/dc-logo.png" alt="Data Commandr">
-    <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
-  </a>
-</div>
-
-<div class="collapse navbar-collapse">
-  <ul class="nav navbar-nav">
-
-    <li [class.active]="activeComponent == 'dc'"><a (click)="activeComponent = 'dc'"><b>APPLICATION</b></a></li>
-    <li [class.active]="activeComponent == 'help'"><a (click)="activeComponent = 'help'"><b>HELP</b></a></li>
-    <li [class.active]="activeComponent == 'about'"><a (click)="activeComponent = 'about'"><b>ABOUT</b></a></li>
-
-  </ul>
-</div>
-		
-</div>
-</div>
-</div>
 -->

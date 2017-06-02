@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'DATA COMMANDR';
-  activeComponent = 'dc-main';
-  version = '0.6.0'
-  versionDate = '14.05.2017'
+  activeComponent = 'dc-edit';
+  version = '0.7.0'
+  versionDate = 'xx.06.2017'
 
   public isCollapsed:boolean = false;
 

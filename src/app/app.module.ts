@@ -16,7 +16,8 @@ import { ToastModule } from 'ng2-toastr';
 //
 import { AppComponent }  from './app.component';
 
-import { MainComponent }  from './main.component';
+import { EditComponent }  from './edit.component';
+import { SimComponent }  from './sim.component';
 import { HelpComponent } from './help.component';
 import { AboutComponent } from './about.component';
 
@@ -40,7 +41,8 @@ import { AppService }  from './app.service';
   exports: [ AppComponent ],
   declarations: [
     AppComponent,
-    MainComponent,
+    EditComponent,
+    SimComponent,
     HelpComponent,
     AboutComponent
     ],

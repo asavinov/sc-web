@@ -28,9 +28,12 @@ The following steps have to be performed:
 * @types/loadash (4.14.61) module will cause this error: TS2428: All declarations of 'WeakMap' must have identical type parameters. As a workaround, it is disabled by adding the "skipLibCheck": true into tsconfig.json. 
 Remove this line when @types\loadash is fixed.
 * <script>window.__theme = 'bs4';</script> is added to index.html to ensure compatibility of ng2-bootstrap with bootstrap 4. Remove it when not needed.
+* Empty file postcss.config.js had to be added to avoid error "No PostCSS Config found".
 
 # Change Log
 
+* v0.7.0 (2017-06-xx)
+  * TODO
 * v0.6.0 (2017-05-13)
   * Popovers with linked record details
 * v0.5.0 (2017-03-19)
