@@ -11,3 +11,32 @@
     The result of processing incoming events is stored in new columns and new tables.
   </div>
 </div>
+
+<!-- ----------- -->
+<!-- EVENTS LIST -->
+<div class="card">
+
+  <div class="card-header list-inline" style="padding: 0.2rem;">
+
+    <i class="fa fa-info-circle" popover="Here you can manage your databases by adding, editing or removing them" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>BASES:</b></h6>
+
+  </div>
+
+        <div class="form-group row">
+          <label for="event_table" class="col-form-label col-2">
+            Table <i class="fa fa-info-circle" popover="Table to send events to" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-4">
+
+            <input id="event_table" name="event_table" ngControl="event_table" type="text" class="form-control" [(ngModel)]="eventTable && eventTable.name" required placeholder="Table name" />
+            <!-- Does not work: we do not have access to the model. Alternatively, we can use currently selected schema and table.
+            <select id="event_table" name="event_table" ngControl="event_table" class="form-control" [(ngModel)]="eventTable && eventTable.id" required >
+              <option *ngFor="let tab of nonprimitiveTables()" [disabled]="!tab" [ngValue]="tab.id">{{tab.name}}</option>
+            </select>
+            -->
+          </div>
+        </div>
+
+
+</div>

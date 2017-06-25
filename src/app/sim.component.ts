@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+import { Schema } from './schema';
+import { Table, TableRef } from './table';
+import { Column } from './column';
+import { ColumnKind } from './column';
+
 @Component({
   selector: 'dc-sim',
   templateUrl: 'sim.component.html',
@@ -7,4 +12,8 @@ import { Component } from '@angular/core';
 })
 export class SimComponent {
   title = 'STREAM SIMULATOR';
+
+
+  selectedTable: Table;
+
 }

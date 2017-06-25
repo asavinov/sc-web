@@ -590,6 +590,71 @@ export class EditComponent implements OnInit, AfterViewInit {
     );
   }
 
+  // Stream
+
+  streamCsv: string;
+
+  streamFrequency: number = 1000;
+  streamCount: number = 5;
+
+  isStarted: boolean = false;
+  eventsSent: number = 0;
+  streamTimer = null;
+
+/*
+TODO: Send lines of csv rather than the whole csv (one event per append). Maybe use some other method (not csv but something like append json)
+  Maybe introduce checkbox: all lines in one event (otherwise one line per event)
+TODO: Show progress as progress bar (or something moving) in dialog.
+TODO: Show progress in main (edit) screen, say, rotating spinner.
+NEXT: 1) set parameters for auto-evaluation in UI 2) periodically evaluate on the server according to these parameters
+*/  
+  onTableStreamStart() {
+    //
+    // Initialize the state
+    //
+    this.isStarted = true;
+    this.eventsSent = 0;
+    if (this.streamTimer != null) {
+      clearInterval(this.streamTimer);
+    }
+
+    //
+    // Start timer which will send events periodically
+    //
+    this.streamTimer = setInterval( this.sendEvent, this.streamFrequency, this);
+    // Now the send event method will be called periodically
+  }
+
+  onTableStreamStop() {
+    this.isStarted = false;
+    this.eventsSent = 0;
+    if (this.streamTimer != null) {
+      clearInterval(this.streamTimer);
+    }
+  }
+
+  // This method will be sent by the timer and really send next event by means of REST call
+  // We need to pass a component because 'this' points to the Window
+  sendEvent(model:EditComponent) {
+
+    // Stop if explicit signal
+    if(model.isStarted == false || model.eventsSent >= model.streamCount) {
+      model.onTableStreamStop();
+      return;
+    }
+
+    let params = { createColumns: false }
+    // Write data to the service
+    model._scService.write(model.selectedTable, model.streamCsv, params)
+      .then(x => {
+        model.eventsSent++; // Update progress
+      })
+      .catch( e => {
+        model._toastr.error(e.message);
+        model.onTableStreamStop(); // Stop the process
+      });
+  }
+
   //
   // Column list
   //

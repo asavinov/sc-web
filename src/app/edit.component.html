@@ -43,11 +43,11 @@ Use col-form-label class for labels
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
 
-    <i class="fa fa-info-circle" popover="Here you can manage your databases by adding, editing or removing them" triggers="hover" container="body" placement="right" ></i>
-    <h6 class="card-subtitle list-inline-item"><b>BASES:</b></h6>
+    <i class="fa fa-database" popover="Here you can manage your databases by adding, editing or removing them" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>BASES</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-play"></i> Evaluate</button>
+      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-refresh"></i> Evaluate All</button>
     </div>
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected base..." ><i class="fa fa-edit"></i></button>
@@ -159,11 +159,11 @@ Use col-form-label class for labels
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
 
-    <i class="fa fa-info-circle" popover="Here you can manage tables of one databases by adding, editing or removing them as well as working with data" triggers="hover" container="body" placement="right" ></i>
-    <h6 class="card-subtitle list-inline-item"><b>TABLES:</b></h6>
+    <i class="fa fa-table" popover="Here you can manage tables of one selected database by adding, editing or removing them as well as working with data" triggers="hover" container="body" placement="right" ></i>
+    <h6 class="card-subtitle list-inline-item"><b>TABLES</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Read and display data in the selected table" ><i class="fa fa-refresh"></i> Load</button>
+      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Read and display data in the selected table" ><i class="fa fa-cloud-download"></i> Load Table</button>
     </div>
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
@@ -172,6 +172,9 @@ Use col-form-label class for labels
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all records from the selected table..." placement="left"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="list-inline-item">
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="streamModal.show()" title="Stream data by appending them to the selected table..."><i class="fa fa-flash"></i></button>
     </div>
 
   </div>
@@ -304,7 +307,7 @@ Use col-form-label class for labels
           <div class="col-sm-10">
             <div class="form-check">
               <label class="form-check-label">
-                <input id="createColumns" name="createColumns" ngControl="createColumns" [(ngModel)]="createColumns" class="form-check-input" type="checkbox" > Create columns which do not exist in the table
+                <input id="createColumns" name="createColumns" ngControl="createColumns" [(ngModel)]="createColumns" class="form-check-input" type="checkbox" > If a column does not exit then create it automatically
               </label>
             </div>
           </div>
@@ -320,6 +323,7 @@ Use col-form-label class for labels
             <button type="button" class="btn" [disabled]="!fileToUpload" (click)="loadFileToTextArea()" title="Read and paste records into the text area" ><i class="fa fa-file-text-o"></i> Read and Paste</button>
           </span>
         </div>
+
       </div>
 
       <div class="modal-footer">
@@ -363,6 +367,72 @@ Use col-form-label class for labels
   </div>
 </div>
 
+<!-- STREAM DIALOG -->
+<div bsModal #streamModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Stream Data" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf="selectedTable">
+      <form (ngSubmit)="streamModal.hide();" #uploadForm="ngForm">
+
+      <div class="modal-header">
+        <button type="button" class="close" (click)="streamModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Stream Data</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <ng-template #popStreamCsv>
+          First row provides column names, for example, <code>My Column 1, My Column 1</code>. Not all columns have to be specified.
+          Each next row represents one data record, for example, <code>123.45, my string</code>. Maximum 8192 characters can be uploaded for one time.
+        </ng-template>
+        <div class="form-group">
+          <label for="streamCsv">CSV data</label> <i class="fa fa-info-circle" [popover]="popStreamCsv" triggers="hover" container="body" placement="right" ></i>
+          <textarea id="streamCsv" name="streamCsv" ngControl="streamCsv" [readonly]="isStarted" [(ngModel)]="streamCsv" class="form-control" rows="5" maxlength="8192" style="overflow-x: auto; white-space: pre; " ></textarea>
+        </div>
+
+        <div class="form-group row">
+          <label for="streamFrequency" class="col-form-label col-4">
+            Frequency of events (ms) <i class="fa fa-info-circle" popover="Time in milliseconds for sending events" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-8">
+            <input id="streamFrequency" name="streamFrequency" ngControl="streamFrequency" type="number" class="form-control" [readonly]="isStarted" [(ngModel)]="streamFrequency" required min="10" placeholder="Time in milliseconds for sending events" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="streamCount" class="col-form-label col-4">
+            Total number of events <i class="fa fa-info-circle" popover="The total number of events to be sent" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-8">
+            <input id="streamCount" name="streamCount" ngControl="streamCount" type="number" class="form-control" [readonly]="isStarted" [(ngModel)]="streamCount" required min="10" placeholder="The number of events to be sent" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="eventsSent" class="col-form-label col-4">
+            Events sent <i class="fa fa-info-circle" popover="The number of events already sent" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-8">
+            <input id="eventsSent" name="eventsSent" ngControl="eventsSent" type="number" class="form-control" [(ngModel)]="eventsSent" readonly placeholder="The number of events already sent" />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-xs-right">
+          <button type="button" class="btn btn-secondary btn-outline-primary" [disabled]="!isStarted" (click)="onTableStreamStop()"><i class="fa fa-stop"></i> Stop</button>
+          <button type="button" class="btn btn-secondary btn-outline-primary" [disabled]="isStarted" (click)="onTableStreamStart()"><i class="fa fa-play"></i> Start</button>
+          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Close</button>
+        </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ----------- -->
@@ -371,7 +441,7 @@ Use col-form-label class for labels
 
   <div class="card-header list-inline" style="padding: 0.2rem;">
 
-    <i class="fa fa-info-circle" popover="Here you can manage columns of one table by adding, editing or removing them as well as defining formulas" triggers="hover" container="body" placement="right" ></i>
+    <i class="fa fa-columns" popover="Here you can manage columns of one selected table by adding, editing or removing them as well as defining formulas" triggers="hover" container="body" placement="right" ></i>
     <h6 class="card-subtitle list-inline-item"><b>COLUMNS</b></h6>
 
     <div class="list-inline-item">
