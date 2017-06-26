@@ -105,7 +105,7 @@ Use col-form-label class for labels
           <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Base name"/>
         </div>
         <div class="form-group">
-          <label for="afterAppend">Auto evaluation time</label> <i class="fa fa-info-circle" popover="Time in milliseconds for automatic evaluation. 0 means immediately after update and -1 means no automatic evaluation." triggers="hover" container="body" placement="right" ></i>
+          <label for="afterAppend">Auto evaluation time (ms)</label> <i class="fa fa-info-circle" popover="Time in milliseconds for automatic evaluation. 0 means immediately after update and -1 means no automatic evaluation." triggers="hover" container="body" placement="right" ></i>
           <input id="afterAppend" name="afterAppend" ngControl="afterAppend" type="number" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.afterAppend" required min="-1" placeholder="Time in seconds for automatic evaluation" />
         </div>
       </div>
@@ -329,7 +329,7 @@ Use col-form-label class for labels
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-default" (click)="uploadModal.hide()"><i class="fa fa-close"></i> Cancel</button>
-          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Ok</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!uploadCsv || !uploadCsv.trim()"><i class="fa fa-check"></i> Ok</button>
         </div>
       </div>
 
@@ -423,8 +423,8 @@ Use col-form-label class for labels
       <div class="modal-footer">
         <div class="text-xs-right">
           <button type="button" class="btn btn-secondary btn-outline-primary" [disabled]="!isStarted" (click)="onTableStreamStop()"><i class="fa fa-stop"></i> Stop</button>
-          <button type="button" class="btn btn-secondary btn-outline-primary" [disabled]="isStarted" (click)="onTableStreamStart()"><i class="fa fa-play"></i> Start</button>
-          <button type="submit" class="btn btn-primary" ><i class="fa fa-check"></i> Close</button>
+          <button type="button" class="btn btn-secondary btn-outline-primary" [disabled]="isStarted || !streamCsv || !streamCsv.trim()" (click)="onTableStreamStart()"><i class="fa fa-play"></i> Start</button>
+          <button type="submit" class="btn btn-default" ><i class="fa fa-close"></i> Close</button>
         </div>
       </div>
 

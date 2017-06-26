@@ -602,11 +602,16 @@ export class EditComponent implements OnInit, AfterViewInit {
   streamTimer = null;
 
 /*
+NEXT: 
+1) check automatic deletion of rows according to max rows param in the table (as many events are sent)
+2) auto-evaluation after each append according to auto-eval parameters
+  - clean status after auto-evaluation is not passed to the client if we again load data -> if data is loaded then probably also load column status.
+3) synchronize access to the schema: append, read_data etc. (have to be called synchronously or at least get sync access to the same schema)
+
 TODO: Send lines of csv rather than the whole csv (one event per append). Maybe use some other method (not csv but something like append json)
   Maybe introduce checkbox: all lines in one event (otherwise one line per event)
 TODO: Show progress as progress bar (or something moving) in dialog.
 TODO: Show progress in main (edit) screen, say, rotating spinner.
-NEXT: 1) set parameters for auto-evaluation in UI 2) periodically evaluate on the server according to these parameters
 */  
   onTableStreamStart() {
     //
