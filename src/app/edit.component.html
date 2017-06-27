@@ -174,7 +174,7 @@ Use col-form-label class for labels
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all records from the selected table..." placement="left"><i class="fa fa-times"></i></button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="streamModal.show()" title="Stream data by appending them to the selected table..."><i class="fa fa-flash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="streamModal.show()" title="Stream data by appending them to the selected table..."><i class="fa fa-spinner" [class.fa-spin]="isStarted"></i></button>
     </div>
 
   </div>
