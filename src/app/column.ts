@@ -155,8 +155,8 @@ export enum ColumnKind {
 
     USER = 50,
     CALC = 60,
-    ACCU = 70,
-    LINK = 80,
+    LINK = 70,
+    ACCU = 90,
 
     CLASS = 100,
 }

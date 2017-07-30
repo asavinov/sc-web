@@ -44,14 +44,14 @@ Use col-form-label class for labels
   <div class="card-header list-inline" style="padding: 0.2rem;">
 
     <i class="fa fa-database" popover="Here you can manage your databases by adding, editing or removing them" triggers="hover" container="body" placement="right" ></i>
-    <h6 class="card-subtitle list-inline-item"><b>BASES</b></h6>
+    <h6 class="card-subtitle list-inline-item"><b>DATABASES</b></h6>
 
     <div class="list-inline-item">
       <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-refresh"></i> Evaluate All</button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected base..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected base..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected database..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected database..." ><i class="fa fa-trash"></i></button>
     </div>
 
   </div>
@@ -74,7 +74,7 @@ Use col-form-label class for labels
       (click)="onSchemaSelect(null)"
       >
       <div [class.dc-list-item-active]="selectedSchema && selectedSchema.id === ''" class="card dc-horizontal-list-item">
-        <div title="Create new base..." >
+        <div title="Create new database..." >
           <h6 class="card-text">
             <i class="fa fa-plus"></i>
           </h6>
@@ -87,7 +87,7 @@ Use col-form-label class for labels
 </div>
 
 <!-- SCHEMA EDIT DIALOG -->
-<div bsModal #schemaModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Base" aria-hidden="true">
+<div bsModal #schemaModal="bs-modal" [config]="{backdrop: true}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Edit Database" aria-hidden="true">
   <div class="modal-dialog">
     <div *ngIf="selectedSchema" class="modal-content">
       <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
@@ -96,13 +96,13 @@ Use col-form-label class for labels
         <button type="button" class="close" (click)="schemaModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Base</h4>
+        <h4 class="modal-title">Edit Database</h4>
       </div>
 
       <div class="modal-body">
         <div class="form-group">
-          <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the base" triggers="hover" container="body" placement="right" ></i>
-          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Base name"/>
+          <label for="name">Name</label> <i class="fa fa-info-circle" popover="Unique name of the database" triggers="hover" container="body" placement="right" ></i>
+          <input id="name" name="name" ngControl="name" type="text" class="form-control" [(ngModel)]="selectedSchema && selectedSchema.name" required placeholder="Database name"/>
         </div>
         <div class="form-group">
           <label for="afterAppend">Auto evaluation time (ms)</label> <i class="fa fa-info-circle" popover="Time in milliseconds for automatic evaluation. 0 means immediately after update and -1 means no automatic evaluation." triggers="hover" container="body" placement="right" ></i>
@@ -132,11 +132,11 @@ Use col-form-label class for labels
         <button type="button" class="close" (click)="schemaDeleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Delete Base</h4>
+        <h4 class="modal-title">Delete Database</h4>
       </div>
 
       <div class="modal-body">
-        Delete the selected base: {{selectedSchema.name}}?
+        Delete the selected database: {{selectedSchema.name}}?
       </div>
 
       <div class="modal-footer">
