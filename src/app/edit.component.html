@@ -664,13 +664,13 @@ Use col-form-label class for labels
 
         <div class="form-group row">
           <ng-template #popAccuFormula>An accumulate formula is an expression which uses columns (measures) of the accumulate (fact) table.
-            It also uses a special variable <code>out</code> which represents the currently accumulated value to be updated by the formula. 
-            For example, the formula <code>out + [Measure From Accu Table]</code> adds next measure value in the group to the currently accumulated value.</ng-template>
+            It also uses a special variable <code>[out]</code> which represents the currently accumulated value to be updated by the formula. 
+            For example, the formula <code>[out] + [Measure From Accu Table]</code> adds next measure value in the group to the currently accumulated value.</ng-template>
           <label for="accuFormula" class="col-form-label col-5">
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
-            <input id="accuFormula" name="accuFormula" ngControl="accuFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.accuFormula" placeholder="Example: out + [Amount]" >
+            <input id="accuFormula" name="accuFormula" ngControl="accuFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.accuFormula" placeholder="Example: [out] + [Amount]" >
           </div>
         </div>
 

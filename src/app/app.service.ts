@@ -68,7 +68,7 @@ export class AppService {
   }
 
   createSchema(sch: Schema): Promise<Schema> {
-    if(!sch)  return Promise.resolve({});
+    if(!sch)  return Promise.resolve(null);
 
     let body = sch.toJson();
 
@@ -132,7 +132,7 @@ export class AppService {
   }
 
   createTable(sch: Schema, tab: Table): Promise<Table> {
-    if(!sch || !sch.id || !tab) return Promise.resolve({});
+    if(!sch || !sch.id || !tab) return Promise.resolve(null);
     let id: string  = sch.id;
 
     let body = tab.toJson();
@@ -197,7 +197,7 @@ export class AppService {
   }
 
   createColumn(sch: Schema, col: Column): Promise<Column> {
-    if(!sch || !sch.id || !col) return Promise.resolve({});
+    if(!sch || !sch.id || !col) return Promise.resolve(null);
     let id: string  = sch.id;
 
     let body = col.toJson();
