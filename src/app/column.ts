@@ -33,11 +33,14 @@ export class Column {
     return false;
   }
 
-  formula: string;
+  calcFormula: string; // CALC
 
-  accuformula: string;
-  accutable: string;
-  accupath: string;
+  linkFormula: string; // LINK
+
+  initFormula: string; // ACCU
+  accuFormula: string;
+  accuTable: string;
+  accuPath: string;
 
   descriptor: string;
 
@@ -45,12 +48,16 @@ export class Column {
   status: ServiceError;
 
   getFormulaForColumnCard(): string {
-    if(this.kind == ColumnKind.ACCU) return this.accuformula;
-    else return this.formula;
+    if(this.kind == ColumnKind.USER) return "";
+    else if(this.kind == ColumnKind.CALC) return this.calcFormula;
+    else if(this.kind == ColumnKind.LINK) return this.linkFormula;
+    else if(this.kind == ColumnKind.ACCU) return this.accuFormula;
+    else return "";
   }
 
   getStatusColor(): string {
-    if (!this.formula || this.formula.trim().length === 0) return '';
+    if(this.kind == ColumnKind.USER) return "";
+    //if (!this.calcFormula || this.calcFormula.trim().length === 0) return '';
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'green';
 
@@ -69,7 +76,8 @@ export class Column {
   }
 
   getStatusMessage(): string {
-    if (!this.formula || this.formula.trim().length === 0) return '';
+    if(this.kind == ColumnKind.USER) return "";
+    //if (!this.calcFormula || this.calcFormula.trim().length === 0) return '';
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'OK';
 
@@ -84,7 +92,8 @@ export class Column {
   }
 
   getStatusDescription(): string {
-    if (!this.formula || this.formula.trim().length === 0) return '';
+    if(this.kind == ColumnKind.USER) return "";
+    //if (!this.calcFormula || this.calcFormula.trim().length === 0) return '';
 
     if (!this.status || !this.status.code || this.status.code === ServiceErrorCode.NONE.valueOf() ) return 'No errors found.';
 
@@ -119,11 +128,14 @@ export class Column {
 
     col.kind = json.kind;
 
-    col.formula = json.formula;
+    col.calcFormula = json.calcFormula;
 
-    col.accuformula = json.accuformula;
-    col.accutable = json.accutable;
-    col.accupath = json.accupath;
+    col.linkFormula = json.linkFormula;
+
+    col.initFormula = json.initFormula;
+    col.accuFormula = json.accuFormula;
+    col.accuTable = json.accuTable;
+    col.accuPath = json.accuPath;
 
     col.descriptor = json.descriptor;
 

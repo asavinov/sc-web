@@ -477,7 +477,7 @@ Use col-form-label class for labels
           <h6 class="card-text">
 
             <ng-template #popStatusNull>No formula</ng-template>
-            <i *ngIf="false && col.getStatusColor() == '' || col.getStatusColor() == null" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
+            <i *ngIf="col.getStatusColor() == null || col.getStatusColor() == ''" class="fa fa-circle-o pull-right" [popover]="popStatusNull" triggers="hover" container="body" placement="right" ></i>
             <ng-template #popStatusGreen>Column formula is correct</ng-template>
             <i *ngIf="col.getStatusColor() == 'green'" class="fa fa-check-circle dc-status-green-icon pull-right" [popover]="popStatusGreen" triggers="hover" container="body" placement="right" ></i>
             <ng-template #popStatusYellow>Column depends on an incorrect column(s) or itself: {{col.getStatusDescription()}}</ng-template>
@@ -536,18 +536,18 @@ Use col-form-label class for labels
       <div *ngIf="selectedColumn && selectedColumn.isPrimitve()" class="input-group">
 
         <ng-template #popAccuFormula>An accumulate formula uses columns of the accumulation table and a special variable <code>out</code> with the current value which has to be updated, for example, <code>out + [Column 1]</code></ng-template>
-        <span id="accuformula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
-        <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]">
+        <span id="accuFormula-addon" class="input-group-addon">Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i></span>
+        <input id="accuFormula" name="accuFormula" ngControl="accuFormula" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuFormula" placeholder="Example: out + [Amount]">
 
         <ng-template #popAccuTable>Accumulation formula is evaluated for each record of the accumulation table</ng-template>
-        <span id="accutable-addon" class="input-group-addon">Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i></span>
-        <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
+        <span id="accuTable-addon" class="input-group-addon">Accu Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i></span>
+        <select id="accuTable" name="accuTable" ngControl="accuTable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuTable" >
           <option *ngFor="let tab of tables" [disabled]="!selectedTable || !tab || tab.isPrimitve()" [ngValue]="tab.name">{{tab.name}}</option>
         </select>
 
         <ng-template #popAccuPath>Accumulation path is a column path from the accu table to the main (selected) table</ng-template>
-        <span id="accupath-addon" class="input-group-addon">Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i></span>
-        <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Column 1].[Column 2]">
+        <span id="accuPath-addon" class="input-group-addon">Accu Path <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i></span>
+        <input id="accuPath" name="accuPath" ngControl="accuPath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuPath" placeholder="Example: [Column 1].[Column 2]">
         <span class="input-group-addon">Main Table '{{selectedTable.name}}'</span>
       </div>
 
@@ -608,44 +608,69 @@ Use col-form-label class for labels
           </div>
         </div>
 
-        <div *ngIf="selectedColumn && (selectedColumn.kind == columnKinds.CALC || selectedColumn.kind == columnKinds.ACCU || selectedColumn.kind == columnKinds.LINK)">
+        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CALC">
         <div class="form-group row">
-          <ng-template #popFormula>
+          <ng-template #popCalcFormula>
             <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CALC" class="form-text small">
               Calculated formula is an arithmetic expression, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
               Column names belong to the selected table and are written in square brackets like <code>[My Column]</code>.
               Formulas can use column paths as dot separated column names, for example, <code>[My Column 1].[My Column 2]</code>.
             </span>
+          </ng-template>
+          <label for="calcFormula" class="col-form-label col-5">
+            Formula <i class="fa fa-info-circle" [popover]="popCalcFormula" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-7">
+            <input id="calcFormula" name="calcFormula" ngControl="calcFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.calcFormula" placeholder="Example: [Quantity] * [Price]" >
+          </div>
+        </div>
+        </div>
+
+        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.LINK">
+        <div class="form-group row">
+          <ng-template #popLinkFormula>
             <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.LINK" class="form-text small">
               Link column is a semi-colon separated list of assignments enclosed in curly braces, for example, <code>{{'{'}} [Output Table A]=[This Table Column 1]; [Output Table B]=[This Table Column 2] {{'}'}}</code>.
               The tight hand side of the assignment is an arbitrary formula as used in calculated columns by using colums of the selected table, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
               The left hand side of an assignment is a column from the output table (type of this column).
             </span>
+          </ng-template>
+          <label for="linkFormula" class="col-form-label col-5">
+            Formula <i class="fa fa-info-circle" [popover]="popLinkFormula" triggers="hover" container="body" placement="right" ></i>
+          </label>
+          <div class="col-7">
+            <input id="linkFormula" name="linkFormula" ngControl="linkFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.linkFormula" placeholder="Example: [ID] = [ID]" >
+          </div>
+        </div>
+        </div>
+
+        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU && isPrimitiveTable(selectedColumn.output.id)">
+
+          <div class="form-group row">
+          <ng-template #popInitFormula>
             <span *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU" class="form-text small">
               This formula initializes all column values before aggregation. 
               It can be a constant or an arbitrary expression as used in calculated columns 
               by using column names of the selected table in sequare brackets, for example, <code>([Column 1] + [Column 2]) * 2.0</code>.
             </span>
           </ng-template>
-          <label for="formula" class="col-form-label col-5">
-            Formula <i class="fa fa-info-circle" [popover]="popFormula" triggers="hover" container="body" placement="right" ></i>
+          <label for="initFormula" class="col-form-label col-5">
+            Formula <i class="fa fa-info-circle" [popover]="popInitFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
-            <input id="formula" name="formula" ngControl="formula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.formula" placeholder="Example: [Quantity] * [Price]" >
+            <input id="initFormula" name="initFormula" ngControl="initFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.initFormula" placeholder="Example: [Quantity] * [Price]" >
           </div>
         </div>
-        </div>
 
-        <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.ACCU && isPrimitiveTable(selectedColumn.output.id)" >
         <div class="form-group row">
           <ng-template #popAccuFormula>An accumulate formula is an expression which uses columns (measures) of the accumulate (fact) table.
             It also uses a special variable <code>out</code> which represents the currently accumulated value to be updated by the formula. 
             For example, the formula <code>out + [Measure From Accu Table]</code> adds next measure value in the group to the currently accumulated value.</ng-template>
-          <label for="accuformula" class="col-form-label col-5">
+          <label for="accuFormula" class="col-form-label col-5">
             Accu Formula <i class="fa fa-info-circle" [popover]="popAccuFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
-            <input id="accuformula" name="accuformula" ngControl="accuformula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.accuformula" placeholder="Example: out + [Amount]" >
+            <input id="accuFormula" name="accuFormula" ngControl="accuFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.accuFormula" placeholder="Example: out + [Amount]" >
           </div>
         </div>
 
@@ -653,11 +678,11 @@ Use col-form-label class for labels
           <ng-template #popAccuTable>Accumulate or fact table provides records (facts) to be aggregated. 
             The accumulate formula will be evaluated for each record of this table. 
             Its columns are used in the accumulate formula.</ng-template>
-          <label for="accutable" class="col-form-label col-5">
+          <label for="accuTable" class="col-form-label col-5">
             Accu (Fact) Table <i class="fa fa-info-circle" [popover]="popAccuTable" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
-            <select id="accutable" name="accutable" ngControl="accutable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accutable" >
+            <select id="accuTable" name="accuTable" ngControl="accuTable" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuTable" >
               <option *ngFor="let tab of nonprimitiveTables()" [disabled]="!selectedTable || !tab" [ngValue]="tab.name">{{tab.name}}</option>
             </select>
           </div>
@@ -666,13 +691,14 @@ Use col-form-label class for labels
         <div class="form-group row">
           <ng-template #popAccuPath>Accumulatie or group column is a column of the accumulate table to the main (selected) table.
             This column represents a group for each fact in the accumulate table.</ng-template>
-          <label for="accupath" class="col-form-label col-5">
+          <label for="accuPath" class="col-form-label col-5">
             Accu (Group) Column <i class="fa fa-info-circle" [popover]="popAccuPath" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
-            <input id="accupath" name="accupath" ngControl="accupath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accupath" placeholder="Example: [Product ID]" >
+            <input id="accuPath" name="accuPath" ngControl="accuPath" type="text" class="form-control" [(ngModel)]="selectedColumn && selectedColumn.accuPath" placeholder="Example: [Product ID]" >
           </div>
         </div>
+
         </div>
 
         <div *ngIf="selectedColumn && selectedColumn.kind == columnKinds.CLASS">
