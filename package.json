@@ -27,24 +27,27 @@
     "postinstall": "npm run webdriver-update"
   },
   "dependencies": {
-    "@angular/common": "4.3.3",
-    "@angular/compiler": "4.3.3",
-    "@angular/core": "4.3.3",
-    "@angular/forms": "4.3.3",
-    "@angular/http": "4.3.3",
-    "@angular/platform-browser": "4.3.3",
-    "@angular/platform-browser-dynamic": "4.3.3",
-    "@angular/router": "4.3.3",
+    "@angular/common": "4.3.4",
+    "@angular/compiler": "4.3.4",
+    "@angular/core": "4.3.4",
+    "@angular/forms": "4.3.4",
+    "@angular/http": "4.3.4",
+    "@angular/platform-browser": "4.3.4",
+    "@angular/platform-browser-dynamic": "4.3.4",
+    "@angular/router": "4.3.4",
 
     "core-js": "^2.5.0",
     "reflect-metadata": "^0.1.10",
-    "rxjs": "^5.4.2",
+    "rxjs": "^5.4.3",
     "zone.js": "^0.8.16",
 
-    "@angular/animations": "~4.3.3",
+    "@angular/animations": "~4.3.4",
+
+    "bootstrap": "v4.0.0-beta",
+    "jquery": "3.2.1",
+    "popper.js": "1.11.1",
 
     "ngx-bootstrap": "1.8.1",
-    "bootstrap": "4.0.0-alpha.6",
     "font-awesome": "4.7.0",
     "ng2-toastr": "^4.1.2"
 	},

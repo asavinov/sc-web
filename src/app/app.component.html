@@ -8,40 +8,51 @@ hidden-xs
 visible-*
 
 float-*-right
+
+navbar-toggleable-md - ???
+
+fixed-top/bottom - always at top but offset is needed
+sticky-top - always at the top
+
+navbar-expand-lg - without it, the items will be always vertically alligned (and togglable)
 -->
 
-<nav class="navbar navbar-toggleable-md navbar-light navbar-static-top bg-faded">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
 
   <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-edit'">
       <img class="logo-header" src="img/dc-logo.png" alt="Data Commandr">
-  </a>
-  <a class="navbar-brand" href="#" (click)="activeComponent = 'dc-edit'">
       <img class="logo-header" src="img/dc-logo-header3.png" alt="Data Commandr">
   </a>
 
-<div id="navbar" class="collapse navbar-collapse" [collapse]="isCollapsed">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" (click)="isCollapsed = !isCollapsed" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <ul class="nav navbar-nav">
-    <li class="nav-item" [class.active]="activeComponent == 'dc-edit'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-edit'"><b>EDIT</b></a>
-    </li>
-    <!--
-    <li class="nav-item" [class.active]="activeComponent == 'dc-sim'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-sim'"><b>STREAM SIMULATOR</b></a>
-    </li>
-    -->
-    <li class="nav-item" [class.active]="activeComponent == 'dc-help'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-help'"><b>HELP</b></a>
-    </li>
-    <li class="nav-item" [class.active]="activeComponent == 'dc-about'">
-      <a class="nav-link" href="#" (click)="activeComponent = 'dc-about'"><b>ABOUT</b></a>
-    </li>
-    <li class="nav-item float-xs-right" >
-      <p class="nav-link">Version {{version}} ({{versionDate}})</p>
-    </li>
-  </ul>
+  <div id="navbar" class="collapse navbar-collapse" [collapse]="isCollapsed">
 
-</div>
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item" [class.active]="activeComponent == 'dc-edit'">
+        <a class="nav-link" href="#" (click)="activeComponent = 'dc-edit'"><b>EDIT</b></a>
+      </li>
+      <!--
+      <li class="nav-item" [class.active]="activeComponent == 'dc-sim'">
+        <a class="nav-link" href="#" (click)="activeComponent = 'dc-sim'"><b>STREAM SIMULATOR</b></a>
+      </li>
+      -->
+      <li class="nav-item" [class.active]="activeComponent == 'dc-help'">
+        <a class="nav-link" href="#" (click)="activeComponent = 'dc-help'"><b>HELP</b></a>
+      </li>
+      <li class="nav-item" [class.active]="activeComponent == 'dc-about'">
+        <a class="nav-link" href="#" (click)="activeComponent = 'dc-about'"><b>ABOUT</b></a>
+      </li>
+    </ul>
+
+    <div class="nav-item" >
+      <p class="nav-link disabled">Version {{version}} ({{versionDate}})</p>
+    </div>
+
+  </div>
 
 </nav>
 

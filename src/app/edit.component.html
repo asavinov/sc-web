@@ -47,11 +47,11 @@ Use col-form-label class for labels
     <h6 class="card-subtitle list-inline-item"><b>DATABASES</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-refresh"></i> Evaluate All</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="onSchemaEvaluate()" title="Evaluate all formulas" ><i class="fa fa-refresh"></i> Evaluate All</button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected database..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected database..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaModal.show()" title="Edit selected database..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedSchema && selectedSchema.id)" (click)="schemaDeleteModal.show()" title="Delete selected database..." ><i class="fa fa-trash"></i></button>
     </div>
 
   </div>
@@ -163,18 +163,18 @@ Use col-form-label class for labels
     <h6 class="card-subtitle list-inline-item"><b>TABLES</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Read and display data in the selected table" ><i class="fa fa-cloud-download"></i> Load Table</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="onTableRead()" title="Read and display data in the selected table" ><i class="fa fa-cloud-download"></i> Load Table</button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableModal.show()" title="Edit selected table..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableDeleteModal.show()" title="Delete selected table..." ><i class="fa fa-trash"></i></button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all records from the selected table..." placement="left"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="uploadModal.show()" title="Upload and append data to the selected table..."><i class="fa fa-cloud-upload"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="tableEmptyModal.show()" title="Remove all records from the selected table..." placement="left"><i class="fa fa-times"></i></button>
     </div>
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="streamModal.show()" title="Stream data by appending them to the selected table..."><i class="fa fa-spinner" [class.fa-spin]="isStarted"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedTable && selectedTable.id)" (click)="streamModal.show()" title="Stream data by appending them to the selected table..."><i class="fa fa-spinner" [class.fa-spin]="isStarted"></i></button>
     </div>
 
   </div>
@@ -445,8 +445,8 @@ Use col-form-label class for labels
     <h6 class="card-subtitle list-inline-item"><b>COLUMNS</b></h6>
 
     <div class="list-inline-item">
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
-      <button type="button" class="btn btn-secondary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnModal.show()" title="Edit selected column..." ><i class="fa fa-edit"></i></button>
+      <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!(selectedColumn && selectedColumn.id)" (click)="columnDeleteModal.show()" title="Delete selected column..." ><i class="fa fa-trash"></i></button>
     </div>
 
   </div>
@@ -655,7 +655,7 @@ Use col-form-label class for labels
             </span>
           </ng-template>
           <label for="initFormula" class="col-form-label col-5">
-            Formula <i class="fa fa-info-circle" [popover]="popInitFormula" triggers="hover" container="body" placement="right" ></i>
+            Initialization Formula <i class="fa fa-info-circle" [popover]="popInitFormula" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-7">
             <input id="initFormula" name="initFormula" ngControl="initFormula" type="text" class="form-control" style="font-weight: bold;" [(ngModel)]="selectedColumn && selectedColumn.initFormula" placeholder="Example: [Quantity] * [Price]" >
