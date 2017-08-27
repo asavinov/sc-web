@@ -55,9 +55,10 @@ export class EditComponent implements OnInit, AfterViewInit {
   //
   // Tips
   //
-  public tipCount = 7;
+  public tipCount = 8;
   public tipNumber = 0;
   public tipText: string[] = [
+    "Welome to <b>Data Commandr</b>. It is a web applicatin for easily processing <b>data in tables</b>. It uses a unique novel approach to data processing where all data manpulations are described via <b>column formulas</b>, which makes it as powerful as SQL and as easy as a spreadsheet. Formally, this technology is based on the <b>concept-oriented model</b> of data and it can be applied to many other tasks like stream analytics, data integration and big data processing. More information can be found in the <b>About</b> and <b>Help</b> pages that can be chosen from the top menu.",
     "Start working by creating a new <b>database</b> or selecting an existing (example) database from the list of databases. ",
     "Create a new <b>table</b> in the list of tables or select an existing table. A table is intended for storing a number of rows with data structured by the table columns.",
     "Load data into the selected table from a CSV file by clicking <b>Upload</b> button. The columns will be created automatically from the file header if the corresponding option is selected.",

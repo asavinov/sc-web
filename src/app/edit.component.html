@@ -93,10 +93,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onSchemaSubmit(); schemaModal.hide();" #schemaForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Edit Database</h4>
         <button type="button" class="close" (click)="schemaModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Database</h4>
       </div>
 
       <div class="modal-body">
@@ -129,10 +129,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onSchemaDelete(); schemaDeleteModal.hide();" #schemaForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Delete Database</h4>
         <button type="button" class="close" (click)="schemaDeleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Delete Database</h4>
       </div>
 
       <div class="modal-body">
@@ -225,10 +225,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onTableSubmit(); tableModal.hide();" #tableForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Edit Table</h4>
         <button type="button" class="close" (click)="tableModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Table</h4>
       </div>
 
       <div class="modal-body">
@@ -261,10 +261,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onTableDelete(); tableDeleteModal.hide();" #tableForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Delete Table</h4>
         <button type="button" class="close" (click)="tableDeleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Delete Table</h4>
       </div>
 
       <div class="modal-body">
@@ -290,10 +290,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onTableUpload(); uploadModal.hide();" #uploadForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Upload Data</h4>
         <button type="button" class="close" (click)="uploadModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Upload Data</h4>
       </div>
 
       <div class="modal-body">
@@ -345,10 +345,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onTableEmpty(); tableEmptyModal.hide();" #tableEmptyForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Empty Data</h4>
         <button type="button" class="close" (click)="tableEmptyModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Empty Data</h4>
       </div>
 
       <div class="modal-body">
@@ -374,10 +374,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="streamModal.hide();" #uploadForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Stream Data</h4>
         <button type="button" class="close" (click)="streamModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Stream Data</h4>
       </div>
 
       <div class="modal-body">
@@ -564,10 +564,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onColumnSubmit(); columnModal.hide();" #columnForm="ngForm" class="form-horizontal">
 
       <div class="modal-header">
+        <h4 class="modal-title">Edit Column</h4>
         <button type="button" class="close" (click)="columnModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Column</h4>
       </div>
 
       <div class="modal-body">
@@ -736,10 +736,10 @@ Use col-form-label class for labels
       <form (ngSubmit)="onColumnDelete(); columnDeleteModal.hide();" #columnForm="ngForm">
 
       <div class="modal-header">
+        <h4 class="modal-title">Delete Column</h4>
         <button type="button" class="close" (click)="columnDeleteModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Delete Column</h4>
       </div>
 
       <div class="modal-body">
@@ -819,14 +819,14 @@ https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
     <div class="modal-content">
 
       <div class="modal-header">
+        <h4 class="modal-title">Getting Started: {{tipNumber+1}} / {{tipCount}}</h4>
         <button type="button" class="close" (click)="tipsModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Getting Started: {{tipNumber+1}} / {{tipCount}}</h4>
       </div>
 
       <div class="modal-body" style="background-color: #EEE;">
-        <div class="card-block">
+        <div class="card-body">
           <div [innerHTML]="tipText[tipNumber]"></div>
         </div>
       </div>

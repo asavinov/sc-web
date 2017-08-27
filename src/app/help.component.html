@@ -1,20 +1,21 @@
 <div class="card" style="margin-left: 10px; margin-right: 10px; margin-top: 10px;">
 
 <div class="card">
-  <div class="card-header">
-    <h6 class="card-title text-xs-center"><b>WORKING WITH TABLES</b></h6>
+
+  <div class="card-header card-title text-center">
+    <b>WORKING WITH TABLES</b>
   </div>
-  <div class="card-block">
+  <div class="card-body">
     In <span class="dc">Data Commandr</span>, data is organized into many tables which are displayed in the TABLES panel as a list. 
     Each table must have a unique name. However, tables do not have their own defintions, that is, new tables do not result from operations with other tables like in the conventional (set-oriented) approaches.
   </div>
 </div>
 
 <div class="card">
-  <div class="card-header">
-    <h6 class="card-title text-xs-center"><b>WORKING WITH COLUMNS</b></h6>
+  <div class="card-header card-title text-center">
+    <b>WORKING WITH COLUMNS</b>
   </div>
-  <div class="card-block">
+  <div class="card-body">
     <p>All columns of the selected tables are displayed in the COLUMNS panel. Each column must have a unique name within its table. 
     A column is characterized by its type. Column types is either a primitive type or another column.
     Real data values that a column stores can be either uploaded or computed from other columns. 
@@ -23,10 +24,10 @@
 </div>
 
 <div class="card">
-  <div class="card-header">
-    <h6 class="card-title text-xs-center"><b>COLUMN FORMULAS</b></h6>
+  <div class="card-header card-title text-center">
+    <b>COLUMN FORMULAS</b>
   </div>
-  <div class="card-block">
+  <div class="card-body">
     <p><span class="dc">Data Commandr</span> uses a column-oriented approach to data representation and processing. 
     This means that a new column can be defined in terms of other columns and hence data a column stores is derived from the data in other columns.
     </p>
@@ -40,7 +41,7 @@
     <li>Link columns has a value which references a row in another table (which is its data type).</li>
     </ul> 
 
-    <p class="card-title text-xs-center"><b>Calculated Columns</b></p>
+    <p class="card-title text-center"><b>Calculated Columns</b></p>
 
     <p>Primitive column formula is an expression which is composed of other column names and operations.  
     Column names used in formulas must be written in square brackets. 
@@ -58,7 +59,7 @@
     <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code>, <code>signum</code>. 
     </p>
 
-    <p class="card-title text-xs-center"><b>Accumulated Columns</b></p>
+    <p class="card-title text-center"><b>Accumulated Columns</b></p>
 
     <p>Accumulated formulas use the main expression to initialize its values precisely as it is done for primitive expressions.
     If the main expression is empty then a default value will be used for initialization.</p>
@@ -72,7 +73,7 @@
       </li> 
     </ul> 
 
-    <p class="card-title text-xs-center"><b>Link Columns</b></p>
+    <p class="card-title text-center"><b>Link Columns</b></p>
 
     <p>Link formulas have special syntax. They are enclosed in curly brackets and store a comma separated list of assignments: 
       <code>&#123; [Col1] = PRIMITIVE EXPRESSION 1, [Col1] = PRIMITIVE EXPRESSION 2, ... &#125;</code>.
@@ -85,10 +86,10 @@
 </div>
 
 <div class="card">
-  <div class="card-header">
-    <h6 class="card-title text-xs-center"><b>EVALUATING AND DISPLAYING DATA</b></h6>
+  <div class="card-header card-title text-center">
+    <b>EVALUATING AND DISPLAYING DATA</b>
   </div>
-  <div class="card-block">
+  <div class="card-body">
     When a formula is defined or modified then it is not immediately evaluated and the column data is not updated. 
     To evaluate formulas it is necessary to press the Evaluate button and then the (up-to-date) data of the currently selected table has to be loaded by pressing the Load button.
     The result is then shown as a number of rows where values have been either previously uploaded or computed from other columns. 
@@ -96,10 +97,10 @@
 </div>
 
 <div class="card">
-  <div class="card-header">
-    <h6 class="card-title text-xs-center"><b>UPLOADING DATA</b></h6>
+  <div class="card-header card-title text-center">
+    <b>UPLOADING DATA</b>
   </div>
-  <div class="card-block">
+  <div class="card-body">
     Columns whithout a formula get their data from outside by uploading it to the selected table. 
     Currently <span class="dc">Data Commandr</span> supports import from CSV format. 
     This means that the first row of the text has to be a list of column names, for example, <code>Column 1, Column 2</code>. 
