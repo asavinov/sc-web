@@ -32,9 +32,10 @@ export class AppService {
   //private serviceHost = 'http://192.168.66.35:8000';
 
   // Production:
+  //private serviceHost = 'http://dc.conceptoriented.com:8000';
+  //private serviceHost = 'http://conceptoriented.com:8000';
+  //private serviceHost = 'http://datacommandr.eastus.cloudapp.azure.com:8000';
   //private serviceHost = 'http://datacommandr.eastus2.cloudapp.azure.com:8000';
-  //private serviceHost = 'http://dc.conceptoriented.com:8000';
-  //private serviceHost = 'http://dc.conceptoriented.com:8000';
 
   private url = this.serviceHost + '/api';
 

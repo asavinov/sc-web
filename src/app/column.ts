@@ -63,6 +63,7 @@ export class Column {
 
     if (
       this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.TRANSLATE_PROPAGATION_ERROR.valueOf() ||
       this.status.code === ServiceErrorCode.DEPENDENCY_CYCLE_ERROR.valueOf()
       )
       return 'yellow';
@@ -84,6 +85,7 @@ export class Column {
     if (
       this.status.code === ServiceErrorCode.PARSE_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_ERROR.valueOf() ||
       this.status.code === ServiceErrorCode.PARSE_PROPAGATION_ERROR.valueOf() || this.status.code === ServiceErrorCode.BIND_PROPAGATION_ERROR.valueOf() ||
+      this.status.code === ServiceErrorCode.TRANSLATE_PROPAGATION_ERROR.valueOf() ||
       this.status.code === ServiceErrorCode.DEPENDENCY_CYCLE_ERROR.valueOf()
       )
       return this.status.message ? this.status.message : 'ERROR';

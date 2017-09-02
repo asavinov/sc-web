@@ -57,13 +57,23 @@ export class EditComponent implements OnInit, AfterViewInit {
   //
   public tipCount = 8;
   public tipNumber = 0;
+  public tipTitle: string[] = [
+    "Data Commandr",
+    "Databases",
+    "Tables",
+    "Import CSV",
+    "Columns",
+    "Calculated Columns",
+    "Accumulated Columns",
+    "Link Columns"
+    ];
   public tipText: string[] = [
-    "Welome to <b>Data Commandr</b>. It is a web applicatin for easily processing <b>data in tables</b>. It uses a unique novel approach to data processing where all data manpulations are described via <b>column formulas</b>, which makes it as powerful as SQL and as easy as a spreadsheet. Formally, this technology is based on the <b>concept-oriented model</b> of data and it can be applied to many other tasks like stream analytics, data integration and big data processing. More information can be found in the <b>About</b> and <b>Help</b> pages that can be chosen from the top menu.",
+    "<b>Data Commandr</b> is a web applicatin for easily processing <b>data in tables</b>. It uses a unique novel approach to data processing where all data manpulations are described via <b>column formulas</b>, which makes it as powerful as SQL and as easy as a spreadsheet. Formally, this technology is based on the <b>concept-oriented model</b> and it can be applied to many other tasks like stream analytics, data integration and big data processing. More information can be found on the <b>About</b> and <b>Help</b> pages.",
     "Start working by creating a new <b>database</b> or selecting an existing (example) database from the list of databases. ",
     "Create a new <b>table</b> in the list of tables or select an existing table. A table is intended for storing a number of rows with data structured by the table columns.",
     "Load data into the selected table from a CSV file by clicking <b>Upload</b> button. The columns will be created automatically from the file header if the corresponding option is selected.",
     "Create new or additional columns for the selected table. <b>Data type</b> specifies what kind of data this column will store. <b>Column type</b> specifies how data in this column are produced.",
-    "Choose <b>calculated</b> column type if this column values will be computed from other column values using a <b>formula</b> that has to be specified in another field.",
+    "Choose <b>calculated</b> column type if this column values will be computed from other column values using a formula that has to be specified in another field.",
     "Choose <b>accumulated</b> column type if this column values will be computed from a group of <em>many</em> rows of another table that has to be specified in addition to other parameters.",
     "Choose <b>link</b> column type if this column values will reference rows of another table which is this column data type."
     ];
@@ -595,8 +605,8 @@ export class EditComponent implements OnInit, AfterViewInit {
 
   streamCsv: string;
 
-  streamFrequency: number = 1000;
-  streamCount: number = 5;
+  streamPeriod: number = 1;
+  streamCount: number = 10;
 
   isStarted: boolean = false;
   eventsSent: number = 0;
@@ -627,7 +637,10 @@ TODO: Show progress in main (edit) screen, say, rotating spinner.
     //
     // Start timer which will send events periodically
     //
-    this.streamTimer = setInterval( this.sendEvent, this.streamFrequency, this);
+    if(this.streamPeriod < 1) {
+      this.streamPeriod = 1;
+    }
+    this.streamTimer = setInterval( this.sendEvent, this.streamPeriod * 1000, this);
     // Now the send event method will be called periodically
   }
 

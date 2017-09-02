@@ -392,11 +392,11 @@ Use col-form-label class for labels
         </div>
 
         <div class="form-group row">
-          <label for="streamFrequency" class="col-form-label col-4">
-            Frequency of events (ms) <i class="fa fa-info-circle" popover="Time in milliseconds for sending events" triggers="hover" container="body" placement="right" ></i>
+          <label for="streamPeriod" class="col-form-label col-4">
+            Period of events <i class="fa fa-info-circle" popover="Time in seconds between sending events" triggers="hover" container="body" placement="right" ></i>
           </label>
           <div class="col-8">
-            <input id="streamFrequency" name="streamFrequency" ngControl="streamFrequency" type="number" class="form-control" [readonly]="isStarted" [(ngModel)]="streamFrequency" required min="10" placeholder="Time in milliseconds for sending events" />
+            <input id="streamPeriod" name="streamPeriod" ngControl="streamPeriod" type="number" class="form-control" [readonly]="isStarted" [(ngModel)]="streamPeriod" required min="1" placeholder="Time in milliseconds for sending events" />
           </div>
         </div>
 
@@ -827,6 +827,7 @@ https://www.html5andbeyond.com/fullscreen-website-design-100-window-height-div/
 
       <div class="modal-body" style="background-color: #EEE;">
         <div class="card-body">
+          <h4 [innerHTML]="tipTitle[tipNumber]" class="card-title text-center"></h4>
           <div [innerHTML]="tipText[tipNumber]"></div>
         </div>
       </div>

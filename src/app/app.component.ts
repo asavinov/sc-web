@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'DATA COMMANDR';
   activeComponent = 'dc-edit';
   version = '0.7.0'
-  versionDate = 'xx.06.2017'
+  versionDate = '02.09.2017'
 
   public isCollapsed:boolean = false;
 
